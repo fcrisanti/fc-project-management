@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.fc.app.dao.IEmployeeRepository;
 import pl.fc.app.enities.Employee;
+import pl.fc.app.services.EmployeeService;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    IEmployeeRepository employeeRepository;
+    EmployeeService employeeService;
 
     @GetMapping
     public String displayEmployees(Model model) {
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> employees = employeeService.getAll();
         model.addAttribute("employees",employees);
         return "employees/list-employees";
     }
@@ -34,7 +34,7 @@ public class EmployeeController {
 
     @PostMapping("/save")
     public String createEmployee (Employee employee, Model model) {
-        employeeRepository.save(employee);
+        employeeService.save(employee);
         return "redirect:/employees/new";
     }
 }

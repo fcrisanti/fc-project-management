@@ -7,16 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.fc.app.dao.IEmployeeRepository;
-import pl.fc.app.dao.IProjectRepository;
 import pl.fc.app.dto.EmployeeProject;
 import pl.fc.app.dto.ProjectStatus;
-import pl.fc.app.enities.Employee;
 import pl.fc.app.enities.Project;
+import pl.fc.app.services.EmployeeService;
+import pl.fc.app.services.ProjectService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -25,19 +22,19 @@ public class HomeController {
     String version;
 
     @Autowired
-    IProjectRepository projectRepository;
+    ProjectService projectService;
 
     @Autowired
-    IEmployeeRepository employeeRepository;
+    EmployeeService employeeService;
 
     @GetMapping("/")
     public String displayHome(Model model) throws JsonProcessingException {
 
         model.addAttribute("version",version);
 
-        List<Project> projects = projectRepository.findAll();
-        List<EmployeeProject> employeesProjectCount = employeeRepository.employeeProjects();
-        List<ProjectStatus> projectStatusCount = projectRepository.projectStatus();
+        List<Project> projects = projectService.getAll();
+        List<EmployeeProject> employeesProjectCount = employeeService.employeesProjectCount();
+        List<ProjectStatus> projectStatusCount = projectService.projectStatus();
 
         //Project data to JSON structure
         ObjectMapper objectMapper = new ObjectMapper();
