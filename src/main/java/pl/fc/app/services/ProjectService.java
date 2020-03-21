@@ -3,7 +3,7 @@ package pl.fc.app.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.fc.app.dao.IProjectRepository;
-import pl.fc.app.dto.ProjectStatus;
+import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class ProjectService {
        return projectRepository.findAll();
     }
 
-    public List<ProjectStatus> projectStatus() {
+    public List<IProjectStatus> projectStatus() {
         return projectRepository.projectStatus();
     }
 }

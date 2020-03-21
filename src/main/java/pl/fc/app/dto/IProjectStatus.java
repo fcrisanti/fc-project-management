@@ -1,6 +1,6 @@
 package pl.fc.app.dto;
 
-public interface ProjectStatus {
+public interface IProjectStatus {
 
     public String getLabel();
 

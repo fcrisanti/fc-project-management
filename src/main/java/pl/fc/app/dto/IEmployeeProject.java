@@ -1,6 +1,6 @@
 package pl.fc.app.dto;
 
-public interface EmployeeProject {
+public interface IEmployeeProject {
 
     public String getFirstName();
 
