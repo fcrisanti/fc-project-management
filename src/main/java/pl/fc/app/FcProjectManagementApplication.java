@@ -9,6 +9,7 @@ import pl.fc.app.dao.IEmployeeRepository;
 import pl.fc.app.dao.IProjectRepository;
 import pl.fc.app.enities.Employee;
 import pl.fc.app.enities.Project;
+import org.flywaydb.core.Flyway;
 
 import java.util.Arrays;
 
@@ -23,6 +24,8 @@ public class FcProjectManagementApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FcProjectManagementApplication.class, args);
+        Flyway flyway = Flyway.configure().dataSource("jdbc:h2:mem:testdb", "sa", "").load();
+        flyway.migrate();
 
     }
 
