@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.fc.app.dao.IEmployeeRepository;
 import pl.fc.app.enities.Employee;
 import pl.fc.app.enities.Project;
+import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
 
 import java.util.List;
@@ -22,7 +22,7 @@ class ProjectController {
     ProjectService projectService;
 
     @Autowired
-    IEmployeeRepository employeeRepository;
+    EmployeeService employeeService;
 
     @GetMapping
     public String displayProjects(Model model) {
@@ -34,7 +34,7 @@ class ProjectController {
     @GetMapping("/new")
     public String displayProjectForm(Model model) {
         Project project = new Project();
-        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> employees = employeeService.getAll();
         model.addAttribute("allEmployees", employees);
         model.addAttribute("project", project);
         return "projects/new-project";

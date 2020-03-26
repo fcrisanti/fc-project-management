@@ -90,8 +90,14 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>6.3.2</version>
 				<configuration>
-					<url>jdbc:h2:mem:testdb</url>
-					<user>sa</user>
+<!--					H2 config: -->
+<!--					<url>jdbc:h2:mem:testdb</url> -->
+<!--					<user>sa</user> -->
+
+<!--					PostgreSQL config: -->
+					<url>jdbc:postgresql://localhost:5432/fc-ppm-db</url>
+					<user>postgres</user>
+					<password>admin</password>
 				</configuration>
 			</plugin>
 		</plugins>

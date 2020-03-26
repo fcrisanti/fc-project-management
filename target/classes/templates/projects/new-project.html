@@ -7,7 +7,7 @@
 <nav th:replace="layouts :: navbar"></nav>
 
 <div class="container">
-    <form action="/projects/save" th:object="${project}" method="POST">
+    <form th:action="@{/projects/save}" th:object="${project}" method="POST">
 
         <input type="text" placeholder="Project Name" th:field="*{name}">
 
@@ -25,6 +25,8 @@
                     th:text="${employee.firstName}">
             </option>
         </select>
+
+<!--        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
 
         <button type="submit">Create Project</button>
 
