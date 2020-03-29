@@ -7,6 +7,7 @@ import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -24,5 +25,9 @@ public class ProjectService {
 
     public List<IProjectStatus> projectStatus() {
         return projectRepository.projectStatus();
+    }
+
+    public Optional<Project> getByID(Long id) {
+        return projectRepository.findById(id);
     }
 }

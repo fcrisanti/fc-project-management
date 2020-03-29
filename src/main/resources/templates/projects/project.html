@@ -7,25 +7,35 @@
 <nav th:replace="layouts :: navbar"></nav>
 
 <hr>
-<h3> Projects </h3>
+<h3> Project </h3>
 <hr>
 <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>
 
 <div>
-    <h4> Current Projects </h4>
+    <h4 th:text="${project.name}"> Current Project</h4>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
-            <th> Project Name</th>
-            <th> Project Stage</th>
-            <th> Project Link</th>
+            <th> Parameter</th>
+            <th> Value</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="project : ${projects}">
+        <tbody th:object="${project}">
+        <tr>
+            <th> Project Name</th>
             <td th:text="${project.name}">
+            </td>
+        <tr>
+            <th> Project ID</th>
+            <td th:text="${project.projectId}">
+            </td>
+        <tr>
+            <th> Stage</th>
             <td th:text="${project.stage}">
-            <td> <a th:href="@{/projects/display(id=${project.projectId})}">Project details</a> </td>
+        </tr>
+        <tr>
+            <th> Description</th>
+            <td th:text="${project.description}">
         </tr>
         </tbody>
         </tbody>
