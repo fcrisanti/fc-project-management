@@ -15,7 +15,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import pl.fc.app.enities.enums.*;
 import javax.persistence.SequenceGenerator;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +33,31 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_generator")
     @SequenceGenerator(name = "project_generator",sequenceName = "project_seq", allocationSize = 1)
     private long projectId;
+
     private String name;
-    private String stage; //NOTSTARTED, COMPLETED, INPROGRESS
-    private String description;
+    private Long sapNo;
+    private String projectManager;
+    private String techManager;
+    private String analyst;
+    private String steeringCom;
+    private Company company;
+    private Genesis genesis;
+    private Status status;
+    private String externalProviders;
+    private String MPK;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate inaugurationDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate kickOff;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate goLivePlanned;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate goLiveFinal;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate projectClosure;
+    private String descriptionPl;
+    private String descriptionEn;
+    private String stage;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "project_id"),
@@ -48,8 +74,6 @@ public class Project {
     public Project(String name, String stage, String description) {
         this.name = name;
         this.stage = stage;
-        this.description = description;
+        this.descriptionPl = description;
     }
-
-
 }

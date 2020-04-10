@@ -17,9 +17,9 @@ import java.util.Arrays;
 public class FcProjectManagementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FcProjectManagementApplication.class, args);
-        Flyway flyway = Flyway.configure().dataSource("jdbc:h2:mem:testdb", "sa", "").load();
-        flyway.migrate();
+       SpringApplication.run(FcProjectManagementApplication.class, args);
+//        Flyway flyway = Flyway.configure().dataSource("jdbc:h2:mem:testdb", "sa", "").load();
+//        flyway.migrate();
 
     }
 

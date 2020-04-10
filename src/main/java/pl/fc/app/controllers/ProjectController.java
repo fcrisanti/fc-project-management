@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.server.ResponseStatusException;
 import pl.fc.app.enities.Employee;
 import pl.fc.app.enities.Project;
@@ -40,8 +38,20 @@ class ProjectController {
     public String displaySingleProject(@RequestParam Long id, Model model) {
         Optional<Project> maybeProject = projectService.getByID(id);
         Project project = maybeProject.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Motyla noga! Nie znalazłem takiego projektu :("));
+        System.out.println("projekt nr"+project.getProjectId());
         model.addAttribute("project",project);
         return "projects/project";
+    }
+
+    @GetMapping("/edit")
+    public String editProject(@RequestParam Long id, Model model) {
+        Optional<Project> maybeProject = projectService.getByID(id);
+        Project project = maybeProject.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Motyla noga! Nie znalazłem takiego projektu :("));
+        List<Employee> employees = employeeService.getAll();
+
+        model.addAttribute("allEmployees", employees);
+        model.addAttribute("project",project);
+        return "projects/edit-project";
     }
 
     @GetMapping("/new")
@@ -50,13 +60,13 @@ class ProjectController {
         List<Employee> employees = employeeService.getAll();
         model.addAttribute("allEmployees", employees);
         model.addAttribute("project", project);
-        return "projects/new-project";
+        return "projects/edit-project";
     }
 
     @PostMapping("/save")
     public String createProject(Project project, @RequestParam List<Long> employees, Model model) {
+        System.out.println("projekt nr"+project.getProjectId());
         projectService.save(project);
-
         return "redirect:/projects";
     }
 }

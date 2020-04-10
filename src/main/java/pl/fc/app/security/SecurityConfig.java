@@ -48,10 +48,10 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/projects/new").hasRole("USER")
-                .antMatchers("/projects/save").hasRole("USER")
-                .antMatchers("/employees/new").hasRole("USER")
-                .antMatchers("/employees/save").hasRole("USER")
+//                .antMatchers("/projects/new").hasRole("USER")
+//                .antMatchers("/projects/save").hasRole("USER")
+//                .antMatchers("/employees/new").hasRole("USER")
+//                .antMatchers("/employees/save").hasRole("USER")
                 .antMatchers("/", "/**").permitAll()
 //  just for H2:
 //              .antMatchers("/h2_console/**").permitAll()

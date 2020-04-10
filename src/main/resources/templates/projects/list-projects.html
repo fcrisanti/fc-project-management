@@ -23,7 +23,7 @@
         </thead>
         <tbody>
         <tr th:each="project : ${projects}">
-            <td th:text="${project.name}">
+            <td> <a th:href="@{/projects/display(id=${project.projectId})}" th:text="${project.name}"></a> </td>
             <td th:text="${project.stage}">
             <td> <a th:href="@{/projects/display(id=${project.projectId})}">Project details</a> </td>
         </tr>
@@ -31,6 +31,7 @@
         </tbody>
     </table>
 </div>
+
 
 
 </body>

@@ -24,7 +24,7 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_generator")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_generator")
     @SequenceGenerator(name = "employee_generator",sequenceName = "employee_seq", allocationSize = 1)
     private long employeeId;
 
