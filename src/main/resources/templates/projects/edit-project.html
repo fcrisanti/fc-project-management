@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts :: header"></head>
+<head th:replace="layouts :: header">
+</head>
 
 <body>
 
@@ -8,163 +9,189 @@
 
 <hr>
 <h3> Project </h3>
+<h4 th:text="${project.name}"> Current Project</h4>
 <hr>
 <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>
+<div class="row">
 
-<div>
-    <form th:action="@{/projects/save}" th:object="${project}" method="POST">
-        <h4 th:text="${project.name}"> Current Project</h4>
-        <input type="hidden" th:field="${project.projectId}">
-        <table class="table table-bordered table-striped" style=width:480px;>
-            <thead class="thead-dark">
-            <tr>
-                <th> Parameter</th>
-                <th> Value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th> Project Name</th>
-                <td>
-                    <input type="text" th:field="${project.name}" placeholder="Oficjalna nazwa projektu" required>
-                </td>
-            <tr>
-                <th> Project ID</th>
-                <td>P
-                    <input type="number" th:field="${project.sapNo}" placeholder="1234">
-                </td>
-            </tr>
-            <tr>
-                <th> Project Manager</th>
-                <td>
-                    <input type="text" th:field="${project.projectManager}" placeholder="PM projektu">
-                </td>
-            </tr>
-            <tr>
-                <th> Description PL</th>
-                <td>
-                    <textarea th:field="${project.descriptionPl}" placeholder="Opis projektu po Polsku"
+    <div class="column" style=margin:20px;>
+        <form th:action="@{/projects/save}" th:object="${project}" method="POST" onsubmit="save()">
+            <!--            <h4 th:text="${project.name}"> Current Project</h4>-->
+            <input type="hidden" th:field="${project.projectId}">
+            <input type="hidden" th:field="${project.jsonGantt}" id="jsonGantt" value="jsonGantt">
+
+            <table class="table table-bordered table-striped" style=width:480px;>
+                <thead class="thead-dark">
+                <tr>
+                    <th> Parameter</th>
+                    <th> Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th> Project Name</th>
+                    <td>
+                        <input type="text" th:field="${project.name}" placeholder="Oficjalna nazwa projektu" required>
+                    </td>
+                <tr>
+                    <th> Project ID</th>
+                    <td>P
+                        <input type="number" th:field="${project.sapNo}" placeholder="1234">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Project Manager</th>
+                    <td>
+                        <input type="text" th:field="${project.projectManager}" placeholder="PM projektu">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Description PL</th>
+                    <td>
+                    <input type="hidden" th:field="${project.descriptionPl}" placeholder="Opis projektu po Polsku"
                               height="48"></textarea>
-                </td>
-            </tr>
-            <tr>
-            <tr>
-                <th> Description EN</th>
-                <td>
+                    </td>
+                </tr>
+                <tr>
+                <tr>
+                    <th> Description EN</th>
+                    <td>
                     <textarea th:field="${project.descriptionEn}" placeholder="Opis projektu po Angielsku"
                               height="48"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th> PMO</th>
-                <td>
-                    <select th:field="*{employees}">
-                        <option th:each="employee : ${allEmployees}"
-                                th:value="${employee.employeeId}"
-                                th:text="${employee.firstName}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th> Status</th>
-                <td>
-                    <select th:field="${project.status}">
-                        <option th:each="status : ${T(pl.fc.app.enities.enums.Status).values()}"
-                                th:value="${status}" th:default="TO_BE_OPENED"
-                                th:text="${status}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th> Company</th>
-                <td>
-                    <select th:field="${project.company}" multiple="multiple">
-                        <option th:each="company : ${T(pl.fc.app.enities.enums.Company).values()}"
-                                th:value="${company}"
-                                th:text="${company}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th> Genesis</th>
-                <td>
-                    <select th:field="${project.genesis}">
-                        <option th:each="genesis : ${T(pl.fc.app.enities.enums.Genesis).values()}"
-                                th:value="${genesis}" th:default="NOT_GENESIS"
-                                th:text="${genesis}">
-                        </option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th> Steering Committee</th>
-                <td>
+                    </td>
+                </tr>
+                <tr>
+                    <th> PMO</th>
+                    <td>
+                        <select th:field="*{employees}">
+                            <option th:each="employee : ${allEmployees}"
+                                    th:value="${employee.employeeId}"
+                                    th:text="${employee.firstName}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Status</th>
+                    <td>
+                        <select th:field="${project.status}">
+                            <option th:each="status : ${T(pl.fc.app.enities.enums.Status).values()}"
+                                    th:value="${status}" th:default="TO_BE_OPENED"
+                                    th:text="${status}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Company</th>
+                    <td>
+                        <select th:field="${project.company}" multiple="multiple">
+                            <option th:each="company : ${T(pl.fc.app.enities.enums.Company).values()}"
+                                    th:value="${company}"
+                                    th:text="${company}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Genesis</th>
+                    <td>
+                        <select th:field="${project.genesis}">
+                            <option th:each="genesis : ${T(pl.fc.app.enities.enums.Genesis).values()}"
+                                    th:value="${genesis}" th:default="NOT_GENESIS"
+                                    th:text="${genesis}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Steering Committee</th>
+                    <td>
                     <textarea th:field="${project.steeringCom}" placeholder="Członkowie KS projektu"
                               height="48"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th> External Providers</th>
-                <td>
+                    </td>
+                </tr>
+                <tr>
+                    <th> External Providers</th>
+                    <td>
                     <textarea th:field="${project.externalProviders}" placeholder="Dostawcy zewnętrzni"
                               height="48"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th> Analyst</th>
-                <td>
-                    <input type="text" th:field="${project.analyst}" placeholder="Analityk projektu">
-                </td>
-            </tr>
-            <tr>
-                <th> Technical Manager</th>
-                <td>
-                    <input type="text" th:field="${project.techManager}" placeholder="Techniczny projektu">
-                </td>
-            </tr>
-            <tr>
-                <th> MPK</th>
-                <td>
-                    <input type="text" th:field="${project.MPK}" placeholder="Nr Miejsca Powstania Kosztu">
-                </td>
-            </tr>
-            <tr>
-                <th> Inauguration Date</th>
-                <td>
-                    <input type="date" th:field="${project.inaugurationDate}">
-                </td>
-            </tr>
-            <tr>
-                <th> Kick-off</th>
-                <td>
-                    <input type="date" th:field="${project.kickOff}">
-                </td>
-            </tr>
-            <tr>
-                <th> Go Live Planned</th>
-                <td>
-                    <input type="date" th:field="${project.goLivePlanned}">
-                </td>
-            </tr>
-            <tr>
-                <th> Go Live Final</th>
-                <td>
-                    <input type="date" th:field="${project.goLiveFinal}">
-                </td>
-            </tr>
-            <tr>
-                <th> Project Closure</th>
-                <td>
-                    <input type="date" th:field="${project.projectClosure}">
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <button type="submit">Save Project</button>
-    </form>
-</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Analyst</th>
+                    <td>
+                        <input type="text" th:field="${project.analyst}" placeholder="Analityk projektu">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Technical Manager</th>
+                    <td>
+                        <input type="text" th:field="${project.techManager}" placeholder="Techniczny projektu">
+                    </td>
+                </tr>
+                <tr>
+                    <th> MPK</th>
+                    <td>
+                        <input type="text" th:field="${project.MPK}" placeholder="Nr Miejsca Powstania Kosztu">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Inauguration Date</th>
+                    <td>
+                        <input type="date" th:field="${project.inaugurationDate}">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Kick-off</th>
+                    <td>
+                        <input type="date" th:field="${project.kickOff}">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Go Live Planned</th>
+                    <td>
+                        <input type="date" th:field="${project.goLivePlanned}">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Go Live Final</th>
+                    <td>
+                        <input type="date" th:field="${project.goLiveFinal}">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Project Closure</th>
+                    <td>
+                        <input type="date" th:field="${project.projectClosure}">
+                    </td>
+                </tr>
+<!--                <tr>-->
+<!--                    <th> JSON</th>-->
+<!--                    <td th:text="${project.jsonGantt}">-->
+<!--                    </td>-->
+<!--                </tr>-->
+                </tbody>
+            </table>
+            <button type="submit">Save Project</button>
+        </form>
+<!--        <button onclick="save()">Save Gantt</button>-->
+    </div>
 
+    <div class="column" id="gantt_here" style='width:800px; height:1300px; margin:20px;'>
+        <script type="text/javascript" th:inline="javascript">
+
+            gantt.init("gantt_here");
+
+            gantt.parse([[${project.jsonGantt}]]);
+
+            function save() {
+                document.getElementById("jsonGantt").value = JSON.stringify(gantt.serialize());
+                // alert(JSON.stringify(gantt.serialize()));
+            }
+
+        </script>
+    </div>
+
+</div>
 </body>

@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts :: header"></head>
+<head th:replace="layouts :: header">
+    <script src="codebase/dhtmlxgantt.js"></script>
+    <link href="codebase/dhtmlxgantt.css" rel="stylesheet">
+</head>
 
 <body>
+
 
 <nav th:replace="layouts :: navbar"></nav>
 
@@ -105,6 +109,13 @@
         </tbody>
     </table>
 </div>
+
+<div id="gantt_here" style='width:600px; height:400px;'></div>
+<script type="text/javascript">
+
+    gantt.init("gantt_here");
+
+</script>
 
 
 </body>
