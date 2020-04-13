@@ -13,7 +13,7 @@ public interface IProjectRepository extends CrudRepository<Project, Long> {
     @Override
     List<Project> findAll();
     @Query(nativeQuery = true, value="" +
-            "SELECT stage AS label, COUNT(*) AS value FROM project GROUP BY stage ORDER BY 2 DESC")
+            "SELECT status AS label, COUNT(*) AS value FROM project GROUP BY stage ORDER BY 2 DESC")
 
     public List<IProjectStatus> projectStatus();
 }

@@ -17,15 +17,15 @@
         <thead class="thead-dark">
         <tr>
             <th> Project Name</th>
-            <th> Project Stage</th>
+            <th> Project Status</th>
             <th> Project Link</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="project : ${projects}">
-            <td> <a th:href="@{/projects/display(id=${project.projectId})}" th:text="${project.name}"></a> </td>
-            <td th:text="${project.stage}">
-            <td> <a th:href="@{/projects/display(id=${project.projectId})}">Project details</a> </td>
+            <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a> </td>
+            <td th:text="${project.status}">
+            <td> <a th:href="@{/projects/edit(id=${project.projectId})}">Project details</a> </td>
         </tr>
         </tbody>
         </tbody>

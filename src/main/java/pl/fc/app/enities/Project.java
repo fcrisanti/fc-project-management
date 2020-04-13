@@ -61,7 +61,7 @@ public class Project {
     private LocalDate projectClosure;
     private String descriptionPl;
     private String descriptionEn;
-    private String stage;
+//    private String stage;
     @Column(columnDefinition = "json")
     @JsonRawValue
     private String jsonGantt;
@@ -78,9 +78,9 @@ public class Project {
         this.employees.add(employee);
     }
 
-    public Project(String name, String stage, String description) {
+    public Project(String name, Status status, String description) {
         this.name = name;
-        this.stage = stage;
+        this.status = status;
         this.descriptionPl = description;
     }
 }
