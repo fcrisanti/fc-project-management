@@ -16,16 +16,16 @@
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
-            <th> Employee Name</th>
-            <th> Employee Surname</th>
-            <th> Employee Email</th>
+            <th> PMO Name</th>
+            <th> PMO Surname</th>
+            <th> PMO Projects</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="employee : ${employees}">
             <td th:text="${employee.firstName}">
             <td th:text="${employee.lastName}">
-            <td th:text="${employee.email}">
+            <td th:text="${employee.getProjects()}">
         </tr>
         </tbody>
         </tbody>

@@ -89,6 +89,12 @@
 			<artifactId>hibernate-types-52</artifactId>
 			<version>${hibernate-types.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.4.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

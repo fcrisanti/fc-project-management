@@ -1,8 +1,8 @@
 package pl.fc.app.enities.enums;
 
 public enum Status {
-    ANALYSIS,
     TO_BE_OPENED,
+    ANALYSIS,
     RUNNING,
     FINISHED,
     CLOSED,
