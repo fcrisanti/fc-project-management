@@ -72,8 +72,11 @@ public class Project {
     private LocalDate depreciationStartDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectClosure;
+    @Column(columnDefinition = "TEXT")
     private String descriptionPl;
+    @Column(columnDefinition = "TEXT")
     private String descriptionEn;
+    @Column(columnDefinition = "TEXT")
     private String comment;
     private BigDecimal budget;
     //    private String stage;

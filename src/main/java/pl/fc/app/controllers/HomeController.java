@@ -18,8 +18,8 @@ import java.util.List;
 @Controller
 class HomeController {
 
-    @Value("${version}")
-    String version;
+//    @Value("${version}")
+//    String version;
 
     @Autowired
     ProjectService projectService;
@@ -28,25 +28,32 @@ class HomeController {
     EmployeeService employeeService;
 
     @GetMapping("/")
-    public String displayHome(Model model) throws JsonProcessingException {
-
-        model.addAttribute("version",version);
-
-        List<Project> projects = projectService.getAll();
-        List<IEmployeeProject> employeesProjectCount = employeeService.employeesProjectCount();
-        List<IProjectStatus> IProjectStatusCount = projectService.projectStatus();
-
-        //Project data to JSON structure
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = objectMapper.writeValueAsString(IProjectStatusCount);
-        System.out.println(jsonString);
-        model.addAttribute("JSONprojectStatusCount",jsonString);
-
-        model.addAttribute("projects", projects);
-        model.addAttribute("employeesProjectCount", employeesProjectCount);
-        model.addAttribute("projectStatusCount", IProjectStatusCount);
-//        return "index";
-        return "main/home";
+    public String displayAllProjects() {
+//        List<Project> projects = projectService.getAll();
+//        model.addAttribute("projects",projects);
+        return "redirect:/projects";
     }
+
+
+//    public String displayHome(Model model) throws JsonProcessingException {
+//
+//        model.addAttribute("version",version);
+//
+//        List<Project> projects = projectService.getAll();
+//        List<IEmployeeProject> employeesProjectCount = employeeService.employeesProjectCount();
+//        List<IProjectStatus> IProjectStatusCount = projectService.projectStatus();
+//
+//        //Project data to JSON structure
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String jsonString = objectMapper.writeValueAsString(IProjectStatusCount);
+//        System.out.println(jsonString);
+//        model.addAttribute("JSONprojectStatusCount",jsonString);
+//
+//        model.addAttribute("projects", projects);
+//        model.addAttribute("employeesProjectCount", employeesProjectCount);
+//        model.addAttribute("projectStatusCount", IProjectStatusCount);
+////        return "index";
+//        return "main/home";
+//    }
 
 }

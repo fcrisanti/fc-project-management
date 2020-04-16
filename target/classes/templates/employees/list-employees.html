@@ -7,25 +7,25 @@
 <nav th:replace="layouts :: navbar"></nav>
 
 <hr>
-<h3> Employees </h3>
+<h3> PMO </h3>
 <hr>
-<a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3"> New Employee </a>
+<a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3"> New PMO </a>
 
 <div>
-    <h4> Current Employees </h4>
+    <h4> Current PMO </h4>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
-            <th> Employee Name</th>
-            <th> Employee Surname</th>
-            <th> Employee Email</th>
+            <th> PMO Name</th>
+            <th> PMO Surname</th>
+            <th> PMO Projects</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="employee : ${employees}">
             <td th:text="${employee.firstName}">
             <td th:text="${employee.lastName}">
-            <td th:text="${employee.email}">
+            <td th:text="${employee.getProjects()}">
         </tr>
         </tbody>
         </tbody>

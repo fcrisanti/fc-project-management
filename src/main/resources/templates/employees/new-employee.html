@@ -9,13 +9,13 @@
 <div class="container">
     <form th:action="@{/employees/save}" th:object="${employee}" method="POST">
 
-        <input type="text" placeholder="Employee Name" th:field="${employee.firstName}">
-        <input type="text" placeholder="Employee Last Name" th:field="${employee.lastName}">
+        <input type="text" placeholder="PMO Name" th:field="${employee.firstName}">
+        <input type="text" placeholder="PMO Last Name" th:field="${employee.lastName}">
 <!--        <input type="text" placeholder="Employee e-mail" th:field="${employee.email}">-->
 
 <!--        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
 
-        <button type="submit">Create Employee</button>
+        <button type="submit">Create PMO</button>
 
     </form>
 </div>

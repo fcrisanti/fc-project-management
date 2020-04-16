@@ -10,6 +10,7 @@
 
 <hr>
 <h3> Project </h3>
+<h5 style="font-style: italic;" class="orange-text"> PRO TIP: Kliknij przycisk SAVE CHANGES na dole strony aby zapisać zmiany.</h5>
 <h4 th:text="${project.name}"> Current Project</h4>
 <hr>
 <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>
@@ -217,7 +218,7 @@
                 <!--                </tr>-->
                 </tbody>
             </table>
-            <button type="submit">Save Project</button>
+            <button type="submit">Save Changes</button>
         </form>
         <!--        <button onclick="save()">Save Gantt</button>-->
     </div>
@@ -284,15 +285,6 @@
                     <!--                    <li class="gantt-menu-item gantt-menu-item-right"><a data-action="fullscreen"><img-->
                     <!--                            src="/codebase/imgs/ic-fullscreen-24.png">Fullscreen</a>-->
                     <!--                    </li>-->
-                    <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a
-                            data-action="zoomToFit"><img
-                            src="/codebase/imgs/ic-zoom-to-fit-24.png">Zoom to
-                        Fit</a></li>
-                    <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomOut"><img
-                            src="/codebase/imgs/ic-zoom-out.png">Zoom Out</a>
-                    </li>
-                    <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomIn"><img
-                            src="/codebase/imgs/ic-zoom-in.png">Zoom In</a></li>
                     <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a><img
                             src="/codebase/imgs/ic-export-24.png">Export</a>
                         <ul class="gantt-controls">
@@ -310,6 +302,16 @@
                                 Project</a></li>
                         </ul>
                     </li>
+                    <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a
+                            data-action="zoomToFit"><img
+                            src="/codebase/imgs/ic-zoom-to-fit-24.png">Zoom to
+                        Fit</a></li>
+                    <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomOut"><img
+                            src="/codebase/imgs/ic-zoom-out.png">Zoom Out</a>
+                    </li>
+                    <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomIn"><img
+                            src="/codebase/imgs/ic-zoom-in.png">Zoom In</a></li>
+
                 </ul>
             </div>
 

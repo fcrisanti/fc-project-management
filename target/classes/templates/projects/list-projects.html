@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!--<head th:replace="layouts :: header">-->
-    <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -39,15 +39,34 @@
 
 <hr>
 <h3> Projects </h3>
+<h5 style="font-style: italic;" class="orange-text"> PRO TIP: Skorzystaj z wyszukiwarki (SEARCH), która szuka po każdej kolumnie! Kliknij na projekt by zobaczyć szczegóły/edytować.</h5>
 <hr>
 <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>
 
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-    <thead>
+
+<button id="ALL" class="btn btn-sm btn-amber btn-rounded" onclick="reset()">ALL</button>
+<button id="CN" class="btn btn-sm btn-teal btn-rounded" onclick="filter('CL')">CN</button>
+<button id="CNL" class="btn btn-sm btn-green btn-rounded" onclick="filter('CNL')">CNL</button>
+<button id="VIG" class="btn btn-sm btn-red btn-rounded" onclick="filter('VIG')">VIG</button>
+<button id="GENESIS" class="btn btn-sm btn-deep-purple btn-rounded" onclick="genesis()">GENESIS</button>
+
+
+<button id="MORE" class="btn btn-sm btn-elegant btn-rounded" style="float: right;" onclick="more()">MORE COLUMNS
+</button>
+<button id="LESS" class="btn btn-sm btn-blue btn-rounded" style="float: right;" onclick="less()">LESS COLUMNS</button>
+<button id="RED" class="btn btn-sm btn-outline-red btn-rounded" style="float: right;"
+        onclick="location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ';">CZERWONY PRZYCISK
+</button>
+
+<table id="dtBasicExample" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+
+
+    <thead class="peach-gradient">
     <tr>
         <th> Sap No</th>
         <th> Guardian</th>
         <th> Project</th>
+        <th> Company</th>
         <th> Type</th>
         <th> Project Manager</th>
         <th> Technical Manager</th>
@@ -69,26 +88,27 @@
     </thead>
     <tbody>
     <tr th:each="project : ${projects}">
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="P+${project.sapNo}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.employees}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.genesis}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectManager}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.techManager}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.analyst}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.steeringCom}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.descriptionPl}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.externalProviders}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.inaugurationDate}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.kickOff}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.goLivePlanned}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.goLiveFinal}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectClosure}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.steeringComMeetings}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.depreciationStartDate}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.budget}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.costAllocationKey}"></a> </td>
-        <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.comment}"></a> </td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="P+${project.sapNo}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.employees}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.company}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.genesis}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectManager}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.techManager}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.analyst}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.steeringCom}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.descriptionPl}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.externalProviders}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.inaugurationDate}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.kickOff}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.goLivePlanned}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.goLiveFinal}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectClosure}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.steeringComMeetings}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.depreciationStartDate}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.budget}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.costAllocationKey}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.comment}"></a></td>
     </tr>
     </tbody>
     <tfoot>
@@ -96,6 +116,7 @@
         <th> Sap No</th>
         <th> Guardian</th>
         <th> Project</th>
+        <th> Company</th>
         <th> Type</th>
         <th> Project Manager</th>
         <th> Technical Manager</th>
@@ -145,20 +166,79 @@
 <!--"/js/jquery-3.5.0.min.js"-->
 
 <script>
+    function less() {
+        $('#dtBasicExample').DataTable()
+            .columns([8, 9, 10, 11, 14, 15, 16, 19, 17, 18, 20]).visible(false, false)
+            .columns.adjust().draw();
+    }
+
+    function more() {
+        $('#dtBasicExample').DataTable()
+            .columns([8, 9, 10, 11, 14, 15, 16, 19, 17, 18, 20]).visible(true)
+            .columns.adjust().draw();
+    }
+
+    function reset() {
+        $('#dtBasicExample').DataTable()
+            .columns()
+            .search("")
+            .draw();
+    }
+
+    function filter(value) {
+        reset();
+        $('#dtBasicExample').DataTable()
+            .column(3)
+            .search(value)
+            .draw();
+    }
+
+    function genesis() {
+        reset();
+        $('#dtBasicExample').DataTable()
+            .column(4)
+            .search('^((?!NOT_GENESIS).)*$', true, false)
+            .draw();
+    }
+
+    // function sortuj() {
+    //     var column = "Company";
+    //     var select = "CNL";
+    //     // .appendTo($(column.footer()).empty())
+    //
+    //     var val = "CNL";
+    //
+    //     //     $.fn.dataTable.util.escapeRegex(
+    //     //     $(this).val()
+    //     // );
+    //
+    //     column
+    //         .search(val ? '^' + val + '$' : '', true, false)
+    //         .draw();
+    // }
+
+    // column.data().unique().sort().each(function (d, j) {
+    //     select.append('<option value="' + d + '">' + d + '</option>')
+
 
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
             // "ordering" : true,
             // "filterEnabled" : true,
-            "paging" : false, // false to disable pagination (or any other option)
+            "paging": false, // false to disable pagination (or any other option)
             // "searching" : true, // false to disable search (or any other option)
             // "scrollY":        300,
             // "scrollX":        true,
             // "scrollCollapse" : true,
             // "fixedColumns":   true
+            // function () {
+            //     this.api().columns().every(
+
+
         });
         $('.dataTables_length').addClass('bs-select');
         // alert("co tam?");
+        less();
     });
 
 </script>

@@ -7,8 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="/codebase/dhtmlxgantt.js"></script>
@@ -18,7 +22,7 @@
 </head>
 
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Project Portfolio Management </a>
+    <a class="navbar-brand" style="font-style: italic;" th:href="@{/projects}">More Than ACI </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,17 +34,17 @@
 <!--                <a class="nav-link" th:href="@{/}">Home</a>-->
 <!--            </li>-->
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/employees}">PMO</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" th:href="@{/projects}">Projects</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/register}">Register</a>
+                <a class="nav-link" th:href="@{/employees}">PMO</a>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="/login">Log-in</a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/register}">Register</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item">-->
+<!--            <a class="nav-link" href="/login">Log-in</a>-->
+<!--            </li>-->
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
             </li>
