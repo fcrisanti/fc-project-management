@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@EnableAutoConfiguration
 public class FcProjectManagementApplication
 //        extends SpringBootServletInitializer
 {
