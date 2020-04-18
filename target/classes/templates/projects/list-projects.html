@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Material Design Bootstrap</title>
+    <title>More Than ACI</title>
     <script src="/js/jquery-3.5.0.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -30,7 +30,13 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
 </head>
 
 <body>
@@ -39,18 +45,17 @@
 
 <hr>
 <h3> Projects </h3>
-<h5 style="font-style: italic;" class="orange-text"> PRO TIP: Skorzystaj z wyszukiwarki (SEARCH), która szuka po każdej kolumnie! Kliknij na projekt by zobaczyć szczegóły/edytować.</h5>
+<h5 style="font-style: italic;" class="orange-text"> PRO TIP: Skorzystaj z wyszukiwarki (SEARCH), która szuka po każdej
+    kolumnie! Kliknij na projekt by zobaczyć szczegóły/edytować.</h5>
 <hr>
 <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>
 
 
 <button id="ALL" class="btn btn-sm btn-amber btn-rounded" onclick="reset()">ALL</button>
-<button id="CN" class="btn btn-sm btn-teal btn-rounded" onclick="filter('CL')">CN</button>
+<button id="CL" class="btn btn-sm btn-teal btn-rounded" onclick="filter('CL')">CL</button>
 <button id="CNL" class="btn btn-sm btn-green btn-rounded" onclick="filter('CNL')">CNL</button>
 <button id="VIG" class="btn btn-sm btn-red btn-rounded" onclick="filter('VIG')">VIG</button>
 <button id="GENESIS" class="btn btn-sm btn-deep-purple btn-rounded" onclick="genesis()">GENESIS</button>
-
-
 <button id="MORE" class="btn btn-sm btn-elegant btn-rounded" style="float: right;" onclick="more()">MORE COLUMNS
 </button>
 <button id="LESS" class="btn btn-sm btn-blue btn-rounded" style="float: right;" onclick="less()">LESS COLUMNS</button>
@@ -234,12 +239,38 @@
             // function () {
             //     this.api().columns().every(
 
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                {
+                    extend: 'excelHtml5',
+                    autoFilter: true,
+                    sheetName: 'More Than ACE Export'
+                },
+                'csvHtml5'
+            ],
 
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var search = $(`<input class="form-control form-control-sm" type="text" placeholder="Search">`)
+                        .appendTo($(column.footer()).empty())
+                        .on('change input', function () {
+                            var val = $(this).val()
+
+                            column
+                                .search(val ? val : '', true, false)
+                                .draw();
+                        });
+                });
+            }
 
         });
         $('.dataTables_length').addClass('bs-select');
         // alert("co tam?");
         less();
+
+
     });
 
 </script>
