@@ -6,3 +6,5 @@ Postgres db named "fc-ppm-db" available on localhost:5432:
 spring.datasource.url=jdbc:postgresql://localhost:5432/fc-ppm-db
 spring.datasource.username=postgres
 spring.datasource.password=admin
+
+To begin, register first user at http://localhost:8080/register
