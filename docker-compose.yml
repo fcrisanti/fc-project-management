@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  web:
+    network_mode: "host"
+    ports:
+      - "8080:8080"
+      - "5432:5432"
+    build:
+      network: host
+      context: .
+      dockerfile: Dockerfile
+    environment:
+        - jdbcurl
+        - dbuser
+        - dbpass
+
+
+
