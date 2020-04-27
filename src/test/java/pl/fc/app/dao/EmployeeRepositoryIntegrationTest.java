@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.fc.app.enities.Employee;
-import pl.fc.app.enities.Project;
-import pl.fc.app.enities.enums.Status;
-
 import static org.junit.Assert.assertEquals;
 
 @SpringBootTest

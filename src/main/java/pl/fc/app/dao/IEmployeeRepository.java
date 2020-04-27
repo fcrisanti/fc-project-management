@@ -6,6 +6,7 @@ import pl.fc.app.dto.IEmployeeProject;
 import pl.fc.app.enities.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IEmployeeRepository extends CrudRepository<Employee, Long> {
     @Override
@@ -16,4 +17,6 @@ public interface IEmployeeRepository extends CrudRepository<Employee, Long> {
             "FROM employee LEFT JOIN project_employee ON employee.employee_id=project_employee.employee_id\n" +
             "GROUP BY employee.first_name, employee.last_name ORDER BY 3 DESC;")
     public List<IEmployeeProject> employeeProjects();
+
+    Optional<Employee> findEmployeeByFirstNameAndLastName(String firstName, String lastName);
 }

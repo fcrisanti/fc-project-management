@@ -7,6 +7,7 @@ import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IProjectRepository extends CrudRepository<Project, Long> {
 
@@ -16,4 +17,8 @@ public interface IProjectRepository extends CrudRepository<Project, Long> {
             "SELECT status AS label, COUNT(*) AS value FROM project GROUP BY stage ORDER BY 2 DESC")
 
     public List<IProjectStatus> projectStatus();
+
+    void removeProjectBySapNo(long sapNo);
+
+    Optional<Project> findProjectBySapNo(long sapNp);
 }

@@ -7,6 +7,7 @@ import pl.fc.app.dto.IEmployeeProject;
 import pl.fc.app.enities.Employee;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -18,11 +19,20 @@ public class EmployeeService {
         employeeRepository.save(employee);
     }
 
+    public void removeEmployeeByFirstNameAndSecondName(String firstName, String secondName) {
+        Optional<Employee> employee = employeeRepository.findEmployeeByFirstNameAndLastName(firstName, secondName);
+        if (employee.isPresent()) {
+            if (employee.get().getProjects().isEmpty()) {
+                employeeRepository.delete(employee.get());
+            }
+        }
+    }
+
     public List<Employee> getAll() {
-       return employeeRepository.findAll();
+        return employeeRepository.findAll();
     }
 
     public List<IEmployeeProject> employeesProjectCount() {
-       return employeeRepository.employeeProjects();
+        return employeeRepository.employeeProjects();
     }
 }

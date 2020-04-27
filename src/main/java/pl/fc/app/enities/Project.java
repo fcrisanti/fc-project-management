@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import pl.fc.app.enities.enums.Company;
-import pl.fc.app.enities.enums.Genesis;
-import pl.fc.app.enities.enums.Status;
+import pl.fc.app.enities.enums.DocumentState;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -42,15 +43,21 @@ public class Project {
     private String steeringComMeetings;
     private String projectSponsor;
     private String costAllocationKey;
-    @Enumerated(EnumType.STRING)
+    //    @Enumerated(EnumType.STRING)
 //    @Column(length = 12)
-    private Company company;
-    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> companies;
+
+    //    @Enumerated(EnumType.STRING)
 //    @Column(length = 12)
-    private Genesis genesis;
-    @Enumerated(EnumType.STRING)
+//    @ElementCollection(fetch = FetchType.LAZY)
+    private String genesis;
+
+//    @Enumerated(EnumType.STRING)
 //    @Column(length = 12)
-    private Status status;
+//    @ElementCollection(fetch = FetchType.LAZY)
+    private String status;
+
     private String externalProviders;
     private String MPK;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -72,12 +79,20 @@ public class Project {
     @Column(columnDefinition = "TEXT")
     private String comment;
     private BigDecimal budget;
+    private Boolean psrNotRequired;
+
+    private DocumentState kickOffPresentation;
+    private DocumentState businessCase;
+    private DocumentState projectMandate;
+    private DocumentState schedule;
+    private DocumentState closurePresentation;
+
     //    private String stage;
     @Column(columnDefinition = "json")
     @JsonRawValue
     private String jsonGantt;
 
-//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    //    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
 //    @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "project_id"),
 //            inverseJoinColumns = @JoinColumn(name = "employee_id"))
     @ManyToOne(fetch = FetchType.LAZY)
@@ -85,22 +100,18 @@ public class Project {
     private Employee employees;
 //    private List<Employee> employees;
 
-    public Project(String name, Status status, String description) {
-        this.name = name;
-        this.status = status;
-        this.descriptionPl = description;
-    }
+//    public Project(String name, Status status, String description) {
+//        this.name = name;
+//        this.status = status;
+//        this.descriptionPl = description;
+//    }
 
     public void addEmployee(Employee employee) {
-//        if (employees == null) {
-//            employees = new ArrayList<>();
-//        }
-//        this.employees.add(employee);
         employees = employee;
     }
 
     @Override
     public String toString() {
-        return "P"+sapNo+" "+name;
+        return "P" + sapNo + " " + name;
     }
 }

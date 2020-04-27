@@ -71,15 +71,16 @@
         <th> Sap No</th>
         <th> Guardian</th>
         <th> Project</th>
+        <th> Status</th>
         <th> Company</th>
-        <th> Type</th>
+        <th> Stream</th>
         <th> Project Manager</th>
         <th> Technical Manager</th>
         <th> Analyst</th>
         <th> Steering Committee Members</th>
         <th> Description</th>
         <th> Providers</th>
-        <th> Inauguration Date</th>
+        <th> Initiative Notif. Date</th>
         <th> Kick Off</th>
         <th> Go-Live Planned</th>
         <th> Go-Live Final</th>
@@ -96,7 +97,9 @@
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="P+${project.sapNo}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.employees}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a></td>
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.company}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.status}"></a></td>
+<!--        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.company}"></a></td>-->
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.companies}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.genesis}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectManager}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.techManager}"></a></td>
@@ -121,15 +124,16 @@
         <th> Sap No</th>
         <th> Guardian</th>
         <th> Project</th>
+        <th> Status</th>
         <th> Company</th>
-        <th> Type</th>
+        <th> Stream</th>
         <th> Project Manager</th>
         <th> Technical Manager</th>
         <th> Analyst</th>
         <th> Steering Committee Members</th>
         <th> Description</th>
         <th> Providers</th>
-        <th> Inauguration Date</th>
+        <th> Initiative Notif. Date</th>
         <th> Kick Off</th>
         <th> Go-Live Planned</th>
         <th> Go-Live Final</th>
@@ -193,7 +197,7 @@
     function filter(value) {
         reset();
         $('#dtBasicExample').DataTable()
-            .column(3)
+            .column(4)
             .search(value)
             .draw();
     }
@@ -201,7 +205,7 @@
     function genesis() {
         reset();
         $('#dtBasicExample').DataTable()
-            .column(4)
+            .column(5)
             .search('^((?!NOT_GENESIS).)*$', true, false)
             .draw();
     }
