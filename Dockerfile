@@ -1,4 +1,5 @@
 FROM ubuntu:latest
+EXPOSE 8080
 
 MAINTAINER Francesco Crisanti "fcrisanti@gmail.com"
 
