@@ -46,12 +46,14 @@
     zmiany.</h5>
 <h4 th:text="${project.name}"> Current Project</h4>
 <hr>
-<form th:action="@{/projects/save}" th:object="${project}" method="POST" onsubmit="save()">
-<a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>
-<input type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()"
-       style="width:349px; margin-right:16px">
+<form id="projectform" th:action="@{/projects/save}" th:object="${project}" method="POST" onsubmit="saveGantt()">
+    <!--    <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>-->
+    <input type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()"
+           style="width:480px; margin-right:11px; margin-left: 5px">
 
-    <button type="submit" class="btn-primary" style="width:200px">Save Changes</button>
+    <button type="submit" form="projectform" class="btn btn-primary btn-sm mb-3" style="width:200px">Save Changes</button>
+    <a th:href="@{/projects/{id}/psr(id=${project.projectId})}" type="button" class="btn btn-red btn-sm mb-3" style="width:250px">Project Status Reports (beta)</a>
+
     <div class="row" style="width: 100vw">
 
         <div class="column" style="margin-left:20px; margin-right:20px;">
@@ -162,7 +164,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th> Steering Committee</th>
+                    <th> Steering Committee Members</th>
                     <td>
                     <textarea th:field="${project.steeringCom}" placeholder="Członkowie KS projektu"
                               height="48"></textarea>
@@ -263,7 +265,7 @@
                 <!--                </tr>-->
                 </tbody>
             </table>
-            <button type="submit" class="btn-primary" style="width:200px">Save Changes</button>
+            <button type="submit" form="projectform" class="btn-primary" style="width:200px">Save Changes</button>
 
         </div>
 
@@ -486,7 +488,7 @@
     //     return document.getElementById("fullscreen_view");
     // };
 
-    function save() {
+    function saveGantt() {
         document.getElementById("jsonGantt").value = JSON.stringify(gantt.serialize());
         // alert(JSON.stringify(gantt.serialize()));
     }

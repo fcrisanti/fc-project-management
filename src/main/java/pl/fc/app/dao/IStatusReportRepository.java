@@ -1,0 +1,21 @@
+package pl.fc.app.dao;
+
+import org.springframework.data.repository.CrudRepository;
+import pl.fc.app.enities.Project;
+import pl.fc.app.enities.ProjectStatusReport;
+import pl.fc.app.enities.UserAccount;
+
+import java.time.Month;
+import java.util.List;
+import java.util.Optional;
+
+public interface IStatusReportRepository extends CrudRepository<ProjectStatusReport, Long> {
+
+    @Override
+    List<ProjectStatusReport> findAll();
+
+    Optional<ProjectStatusReport> findByMonthAndYearAndProjectProjectId(Month month, Long year, Long projectId);
+    ProjectStatusReport getByMonthAndYearAndProjectProjectId(Month month, Long year, Long projectId);
+
+    Optional<ProjectStatusReport> findByPsrId(Long psrId);
+}

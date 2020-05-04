@@ -27,9 +27,6 @@ public class Employee {
 
     private String lastName;
 
-//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-//    @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "employee_id"),
-//                inverseJoinColumns = @JoinColumn(name = "project_id"))
     @OneToMany(mappedBy = "employees")
     private List<Project> projects;
 

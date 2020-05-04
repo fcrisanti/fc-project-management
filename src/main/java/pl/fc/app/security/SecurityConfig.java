@@ -23,41 +23,25 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-// For PostgreSQL:
                 .usersByUsernameQuery(
                         "select username, password, enabled from user_accounts where username=?")
                 .authoritiesByUsernameQuery(
                         "select username, role from user_accounts where username=?")
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder);
-// For H2:
-//                .withDefaultSchema()
-//                .withUser("admin")
-//                .roles("ADMIN")
-//                .password("admin")
-//                .and()
-//                .withUser("user")
-//                .password("user")
-//                .roles("USER");
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/projects/new").hasRole("USER")
-//                .antMatchers("/projects/save").hasRole("USER")
-//                .antMatchers("/employees/new").hasRole("USER")
-//                .antMatchers("/employees/save").hasRole("USER")
+// For testing USER has full power
+//                .antMatchers("/projects/new").hasRole("ADMIN")
+//                .antMatchers("/projects/save").hasRole("ADMIN")
+//                .antMatchers("/employees/new").hasRole("ADMIN")
+//                .antMatchers("/employees/save").hasRole("ADMIN")
                 .antMatchers("/", "/**").hasRole("USER")
-//  just for H2:
-//              .antMatchers("/h2_console/**").permitAll()
-//                .authenticated()
                 .and()
                 .formLogin();
-
-        //  just for H2 console/testing - dangerous in production!
-//        http.csrf().disable();
-//        http.headers().frameOptions().disable();
     }
 }

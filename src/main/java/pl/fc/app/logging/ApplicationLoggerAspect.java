@@ -23,11 +23,8 @@ class ApplicationLoggerAspect {
 
     @After("definePackagePointcuts()")
     public void logAfter(JoinPoint jp) {
-        logger.debug("\n");
-        logger.debug(" ---------log--------- ");
         logger.debug("after method execution {}.{} () with arguments {}",
         jp.getSignature().getDeclaringTypeName(),
                 jp.getSignature().getName(), Arrays.toString(jp.getArgs()));
-        logger.debug(" --------------------- ");
     }
 }

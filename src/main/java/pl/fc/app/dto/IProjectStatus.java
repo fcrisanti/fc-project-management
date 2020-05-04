@@ -2,7 +2,7 @@ package pl.fc.app.dto;
 
 public interface IProjectStatus {
 
-    public String getLabel();
+    String getLabel();
 
-    public long getValue();
+    long getValue();
 }
