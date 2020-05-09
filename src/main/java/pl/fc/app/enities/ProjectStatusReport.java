@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -33,9 +33,9 @@ public class ProjectStatusReport {
 
     private Month month;
     private Long year;
-    private BigDecimal realizedBudget;
-    private BigDecimal plannedBudget;
-    private BigDecimal forecastBudget;
+    private BigInteger realizedBudget;
+    private BigInteger plannedBudget;
+    private BigInteger forecastBudget;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectInauguration;
@@ -50,9 +50,13 @@ public class ProjectStatusReport {
     private ProjectState cost;
 
     private String projectManager;
-    private String completedWorks;
-    private String nextSteps;
-    private String risks;
+    private String completedWorks1;
+    private String completedWorks2;
+    private String nextSteps1;
+    private String nextSteps2;
+    private String risks1;
+    private String risks2;
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_psr")

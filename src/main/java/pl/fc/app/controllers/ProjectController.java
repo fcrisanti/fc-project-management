@@ -113,14 +113,29 @@ class ProjectController {
 
     @GetMapping("{id}/psr/{year}/{month}")
     public String editProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+        findProjectAndAddPsrAttributes(id, month, year, model);
+        return "projects/edit-status-report";
+    }
+
+    @GetMapping("{id}/psr/{year}/{month}/view")
+    public String viewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+        findProjectAndAddPsrAttributes(id, month, year, model);
+        return "projects/status-report/psr";
+    }
+
+    @GetMapping("{id}/psr/{year}/{month}/view/pdf")
+    public String downloadProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+        findProjectAndAddPsrAttributes(id, month, year, model);
+        return "projects/status-report/psr-pdf";
+    }
+
+    private void findProjectAndAddPsrAttributes(Long id, int month, Long year, Model model) {
         Project project = projectService.getByID(id);
         ProjectStatusReport projectStatusReport = statusReportService.getByProjectIdMonthYear(id, month, year);
 
         model.addAttribute("project", project);
         model.addAttribute("projectStatusReport", projectStatusReport);
-        return "projects/edit-status-report";
     }
-
 
     @PostMapping("{id}/psr/save")
     public String saveProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {

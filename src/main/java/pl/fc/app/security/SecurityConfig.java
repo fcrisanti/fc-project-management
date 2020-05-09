@@ -43,5 +43,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/**").hasRole("USER")
                 .and()
                 .formLogin();
+        http.headers().frameOptions().disable();
     }
 }

@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -65,7 +66,7 @@ public class Project {
     private String descriptionEn;
     @Column(columnDefinition = "TEXT")
     private String comment;
-    private BigDecimal budget;
+    private BigInteger budget;
     private Boolean psrNotRequired;
 
     private DocumentState kickOffPresentation;
