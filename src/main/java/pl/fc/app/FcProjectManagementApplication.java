@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FcProjectManagementApplication {
     public static void main(String[] args) {
         SpringApplication.run(FcProjectManagementApplication.class, args);
+
+
     }
 
 }

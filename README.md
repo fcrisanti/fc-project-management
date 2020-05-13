@@ -29,7 +29,15 @@ You can run it with either docker-compose or Dockerfile. In case of Dockerfile r
 It requires having set the host environmental variables: `jdbcurl`, `dbuser`, `dbpass` compatible with your Postgres db v. 9.2+ settings (a database must exist before program launch).
 Should you use a host postgres db on Windows and Mac remember to replace in `jdbcurl` the `localhost` with `host.docker.internal` e.g. `jdbc:postgresql://host.docker.internal:5432/database-name`
 
-# Quickstart
+# Active Directory integration (optional)
+To log in with AD pass this env variables:
+`AD_DOMAIN` - (required) AD domain, if not passed the app will read and store users in PostgreSQL
+`AD_URL` - (required) AD server url (ldap:// or ldaps://)
+`AD_PORT` - port for non SSL/TLS connections, default 389
+`AD_HTTPS_PORT` - port for HTTPS connections, default 636
+`AD_SECURITY_PROTOCOL` - security protocol. Possible options: "ssl", "tls". Leave empty for auto.
+Should you use a certificate remember to add it to the jdk TrustStore.
 
+# Quickstart
 The app runs by default at port 8080.
-To begin, register your first user at `http://your-host-address:8080/register` (e.g. `http://localhost:8080/register`)
+If you don't use AD login to begin, register your first user at `http://your-host-address:8080/register` (e.g. `http://localhost:8080/register`)
