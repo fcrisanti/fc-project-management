@@ -108,13 +108,11 @@
                     <th> PMO</th>
                     <td>
                         <select name="employees" id="employees">
-                            <!--                                th:field="*{employees}"-->
-                            >
                             <option th:each="employee : ${allEmployees}"
                                     th:value="${employee.employeeId}"
                                     th:text="${employee}"
-                                    th:selected="${employee.employeeId == 1}"
-                            >
+                                    th:selected="${project.employees != null} ? ${employee.employeeId == project.employees.getEmployeeId()} : ${employee.employeeId == 1}"
+                                    >
                             </option>
                         </select>
                     </td>

@@ -23,6 +23,10 @@ public class Employee {
     @SequenceGenerator(name = "employee_generator",sequenceName = "employee_seq", allocationSize = 1)
     private long employeeId;
 
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
     private String firstName;
 
     private String lastName;
