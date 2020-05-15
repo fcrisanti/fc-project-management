@@ -53,7 +53,7 @@
 
     <button type="submit" form="projectform" class="btn btn-primary btn-sm mb-3" style="width:200px">Save Changes</button>
     <a th:href="@{/projects/{id}/psr(id=${project.projectId})}" type="button" class="btn btn-red btn-sm mb-3" style="width:250px">Project Status Reports (beta)</a>
-
+    <i th:text="${project.modifiedBy!=null } ? ${ 'Last modifief by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
     <div class="row" style="width: 100vw">
 
         <div class="column" style="margin-left:20px; margin-right:20px;">

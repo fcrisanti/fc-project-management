@@ -81,6 +81,7 @@
                 <button type="submit" class="btn btn-primary btn-sm mb-3"> Save PSR</button>
                 <a th:href="@{/projects/{id}/psr(id=${project.projectId})}" class="btn btn-green btn-sm mb-3"> New
                     PSR </a>
+
                 Month
                 <select th:field="${projectStatusReport.month}">
                     <option th:each="month : ${T(java.time.Month).values()}"
@@ -90,10 +91,12 @@
                 </select>
                 <input type="hidden" th:field="${projectStatusReport.psrId}">
                 Year
-                <input type="number" th:field="${projectStatusReport.year}" min="2020" max="2099" placeholder="year"
+                <input type="number" th:field="${projectStatusReport.year}" style="width:60px" min="2020" max="2099" placeholder="year"
                        required>
-
-                <div class="column">
+                <small>
+                <i th:text="${projectStatusReport.modifiedBy!=null } ? ${ 'Last modifief by '+projectStatusReport.modifiedBy+' on '+projectStatusReport.lastModifiedDate}"></i>
+                </small>
+                    <div class="column">
                     <table class="table table-bordered table-striped">
                         <tbody>
                         <tr>

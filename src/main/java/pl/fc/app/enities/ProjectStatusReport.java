@@ -3,10 +3,16 @@ package pl.fc.app.enities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.fc.app.enities.enums.ProjectState;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -19,11 +25,13 @@ import javax.persistence.SequenceGenerator;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class ProjectStatusReport {
 
     @Id
@@ -57,6 +65,18 @@ public class ProjectStatusReport {
     private String risks1;
     private String risks2;
     private String description;
+
+    @Column(name = "created_date")
+    @CreatedDate
+    private Date createdDate;
+
+    @Column(name = "last_modified_date")
+    @LastModifiedDate
+    private Date lastModifiedDate;
+
+    @Column(name = "modified_by")
+    @LastModifiedBy
+    private String modifiedBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_psr")
