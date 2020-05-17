@@ -73,13 +73,13 @@
 <div class="row" style="width: 600vw; margin: 30px">
     <div class="html-content" style="width: 800px;height: 650px;">
         <div id="edit" style="width: 800px;height: 650px;">
-            <form th:action="@{/projects/{id}/psr/save(id=${project.projectId})}" th:object="${projectStatusReport}"
+            <form th:action="@{/psr/{id}/save(id=${project.projectId})}" th:object="${projectStatusReport}"
                   method="POST">
                 <div th:if="${errorMessage}">
                     <div th:text="${errorMessage}" class="red-text"></div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm mb-3"> Save PSR</button>
-                <a th:href="@{/projects/{id}/psr(id=${project.projectId})}" class="btn btn-green btn-sm mb-3"> New
+                <a th:href="@{/psr/{id}(id=${project.projectId})}" class="btn btn-green btn-sm mb-3"> New
                     PSR </a>
 
                 Month
@@ -213,24 +213,28 @@
             <tbody>
             <tr th:each="psr : ${project.projectStatusReports}">
                 <td>
-                    <a th:href="@{/projects/{id}/psr/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
                        th:text="${psr.month.getValue()}"></a></td>
                 <td>
-                    <a th:href="@{/projects/{id}/psr/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
                        th:text="${psr.year}"></a></td>
                 <td>
-                    <a th:href="@{/projects/{id}/psr/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
                        class="btn btn-red btn-sm m-0">EDIT</a></td>
                 <td>
                     <button type="button" class="btn btn-indigo btn-sm m-0"
-                            th:attr="onclick=|view('@{/projects/{id}/psr/{year}/{month}/view(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
+                            th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
                     >VIEW
                     </button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-amber btn-sm m-0"
-                            th:attr="onclick=|view('@{/projects/{id}/psr/{year}/{month}/view/pdf(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
+                            th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/pdf(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
                     >PDF
+                    </button>
+                    <button type="button" class="btn btn-amber btn-sm m-0"
+                            th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/ppt(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
+                    >PPT
                     </button>
                 </td>
             </tr>

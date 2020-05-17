@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pl.fc.app.enities.enums.DocumentState;
 import pl.fc.app.shared.Auditable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -93,9 +94,8 @@ public class Project {
     @JoinColumn(name = "fk_employee")
     private Employee employees;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade= CascadeType.REMOVE)
     private Set<ProjectStatusReport> projectStatusReports;
-
 
     public void addEmployee(Employee employee) {
         employees = employee;

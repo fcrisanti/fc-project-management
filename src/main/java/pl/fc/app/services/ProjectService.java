@@ -8,8 +8,10 @@ import pl.fc.app.dao.IProjectRepository;
 import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -26,7 +28,7 @@ public class ProjectService {
     }
 
     public List<Project> getAll() {
-       return projectRepository.findAll();
+        return projectRepository.findAll();
     }
 
     public List<IProjectStatus> projectStatus() {
@@ -41,6 +43,7 @@ public class ProjectService {
         Optional<Project> maybeProject = projectRepository.findById(id);
         return maybeProject.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Motyla noga! Nie znalazłem takiego projektu :("));
     }
+
     public Optional<Project> findBySapNo(Long id) {
         return projectRepository.findProjectBySapNo(id);
     }
@@ -51,5 +54,21 @@ public class ProjectService {
 
     public void delete(Project project) {
         projectRepository.delete(project);
+    }
+
+    public List<Project> getAllNonHavingPsr(int month, Long year) {
+        List<Project> nonPsr = projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
+                .stream()
+                .filter(project -> project.getProjectStatusReports().isEmpty()).collect(Collectors.toList());
+
+        nonPsr.addAll(projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
+                .stream()
+                .filter(project -> !project.getProjectStatusReports().isEmpty())
+                .filter(project -> project.getProjectStatusReports()
+                        .stream()
+                        .noneMatch(projectStatusReport -> projectStatusReport.getYear().equals(year) && projectStatusReport.getMonth().getValue() == month))
+                .collect(Collectors.toList()));
+
+        return nonPsr;
     }
 }

@@ -7,26 +7,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.fc.app.dao.variables.ICompanyRepository;
 import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
-import pl.fc.app.enities.Employee;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.ProjectStatusReport;
-import pl.fc.app.enities.variables.Company;
-import pl.fc.app.enities.variables.Genesis;
-import pl.fc.app.enities.variables.Status;
 import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
 import pl.fc.app.services.StatusReportService;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
-@RequestMapping("/projects")
-class ProjectController {
+@RequestMapping("/psr")
+class PSRController {
 
     @Autowired
     ProjectService projectService;
@@ -47,61 +43,24 @@ class ProjectController {
     StatusReportService statusReportService;
 
     @GetMapping
-    public String displayAllProjects(Model model) {
-        List<Project> projects = projectService.getAll();
+    public String displayAllPSR(Model model) {
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        return "redirect:psr/"+year+"/"+month;
+    }
+
+    @GetMapping("/{year}/{month}")
+    public String displayPSRbyMonthAndYear(Model model, @PathVariable("month") int month, @PathVariable("year") long year) {
+        List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByMonthAndYear(month,year);
+        List<Project> projects = projectService.getAllNonHavingPsr(month,year);
+        model.addAttribute("projectStatusReports", projectStatusReports);
         model.addAttribute("projects", projects);
-        return "projects/list-projects";
+        model.addAttribute("month",month);
+        model.addAttribute("year",year);
+        return "/projects/status-report/list-status-reports";
     }
 
-    @GetMapping("/edit")
-    public String editProject(@RequestParam Long id, Model model) {
-        Project project = projectService.getByID(id);
-        return modelAttributesLoader(model, project);
-    }
-
-    @GetMapping("/new")
-    public String displayProjectForm(Model model, RedirectAttributes redirectAttributes) {
-        Project project = new Project();
-        return modelAttributesLoader(model, project);
-    }
-
-    private String modelAttributesLoader(Model model, Project project) {
-        List<Employee> employees = employeeService.getAll();
-
-        List<Company> allCompanies = companyRepository.findAll();
-        List<Status> allStatuses = statusRepository.findAll();
-        List<Genesis> allGenesis = genesisRepository.findAll();
-
-        model.addAttribute("allEmployees", employees);
-
-        model.addAttribute("project", project);
-
-        model.addAttribute("allCompanies", allCompanies);
-        model.addAttribute("allGenesis", allGenesis);
-        model.addAttribute("allStatuses", allStatuses);
-
-        return "projects/edit-project";
-    }
-
-    @PostMapping("/save")
-    public String createProject(Project project, RedirectAttributes redirectAttributes, Model model) {
-        if (!projectService.findByID(project.getProjectId()).isPresent()) {
-            if (projectService.findBySapNo(project.getSapNo()).isPresent()) {
-                redirectAttributes.addFlashAttribute("errorMessage", String.format("Nie można zapisać projektu. Projekt o numerze P%d już istnieje.", project.getSapNo()));
-                return "redirect:/projects/new";
-            }
-        }
-        projectService.save(project);
-        return "redirect:/projects";
-    }
-
-    @GetMapping("/delete")
-    public String deleteProject(@RequestParam Long id, Model model) {
-        projectService.deleteByID(id);
-        return "redirect:/projects";
-    }
-
-    @GetMapping("{id}/psr")
+    @GetMapping("{id}")
     public String newProjectStatusReport(@PathVariable("id") Long id, Model model) {
         Project project = projectService.getByID(id);
         ProjectStatusReport projectStatusReport = new ProjectStatusReport();
@@ -111,28 +70,34 @@ class ProjectController {
         return "projects/edit-status-report";
     }
 
-    @GetMapping("{id}/psr/{year}/{month}")
+    @GetMapping("{id}/{year}/{month}")
     public String editProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
         findProjectAndAddPsrAttributes(id, month, year, model);
         return "projects/edit-status-report";
     }
 
-    @GetMapping("{id}/psr/{year}/{month}/view")
+    @GetMapping("{id}/{year}/{month}/view")
     public String viewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
         findProjectAndAddPsrAttributes(id, month, year, model);
         return "projects/status-report/psr";
     }
 
-    @GetMapping("{id}/psr/{year}/{month}/delete")
+    @GetMapping("{id}/{year}/{month}/delete")
     public String deleteProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
         deleteProjectByAddPsrAttributes(id, month, year, model);
         return "projects/edit-status-report";
     }
 
-    @GetMapping("{id}/psr/{year}/{month}/view/pdf")
-    public String downloadProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+    @GetMapping("{id}/{year}/{month}/view/pdf")
+    public String downloadPDFProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
         findProjectAndAddPsrAttributes(id, month, year, model);
-        return "psr-ppt";
+        return "/projects/status-report/psr-pdf";
+    }
+
+    @GetMapping("{id}/{year}/{month}/view/ppt")
+    public String downloadPPTProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+        findProjectAndAddPsrAttributes(id, month, year, model);
+        return "/projects/status-report/psr-ppt";
     }
 
     private void findProjectAndAddPsrAttributes(Long id, int month, Long year, Model model) {
@@ -143,7 +108,6 @@ class ProjectController {
         model.addAttribute("projectStatusReport", projectStatusReport);
     }
 
-
     void deleteProjectByAddPsrAttributes(Long id, int month, Long year, Model model) {
         Project project = projectService.getByID(id);
         statusReportService.deleteByProjectIdMonthYear(id, month, year);
@@ -152,13 +116,13 @@ class ProjectController {
         model.addAttribute("project", project);
     }
 
-    @PostMapping("{id}/psr/save")
+    @PostMapping("{id}/save")
     public String saveProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {
         if (!statusReportService.findByPsrId(projectStatusReport.getPsrId()).isPresent()) {
             if (projectService.getByID(id).getProjectStatusReports().contains(statusReportService.getByProjectIdMonthYear(id, projectStatusReport.getMonth().getValue(), projectStatusReport.getYear())))
             {
                 redirectAttributes.addFlashAttribute("errorMessage", String.format("Nie można zapisać PSR. PSR dla tej daty już istnieje %d %d", projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()));
-                return "redirect:/projects/"+id+"/psr";
+                return "redirect:/psr/"+id;
             }
         }
 
@@ -166,6 +130,6 @@ class ProjectController {
         projectStatusReport.setProject(project);
         project.addPSR(projectStatusReport);
         statusReportService.save(projectStatusReport);
-        return "redirect:/projects/"+id+"/psr";
+        return "redirect:/psr/"+id;
     }
 }

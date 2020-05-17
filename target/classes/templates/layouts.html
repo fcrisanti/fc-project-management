@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>More Than ACI</title>
+    <title>PROTON</title>
     <script src="/js/jquery-3.5.0.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -44,7 +44,8 @@
 </head>
 
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" style="font-style: italic;" th:href="@{/projects}">More Than ACI </a>
+    <IMG src="/codebase/planet.png" width="25" height="25">
+    <a class="navbar-brand" style="font-style: italic;" th:href="@{/projects}"> PROTON </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -57,6 +58,9 @@
 <!--            </li>-->
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/projects}">Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/psr}">PSR</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/employees}">PMO</a>
@@ -72,6 +76,9 @@
 <!--            </li>-->
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <li class="nav-item">
+                <i class="nav-link disabled" href="#" style="color: grey">Project Organization and Tracking On-line</i>
             </li>
         </ul>
     </div>

@@ -21,4 +21,6 @@ public interface IProjectRepository extends CrudRepository<Project, Long> {
     void removeProjectBySapNo(long sapNo);
 
     Optional<Project> findProjectBySapNo(long sapNp);
+
+    List<Project> findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse();
 }
