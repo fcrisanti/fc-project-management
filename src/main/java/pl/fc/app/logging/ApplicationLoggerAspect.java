@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -23,8 +24,9 @@ class ApplicationLoggerAspect {
 
     @After("definePackagePointcuts()")
     public void logAfter(JoinPoint jp) {
-        logger.debug("after method execution {}.{} () with arguments {}",
-        jp.getSignature().getDeclaringTypeName(),
+        logger.debug("user: {} after method execution {}.{} () with arguments {}",
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                jp.getSignature().getDeclaringTypeName(),
                 jp.getSignature().getName(), Arrays.toString(jp.getArgs()));
     }
 }

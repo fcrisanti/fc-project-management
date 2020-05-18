@@ -57,7 +57,7 @@ class PSRController {
         model.addAttribute("projects", projects);
         model.addAttribute("month",month);
         model.addAttribute("year",year);
-        return "/projects/status-report/list-status-reports";
+        return "projects/status-report/list-status-reports";
     }
 
     @GetMapping("{id}")
@@ -91,13 +91,13 @@ class PSRController {
     @GetMapping("{id}/{year}/{month}/view/pdf")
     public String downloadPDFProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
         findProjectAndAddPsrAttributes(id, month, year, model);
-        return "/projects/status-report/psr-pdf";
+        return "projects/status-report/psr-pdf";
     }
 
     @GetMapping("{id}/{year}/{month}/view/ppt")
     public String downloadPPTProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
         findProjectAndAddPsrAttributes(id, month, year, model);
-        return "/projects/status-report/psr-ppt";
+        return "projects/status-report/psr-ppt";
     }
 
     private void findProjectAndAddPsrAttributes(Long id, int month, Long year, Model model) {
@@ -130,6 +130,6 @@ class PSRController {
         projectStatusReport.setProject(project);
         project.addPSR(projectStatusReport);
         statusReportService.save(projectStatusReport);
-        return "redirect:/psr/"+id;
+        return "redirect:/psr/"+id+"/"+projectStatusReport.getYear()+"/"+projectStatusReport.getMonth().getValue();
     }
 }

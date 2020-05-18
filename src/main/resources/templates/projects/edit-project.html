@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>More Than ACI</title>
+    <title>PROTON</title>
     <script src="/js/jquery-3.5.0.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -53,7 +53,7 @@
 
     <button type="submit" form="projectform" class="btn btn-primary btn-sm mb-3" style="width:200px">Save Changes</button>
     <a th:href="@{/psr/{id}(id=${project.projectId})}" type="button" class="btn btn-red btn-sm mb-3" style="width:250px">Project Status Reports (beta)</a>
-    <i th:text="${project.modifiedBy!=null } ? ${ 'Last modifief by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
+    <i th:text="${project.modifiedBy!=null } ? ${ 'Last modified by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
     <div class="row" style="width: 100vw">
 
         <div class="column" style="margin-left:20px; margin-right:20px;">
@@ -63,7 +63,7 @@
             <input type="hidden" th:field="${project.jsonGantt}" id="jsonGantt" value="jsonGantt">
 
             <table id="dtBasicExample" class="table table-bordered table-striped" style=width:480px;>
-                <thead class="blue-gradient">
+                <thead class="blue-gradient white-text">
                 <tr>
                     <th> Parameter</th>
                     <th> Value</th>

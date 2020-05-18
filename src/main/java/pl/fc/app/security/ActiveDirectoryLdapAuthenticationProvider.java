@@ -15,6 +15,8 @@
  */
 package pl.fc.app.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.ldap.core.DirContextOperations;
@@ -93,6 +95,9 @@ import javax.net.ssl.HttpsURLConnection.*;
  */
 public class ActiveDirectoryLdapAuthenticationProvider extends
         AbstractLdapAuthenticationProvider {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     private static final Pattern SUB_ERROR_CODE = Pattern
             .compile(".*data\\s([0-9a-f]{3,4}).*");
 
@@ -209,7 +214,9 @@ public class ActiveDirectoryLdapAuthenticationProvider extends
         env.put(Context.SECURITY_CREDENTIALS, password);
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 //        FC mod - SSL, TLS or none - env var AD_SECURITY_PROTOCOL
-        env.put(Context.SECURITY_PROTOCOL, SECURITY_PROTOCOL);
+        env.put(Context.SECURITY_PROTOCOL, SECURITY_PROTOCOL.toLowerCase());
+        LOGGER.info("Active Directory Security protocol (env AD_SECURITY_PROTOCOL): {}",SECURITY_PROTOCOL.toLowerCase());
+
         env.put(Context.OBJECT_FACTORIES, DefaultDirObjectFactory.class.getName());
         env.putAll(this.contextEnvironmentProperties);
 

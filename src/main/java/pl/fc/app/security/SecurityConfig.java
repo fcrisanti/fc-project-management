@@ -1,5 +1,7 @@
 package pl.fc.app.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -36,10 +38,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String DOMAIN;
     @Value("${ldap.url}")
     private String URL;
-    @Value("${ldap.port}")
-    private Integer httpPort;
-    @Value("${ldap.https.port}")
-    private Integer httpsPort;
 
     Boolean ldapProvided() {
         return DOMAIN != null;
@@ -47,6 +45,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     Boolean ldap = false;
 
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Override
     protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
@@ -54,6 +53,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         if (DOMAIN != null) {
             authManagerBuilder.authenticationProvider(activeDirectoryLdapAuthenticationProvider()).userDetailsService(userDetailsService());
         } else {
+            LOGGER.warn("Active Directory domain not set! Pass the env variable AD_DOMAIN to the application to set AD active.");
             authManagerBuilder.jdbcAuthentication().dataSource(dataSource)
                     .usersByUsernameQuery(
                             "select username, password, enabled from user_accounts where username=?")
@@ -78,16 +78,20 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @ConditionalOnExpression("!T(org.springframework.util.StringUtils).isEmpty('${AD_DOMAIN:}')")
     public AuthenticationProvider activeDirectoryLdapAuthenticationProvider() throws IOException {
 
+        LOGGER.info("Active Directory is set-up. Domain: "+DOMAIN);
+        LOGGER.info("AD URL: "+URL);
+
+
         //Adding certificate from Resources (cacerts.jks) with password "changeit"
-        File jks = File.createTempFile("cacerts", "jks");
-        jks.deleteOnExit();
-
-        try (InputStream fromJks = SecurityConfig.class.getResource("/cacerts.jks").openStream()) {
-            FileCopyUtils.copy(FileCopyUtils.copyToByteArray(fromJks), jks);
-        }
-
-        System.setProperty("javax.net.ssl.trustStore", jks.getPath());
-        System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+//        File jks = File.createTempFile("cacerts", "jks");
+//        jks.deleteOnExit();
+//
+//        try (InputStream fromJks = SecurityConfig.class.getResource("/cacerts.jks").openStream()) {
+//            FileCopyUtils.copy(FileCopyUtils.copyToByteArray(fromJks), jks);
+//        }
+//
+//        System.setProperty("javax.net.ssl.trustStore", jks.getPath());
+//        System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
 
         ActiveDirectoryLdapAuthenticationProvider provider = new ActiveDirectoryLdapAuthenticationProvider(DOMAIN, URL);
         provider.setConvertSubErrorCodesToExceptions(true);
