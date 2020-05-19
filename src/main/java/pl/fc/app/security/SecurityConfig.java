@@ -101,9 +101,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin();
         http.headers().frameOptions().disable();
 
-//        http.requiresChannel()
-//                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-//                .requiresSecure();
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
 
     }
 }
