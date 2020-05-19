@@ -5,10 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -17,23 +15,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
-import org.springframework.util.FileCopyUtils;
 
 import javax.sql.DataSource;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
+
+//import org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     @Autowired
     DataSource dataSource;
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
+    Boolean ldap = false;
     @Value("${ldap.domain}")
     private String DOMAIN;
     @Value("${ldap.url}")
@@ -42,10 +40,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     Boolean ldapProvided() {
         return DOMAIN != null;
     }
-
-    Boolean ldap = false;
-
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Override
     protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
@@ -68,7 +62,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public AuthenticationManager authenticationManager() throws Exception {
-        if(ldapProvided()) {
+        if (ldapProvided()) {
             return new ProviderManager(Arrays.asList(activeDirectoryLdapAuthenticationProvider()));
         } else return super.authenticationManager();
     }
@@ -78,8 +72,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @ConditionalOnExpression("!T(org.springframework.util.StringUtils).isEmpty('${AD_DOMAIN:}')")
     public AuthenticationProvider activeDirectoryLdapAuthenticationProvider() throws IOException {
 
-        LOGGER.info("Active Directory is set-up. Domain: "+DOMAIN);
-        LOGGER.info("AD URL: "+URL);
+        LOGGER.info("Active Directory is set-up. Domain: " + DOMAIN);
+        LOGGER.info("AD URL: " + URL);
 
 
         //Adding certificate from Resources (cacerts.jks) with password "changeit"
@@ -102,20 +96,14 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-// For testing USER has full power
-//                .antMatchers("/projects/new").hasRole("ADMIN")
-//                .antMatchers("/projects/save").hasRole("ADMIN")
-//                .antMatchers("/employees/new").hasRole("ADMIN")
-//                .antMatchers("/employees/save").hasRole("ADMIN")
                 .antMatchers("/", "/**").authenticated()
                 .and()
                 .formLogin();
         http.headers().frameOptions().disable();
 
-        /*
-         * Use HTTPs for ALL requests
-         */
-//        http.requiresChannel().anyRequest().requiresSecure();
-//        http.portMapper().http(httpPort).mapsTo(httpsPort);
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
+
     }
 }
