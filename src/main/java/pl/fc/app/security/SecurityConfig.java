@@ -108,4 +108,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                 .requiresSecure();
     }
+
+
 }
