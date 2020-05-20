@@ -18,15 +18,6 @@
     <properties>
         <java.version>1.8</java.version>
         <hibernate-types.version>2.9.8</hibernate-types.version>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>static</directory>
-                <targetPath>static</targetPath>
-            </resource>
-        </resources>
     </properties>
 
 
