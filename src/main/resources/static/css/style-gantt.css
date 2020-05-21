@@ -1,0 +1,259 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+
+.landing-view-demo{
+    min-height: 1755px;
+}
+
+.demo-main-container{
+    height: 1755px;
+    z-index: 4; /* for fullscreen mode of gantt*/
+}
+.demo-main-content{
+    height: 100%;
+    background: #fff;
+}
+
+#gantt_here{
+    width:calc(100% - 550px);
+    height: 100%;
+    position:absolute;
+    background: #fff;
+}
+
+.gantt-advantage-col-1 .container-img,
+.gantt-advantage-col-2 .container-img {
+    max-width: 182px;
+    margin: 0 auto;
+}
+
+.gantt-demo-header{
+    border-top: 1px solid #cecece;
+    border-left: 1px solid #cecece;
+    border-right: 1px solid #cecece;
+}
+
+.gantt-controls {
+    background-color: #f5f5f5;
+    font-size:14px;
+    list-style-type: none;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    text-align: left;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.gantt-menu-item {
+    display:inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    position: relative;
+    overflow: visible;
+    /*padding:0 10px;*/
+}
+
+.gantt-menu-item-right {
+    float: right;
+}
+
+.gantt-menu-item img {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.gantt-menu-item a {
+    display: block;
+    cursor: pointer;
+    color: #3d3d3d;
+    text-align: center;
+    line-height: 40px;
+    padding:0 10px;
+    text-decoration: none;
+}
+
+.gantt-menu-item a:hover {
+    background-color: #e2e2e2;
+}
+
+.gantt-controls .gantt-controls{
+    display: none;
+}
+.gantt-menu-item:hover .gantt-controls{
+    display: block;
+    left:0;
+    padding: 5px 0;
+    position: absolute;
+    top:41px;
+    z-index: 1;
+}
+
+.gantt-menu-item .menu-item-active{
+    background-color: #dadada !important;
+}
+
+.gantt-menu-item .menu-item-disabled{
+    color: #818181 !important;
+    pointer-events:none;
+}
+
+.gantt-menu-item:hover .gantt-controls li{
+    width:100%;
+}
+.gantt-menu-item:hover .gantt-controls a{
+    white-space: nowrap;
+    text-align: left;
+}
+
+.gantt-menu-item:hover .gantt-controls::before{
+    position: absolute;
+    top:-7px;
+    width:100%;
+    content:" ";
+    height:10px;
+    background: transparent;
+    left:0;
+    z-index: 1;
+}
+
+.gantt-menu-item-last {
+    border-right: 1px solid #cecece;
+}
+
+.status_line{
+    background-color: #0ca30a;
+}
+
+
+.gantt_grid_wbs{
+    position: absolute;
+}
+
+.gantt_grid_scale{
+    position: relative;
+    z-index: 1;
+}
+
+
+
+.dnd_highlighter {
+    position: absolute;
+    height: 4px;
+    width: 500px;
+    background-color: #3498db;
+}
+.dnd_highlighter::before{
+    background: transparent;
+    width: 12px;
+    height: 12px;
+    box-sizing: border-box;
+    border: 3px solid #3498db;
+    border-radius: 6px;
+    content: "";
+    line-height: 1px;
+    display: block;
+    position: absolute;
+    margin-left: -11px;
+    margin-top: -4px;
+}
+
+.gantt_tooltip {
+    font-size: 14px;
+    line-height: 120%;
+    border-bottom:1px solid #b3b3b3;
+    border-right:1px solid #b3b3b3;
+    border-color: #b3b3b3;
+}
+
+.gantt_drag_marker{
+    opacity: 0.6;
+}
+
+.gantt_drag_marker.gantt_grid_resize_area{
+    z-index: 1;
+}
+
+.gantt_parent_row{
+    font-weight: bold;
+}
+
+.gantt_task_line div.gantt_side_content{
+    bottom: 0;
+}
+
+.gantt-top-panel{
+    position: relative;
+    color: #fff;
+    padding: 11px 16px;
+    background: #3d3d3d;
+}
+
+.gantt-top-panel__btn{
+    display: inline-block;
+    color: #fff;
+    padding: 7px 24px;
+    text-decoration: none;
+    border-radius: 20px;
+    background: #2095f3;
+
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    margin-top: -16px;
+}
+
+.gantt-top-panel__btn:hover{
+    background: #03a9f4;
+}
+
+.gantt-top-panel__btn:focus{
+    outline: none;
+}
+
+.gantt-top-panel__btn:active{
+    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+}
+.salesforce-banner {
+    margin-top: 80px;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+}
+.salesforce-banner__link {
+    color: #03a9f4;
+    font: inherit;
+    transition: color .2s ease-in-out;
+    font-size: 20px;
+    font-family: Roboto, sans-serif;
+    line-height: 24px;
+}
+.salesforce-banner__link:hover {
+    color: #2095f3;
+}
+.salesforce-banner__link:after {
+    content: "\00a0\003e";
+    display: inline-block;
+    transition: transform .2s ease-in-out;
+}
+.salesforce-banner__link:hover:after {
+    transform: translateX(10px);
+    -webkit-transform: translateX(10px);
+    -moz-transform: translateX(10px);
+    -ms-transform: translateX(10px);
+    -o-transform: translateX(10px);
+}
+
+@media screen and (max-width: 768px) {
+    .salesforce-banner {
+        margin-top: 30px;
+        text-align: center;
+    }
+    .salesforce-banner__link {
+        font-size: 16px;
+    }
+}
