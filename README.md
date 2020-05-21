@@ -1,6 +1,13 @@
 # fc-project-management
 Project Portfolio Management made with Spring, Hibernate, JS, Thymeleaf, PostgreSQL/H2, Spring Security (work in progress)
 
+<strong><em>
+Check it out on Heroku!: https://fc-proton.herokuapp.com/
+
+Login: test 
+Password: test
+</strong></em>
+
 # Technology stack:
 - Spring
 - JPA/Hibernate
