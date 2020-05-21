@@ -43,11 +43,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         return DOMAIN != null;
     }
 
-    @Bean
-    public Filter httpsEnforcerFilter(){
-        return new HttpsEnforcer();
-    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder authManagerBuilder) throws Exception {
 
@@ -106,19 +101,19 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**");
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/js/**", "/css/**", "/images/**", "/codebase/**")
-//                    .permitAll()
-//                .antMatchers("/", "/**")
-//                    .authenticated()
-//                .and()
-//                .formLogin();
-//        http.headers().frameOptions().disable();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/js/**", "/css/**", "/images/**", "/codebase/**")
+                    .permitAll()
+                .antMatchers("/", "/**")
+                    .authenticated()
+                .and()
+                .formLogin();
+        http.headers().frameOptions().disable();
 
-//        http.requiresChannel()
-//                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-//                .requiresSecure();
-//    }
+        http.requiresChannel()
+                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                .requiresSecure();
+    }
 }
