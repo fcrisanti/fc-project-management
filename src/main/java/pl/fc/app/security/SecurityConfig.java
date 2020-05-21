@@ -106,8 +106,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**");
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
 //        http.authorizeRequests()
 //                .antMatchers("/js/**", "/css/**", "/images/**", "/codebase/**")
 //                    .permitAll()
@@ -115,10 +115,10 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .authenticated()
 //                .and()
 //                .formLogin();
-        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();
 
 //        http.requiresChannel()
 //                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
 //                .requiresSecure();
-    }
+//    }
 }
