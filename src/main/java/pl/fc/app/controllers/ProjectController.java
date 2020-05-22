@@ -63,8 +63,9 @@ class ProjectController {
     }
 
     @GetMapping("/new")
-    public String displayProjectForm(Model model, RedirectAttributes redirectAttributes) {
-        Project project = new Project();
+    public String displayProjectForm(Model model, Project project, RedirectAttributes redirectAttributes) {
+//        Project project = new Project();
+        redirectAttributes.addAttribute("project",project);
         return modelAttributesLoader(model, project);
     }
 
@@ -91,6 +92,7 @@ class ProjectController {
         if (!projectService.findByID(project.getProjectId()).isPresent()) {
             if (projectService.findBySapNo(project.getSapNo()).isPresent()) {
                 redirectAttributes.addFlashAttribute("errorMessage", String.format("Nie można zapisać projektu. Projekt o numerze P%d już istnieje.", project.getSapNo()));
+                redirectAttributes.addFlashAttribute("project",project);
                 return "redirect:/projects/new";
             }
         }
@@ -103,72 +105,4 @@ class ProjectController {
         projectService.deleteByID(id);
         return "redirect:/projects";
     }
-
-//    @GetMapping("{id}/psr")
-//    public String newProjectStatusReport(@PathVariable("id") Long id, Model model) {
-//        Project project = projectService.getByID(id);
-//        ProjectStatusReport projectStatusReport = new ProjectStatusReport();
-//
-//        model.addAttribute("project", project);
-//        model.addAttribute("projectStatusReport", projectStatusReport);
-//        return "projects/edit-status-report";
-//    }
-//
-//    @GetMapping("{id}/psr/{year}/{month}")
-//    public String editProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        findProjectAndAddPsrAttributes(id, month, year, model);
-//        return "projects/edit-status-report";
-//    }
-//
-//    @GetMapping("{id}/psr/{year}/{month}/view")
-//    public String viewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        findProjectAndAddPsrAttributes(id, month, year, model);
-//        return "projects/status-report/psr";
-//    }
-//
-//    @GetMapping("{id}/psr/{year}/{month}/delete")
-//    public String deleteProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        deleteProjectByAddPsrAttributes(id, month, year, model);
-//        return "projects/edit-status-report";
-//    }
-//
-//    @GetMapping("{id}/psr/{year}/{month}/view/pdf")
-//    public String downloadProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        findProjectAndAddPsrAttributes(id, month, year, model);
-//        return "psr-ppt";
-//    }
-
-//    private void findProjectAndAddPsrAttributes(Long id, int month, Long year, Model model) {
-//        Project project = projectService.getByID(id);
-//        ProjectStatusReport projectStatusReport = statusReportService.getByProjectIdMonthYear(id, month, year);
-//
-//        model.addAttribute("project", project);
-//        model.addAttribute("projectStatusReport", projectStatusReport);
-//    }
-//
-//
-//    void deleteProjectByAddPsrAttributes(Long id, int month, Long year, Model model) {
-//        Project project = projectService.getByID(id);
-//        statusReportService.deleteByProjectIdMonthYear(id, month, year);
-//        ProjectStatusReport projectStatusReport = new ProjectStatusReport();
-//        model.addAttribute("projectStatusReport", projectStatusReport);
-//        model.addAttribute("project", project);
-//    }
-
-//    @PostMapping("{id}/psr/save")
-//    public String saveProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {
-//        if (!statusReportService.findByPsrId(projectStatusReport.getPsrId()).isPresent()) {
-//            if (projectService.getByID(id).getProjectStatusReports().contains(statusReportService.getByProjectIdMonthYear(id, projectStatusReport.getMonth().getValue(), projectStatusReport.getYear())))
-//            {
-//                redirectAttributes.addFlashAttribute("errorMessage", String.format("Nie można zapisać PSR. PSR dla tej daty już istnieje %d %d", projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()));
-//                return "redirect:/projects/"+id+"/psr";
-//            }
-//        }
-//
-//        Project project = projectService.getByID(id);
-//        projectStatusReport.setProject(project);
-//        project.addPSR(projectStatusReport);
-//        statusReportService.save(projectStatusReport);
-//        return "redirect:/projects/"+id+"/psr";
-//    }
 }

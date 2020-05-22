@@ -61,12 +61,10 @@ class PSRController {
     }
 
     @GetMapping("{id}")
-    public String newProjectStatusReport(@PathVariable("id") Long id, Model model) {
+    public String newProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {
         Project project = projectService.getByID(id);
-        ProjectStatusReport projectStatusReport = new ProjectStatusReport();
-
+        redirectAttributes.addAttribute("projectStatusReport",projectStatusReport);
         model.addAttribute("project", project);
-        model.addAttribute("projectStatusReport", projectStatusReport);
         return "projects/edit-status-report";
     }
 
@@ -122,6 +120,7 @@ class PSRController {
             if (projectService.getByID(id).getProjectStatusReports().contains(statusReportService.getByProjectIdMonthYear(id, projectStatusReport.getMonth().getValue(), projectStatusReport.getYear())))
             {
                 redirectAttributes.addFlashAttribute("errorMessage", String.format("Nie można zapisać PSR. PSR dla tej daty już istnieje %d %d", projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()));
+                redirectAttributes.addFlashAttribute("projectStatusReport",projectStatusReport);
                 return "redirect:/psr/"+id;
             }
         }
