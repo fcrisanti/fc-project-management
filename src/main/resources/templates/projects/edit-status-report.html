@@ -97,18 +97,23 @@
                 </small>
                 <div class="column">
                     <table class="table table-bordered table-striped">
+                        <colgroup>
+                            <col style="background-color:#aeea00">
+                            <col span="2">
+                            <col style="background-color:#ccff90">
+                        </colgroup>
                         <tbody>
                         <tr>
                             <td>PROJECT DESCRIPTION:</td>
-                            <td colspan="2">COST (PLN)</td>
+                            <td colspan="2" style="background-color:#FFFF00">COST (PLN)</td>
                             <td>PM:
                                 <input type="text" name="projectManager" id="projectManager"
                                        th:value="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.projectManager}">
                         </tr>
                         <tr>
                             <td rowspan="6" th:text="${project.descriptionEn}"></td>
-                            <td>REALIZED:</td>
-                            <td>
+                            <td style="background-color:#FFFF00">REALIZED:</td>
+                            <td style="background-color:#FFFF00">
                                 <input type="number" th:field="${projectStatusReport.realizedBudget}" step="1">
                             </td>
                             <td rowspan="2">SCOPE
@@ -121,16 +126,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>PLANNED:</td>
-                            <td>
+                            <td style="background-color:#FFFF00">PLANNED:</td>
+                            <td style="background-color:#FFFF00">
                                 <input type="number"
                                        th:value="${projectStatusReport.plannedBudget != null} ? ${projectStatusReport.plannedBudget} : ${project.budget}"
                                        id="plannedBudget" name="plannedBudget" step="1">
                             </td>
                         </tr>
                         <tr>
-                            <td>FORECAST:</td>
-                            <td>
+                            <td style="background-color:#FFFF00">FORECAST:</td>
+                            <td style="background-color:#FFFF00">
                                 <input type="number" th:field="${projectStatusReport.forecastBudget}" step="1">
                             </td>
                             <td rowspan="2">SCHEDULE
@@ -143,11 +148,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">GO-LIVE DATE</td>
+                            <td style="background-color:#64dd17" colspan="2">GO-LIVE DATE</td>
                         </tr>
                         <tr>
-                            <td>FROM INAUGURATION:</td>
-                            <td>
+                            <td style="background-color:#64dd17">FROM INAUGURATION:</td>
+                            <td style="background-color:#64dd17">
                                 <a th:text="${project.goLivePlanned}"></a>
                             </td>
                             <td rowspan="2">COST
@@ -160,8 +165,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>PLANNED:</td>
-                            <td>
+                            <td style="background-color:#64dd17">PLANNED:</td>
+                            <td style="background-color:#64dd17">
                                 <input type="date" th:field="${projectStatusReport.projectGoLive}">
                             </td>
                         </tr>
