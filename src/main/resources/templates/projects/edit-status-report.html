@@ -78,7 +78,7 @@
                 <button type="submit" class="btn btn-primary btn-sm mb-3"> Save PSR</button>
                 <a th:href="@{/psr/{id}(id=${project.projectId})}" class="btn btn-green btn-sm mb-3"> New
                     PSR </a>
-
+                <button type="submit" class="btn btn-amber btn-sm mb-3" onclick="resetPsrIdAndSave()"> Duplicate</button>
                 Month
                 <select th:field="${projectStatusReport.month}">
                     <option th:each="month : ${T(java.time.Month).values()}"
@@ -86,11 +86,12 @@
                             th:text="${month.getValue()}">
                     </option>
                 </select>
-                <input type="hidden" th:field="${projectStatusReport.psrId}">
+                <input type="hidden" th:value="${projectStatusReport.psrId}" name="psrId" id="psrId">
                 Year
                 <input type="number" th:field="${projectStatusReport.year}" style="width:60px" min="2020" max="2099"
                        placeholder="year"
                        required>
+                <br>
                 <small>
                     <i th:text="${projectStatusReport.modifiedBy!=null } ? ${ 'Last modified by '+projectStatusReport.modifiedBy+' on '+projectStatusReport.lastModifiedDate}"></i>
                 </small>
@@ -245,6 +246,11 @@
 
 
 <script>
+
+    function resetPsrIdAndSave() {
+        document.getElementById("psrId").value = 0;
+    }
+
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
             "searching": true,

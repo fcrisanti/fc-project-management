@@ -116,10 +116,12 @@ class PSRController {
 
     @PostMapping("{id}/save")
     public String saveProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {
-        if (!statusReportService.findByPsrId(projectStatusReport.getPsrId()).isPresent()) {
-            if (projectService.getByID(id).getProjectStatusReports().contains(statusReportService.getByProjectIdMonthYear(id, projectStatusReport.getMonth().getValue(), projectStatusReport.getYear())))
+        ProjectStatusReport foundProjectStatusReport = statusReportService.findByProjectIdMonthYear(id, projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()).orElse(projectStatusReport);
+
+        if (projectStatusReport.getPsrId()==0 || foundProjectStatusReport.getPsrId()!=projectStatusReport.getPsrId()) {
+            if (projectService.getByID(id).getProjectStatusReports().contains(foundProjectStatusReport))
             {
-                redirectAttributes.addFlashAttribute("errorMessage", String.format("Nie można zapisać PSR. PSR dla tej daty już istnieje %d %d", projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()));
+                redirectAttributes.addFlashAttribute("errorMessage", String.format("PSR dla %d/%d już istnieje. Zmień datę przed zapisem lub edytuj istniejący PSR.", projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()));
                 redirectAttributes.addFlashAttribute("projectStatusReport",projectStatusReport);
                 return "redirect:/psr/"+id;
             }
