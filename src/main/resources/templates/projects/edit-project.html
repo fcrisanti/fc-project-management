@@ -454,7 +454,22 @@
         undo: true
     });
 
+
+
     gantt.init("gantt_here");
+
+    gantt.config.lightbox.sections = [
+        {name:"description", height:58, map_to:"text", type:"textarea",focus:true},
+        {name:"responsible", height:38, map_to:"responsible", type:"textarea", default_value:[[${project.projectManager}]]},
+        {name:"time", height:72, type:"duration", map_to:"auto"}
+    ];
+
+    gantt.templates.tooltip_text = function(start,end,task){
+        return "<b>Task:</b> "+task.text+"<br/><b>Start date:</b> " +
+            gantt.templates.tooltip_date_format(start)+
+            "<br/><b>End date:</b> "+gantt.templates.tooltip_date_format(end)
+            +"<br/><b>Responsible:</b> "+task.responsible;
+    };
 
     gantt.config.auto_types = true;
     gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
@@ -468,6 +483,11 @@
     gantt.config.auto_scheduling_strict = true;
     ganttModules.zoom.setZoom("months");
     ganttModules.menu.setup();
+
+    // gantt.attachEvent("onTaskCreated", function(id, task){
+    //     gantt.getLightboxSection('responsible').setValue('abc');
+    //     return true;
+    // });
 
     gantt.parse([[${project.jsonGantt}]]);
 

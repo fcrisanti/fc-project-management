@@ -36264,7 +36264,8 @@ var locale = {
         mfo: "Must Finish On",
         /* resource control */
         resources_filter_placeholder: "type to filter",
-        resources_filter_label: "hide empty"
+        resources_filter_label: "hide empty",
+        responsible: "Responsible"
     }
 };
 exports.default = locale;
