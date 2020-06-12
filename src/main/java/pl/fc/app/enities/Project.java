@@ -46,6 +46,8 @@ public class Project {
     private long projectId;
     private String name;
     private Long sapNo;
+    private Long priority;
+    private Long appraisal;
     private String projectManager;
     private String techManager;
     private String analyst;
@@ -84,6 +86,7 @@ public class Project {
     private DocumentState businessCase;
     private DocumentState projectMandate;
     private DocumentState schedule;
+    private DocumentState DPIA;
     private DocumentState closurePresentation;
 
     @Column(columnDefinition = "json")

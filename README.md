@@ -2,7 +2,8 @@
 Project Portfolio Management made with Spring, Hibernate, JS, Thymeleaf, PostgreSQL/H2, Spring Security (work in progress)
 
 <strong><em>
-Check it out on Heroku!: https://fc-proton.herokuapp.com/
+### Check out the Heroku demo
+https://fc-proton.herokuapp.com/
 
 Login: test 
 Password: test
@@ -16,7 +17,8 @@ Password: test
 - Thymeleaf
 - JavaScript libraries:
     - dxhtmlgantt (Free GNU GPL v2)
-    - MDBootstrap jQuery
+    - MDBootstrap 
+    - jQuery
     - DataTables (datatables.net)
 
 # Requirements:

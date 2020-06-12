@@ -86,7 +86,15 @@
         <th> Depreciation Start Date</th>
         <th> Last Accepted Budget</th>
         <th> Cost Allocation Key</th>
+        <th> Priority [1-5]</th>
+        <th> Appraisal MB's [0%-150%]</th>
         <th> Comments</th>
+        <th> KICK OFF PRESENTATION</th>
+        <th> BUSINESS CASE</th>
+        <th> PROJECT MANDATE</th>
+        <th> SCHEDULE</th>
+        <th> DPIA</th>
+        <th> CLOSURE PROJECT PRESENTATION</th>
     </tr>
     </thead>
     <tbody>
@@ -113,75 +121,96 @@
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.depreciationStartDate}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.budget}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.costAllocationKey}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.priority}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.appraisal}"></a></td>
         <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.comment}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.kickOffPresentation}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.businessCase}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectMandate}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.schedule}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.DPIA}"></a></td>
+        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.closurePresentation}"></a></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
+<!--        1-->
         <th> Sap No</th>
+<!--        2-->
         <th> Guardian</th>
+<!--        3-->
         <th> Project</th>
+<!--        4-->
         <th> Status</th>
+<!--        5-->
         <th> Company</th>
+<!--        6-->
         <th> Stream</th>
+<!--        7-->
         <th> Project Manager</th>
+<!--        8-->
         <th> Technical Manager</th>
+        <!--        9-->
         <th> Analyst</th>
+        <!--        10-->
         <th> Steering Committee Members</th>
+        <!--        11-->
         <th> Description</th>
+        <!--        12-->
         <th> Providers</th>
+        <!--        13-->
         <th> Initiative Notif. Date</th>
+        <!--        14-->
         <th> Kick Off</th>
+        <!--        15-->
         <th> Go-Live Planned</th>
+        <!--        16-->
         <th> Go-Live Final</th>
+        <!--        17-->
         <th> Proj. Closure</th>
+        <!--        18-->
         <th> Steering Committee / Mbm</th>
+        <!--        19-->
         <th> Depreciation Start Date</th>
+        <!--        20-->
         <th> Last Accepted Budget</th>
+        <!--        21-->
         <th> Cost Allocation Key</th>
+        <!--        22-->
+        <th> Priority [1-5]</th>
+        <!--        23-->
+        <th> Appraisal MB's [0%-150%]</th>
+        <!--        24-->
         <th> Comments</th>
+        <!--        25-->
+        <th> KICK OFF PRESENTATION</th>
+        <!--        26-->
+        <th> BUSINESS CASE</th>
+        <!--        27-->
+        <th> PROJECT MANDATE</th>
+        <!--        28-->
+        <th> SCHEDULE</th>
+        <!--        29-->
+        <th> DPIA</th>
+        <!--        30-->
+        <th> CLOSURE PROJECT PRESENTATION</th>
     </tr>
     </tfoot>
 </table>
 
-<!--<div>-->
-<!--    <h4> Current Projects </h4>-->
-<!--    <table class="table table-bordered table-striped">-->
-<!--        <thead class="thead-dark">-->
-<!--        <tr>-->
-<!--            <th> Project Name</th>-->
-<!--            <th> Project Status</th>-->
-<!--            <th> Project Link</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="project : ${projects}">-->
-<!--            <td> <a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a> </td>-->
-<!--            <td th:text="${project.status}">-->
-<!--            <td> <a th:href="@{/projects/edit(id=${project.projectId})}">Project details</a> </td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--</div>-->
-
-
-<!-- SCRIPTS -->
-<!-- JQuery -->
-<!--<script type="text/javascript" src="js/jquery.min.js"></script>-->
-<!--"/js/jquery-3.5.0.min.js"-->
+<!--<footer th:replace="layouts :: footer"></footer>-->
 
 <script>
 
     function less() {
         $('#dtBasicExample').DataTable()
-            .columns([8, 9, 10, 11, 14, 15, 16, 19, 17, 18, 20]).visible(false, false)
+            .columns([8, 9, 10, 11, 14, 15, 16, 19, 17, 18, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30]).visible(false, false)
             .columns.adjust().draw();
     }
 
     function more() {
         $('#dtBasicExample').DataTable()
-            .columns([8, 9, 10, 11, 14, 15, 16, 19, 17, 18, 20]).visible(true)
+            .columns([8, 9, 10, 11, 14, 15, 16, 19, 17, 18, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30]).visible(true)
             .columns.adjust().draw();
     }
 
@@ -208,39 +237,9 @@
             .draw();
     }
 
-    // function sortuj() {
-    //     var column = "Company";
-    //     var select = "CNL";
-    //     // .appendTo($(column.footer()).empty())
-    //
-    //     var val = "CNL";
-    //
-    //     //     $.fn.dataTable.util.escapeRegex(
-    //     //     $(this).val()
-    //     // );
-    //
-    //     column
-    //         .search(val ? '^' + val + '$' : '', true, false)
-    //         .draw();
-    // }
-
-    // column.data().unique().sort().each(function (d, j) {
-    //     select.append('<option value="' + d + '">' + d + '</option>')
-
-
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
-            // "ordering" : true,
-            // "filterEnabled" : true,
             "paging": false, // false to disable pagination (or any other option)
-            // "searching" : true, // false to disable search (or any other option)
-            // "scrollY":        300,
-            // "scrollX":        true,
-            // "scrollCollapse" : true,
-            // "fixedColumns":   true
-            // function () {
-            //     this.api().columns().every(
-
 
             dom: 'Bfrtip',
             stateSave: true,
@@ -285,7 +284,7 @@
         $('.dataTables_length').addClass('bs-select');
         // alert("co tam?");
         less();
-
+        reset();
 
     });
 
