@@ -130,17 +130,17 @@ public class Project {
 
         Map<String, BigInteger[]> result = new HashMap<>();
         for (Map.Entry<String, BigInteger> entry : PMCostCategory.entrySet()) {
-            System.out.println("1- "+entry.getKey()+" "+entry.getValue());
+
             BigInteger[]  budgetExpensesRemaining = new BigInteger[3];
-            System.out.println("2- "+entry.getKey()+" "+entry.getValue());
+
             budgetExpensesRemaining[0] = entry.getValue();
-            System.out.println("3- "+entry.getKey()+" "+entry.getValue());
+
             budgetExpensesRemaining[1] = expenses.stream().filter(e -> e.getPMCostCategory().equals(entry.getKey())).map(Cost::getGrossAmount).reduce(BigInteger::add).orElse(BigInteger.ZERO);
-            System.out.println("4- "+entry.getKey()+" "+entry.getValue());
+
             budgetExpensesRemaining[2] = budgetExpensesRemaining[0].subtract(budgetExpensesRemaining[1]);
-            System.out.println("5- "+entry.getKey()+" "+entry.getValue());
+
             result.put(entry.getKey(),budgetExpensesRemaining);
-            System.out.println("6- "+entry.getKey()+" "+entry.getValue());
+
         }
         return result;
     }
