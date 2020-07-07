@@ -405,14 +405,7 @@
                                                         <td class="pt-3-half currencyInput" th:text="${cat.getValue()[2] > 0} ? ${cat.getValue()[2]} : '0'" style="text-align: right;"></td>
                                                     </tr>
                             </tbody>
-                            <tfoot>
-                            <tr>
-                                <th class="text-center">Category name</th>
-                                <th class="text-center">Budget</th>
-                                <th class="text-center">Spent</th>
-                                <th class="text-center">Remaining</th>
-                            </tr>
-                            </tfoot>
+
                         </table>
 
                         <a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-indigo btn-sm mb-3" style="width:200px">
@@ -502,6 +495,13 @@
             "ordering": false,
             "paging": false,
             "searching": true,
+            'sDom': 't'
+        });
+
+        $('#table-ed').DataTable({
+            "ordering": true,
+            "paging": false,
+            "searching": false,
             'sDom': 't'
         });
     });
