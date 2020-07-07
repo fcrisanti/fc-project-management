@@ -8,8 +8,11 @@ import pl.fc.app.dao.IProjectRepository;
 import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,15 @@ public class ProjectService {
 
     public List<Project> getAll() {
         return projectRepository.findAll();
+    }
+
+    public Map<Long, String> getIdWithNames() {
+        Map<Long, String> allProjectIdsWithNames = new LinkedHashMap<>();
+        List<Project> allProjects = getAll();
+        for (Project project : allProjects) {
+            allProjectIdsWithNames.put(project.getProjectId(),"P"+project.getSapNo()+" - "+project.getName());
+        }
+        return allProjectIdsWithNames;
     }
 
     public List<IProjectStatus> projectStatus() {
@@ -71,4 +83,5 @@ public class ProjectService {
 
         return nonPsr;
     }
+
 }

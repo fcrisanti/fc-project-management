@@ -10,7 +10,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.fc.app.enities.enums.DocumentState;
-import pl.fc.app.shared.Auditable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,14 +22,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -89,6 +88,9 @@ public class Project {
     private DocumentState DPIA;
     private DocumentState closurePresentation;
 
+    @ElementCollection
+    private Map<String, BigInteger> PMCostCategory;
+
     @Column(columnDefinition = "json")
     @JsonRawValue
     private String jsonGantt;
@@ -97,8 +99,24 @@ public class Project {
     @JoinColumn(name = "fk_employee")
     private Employee employees;
 
-    @OneToMany(mappedBy = "project", cascade= CascadeType.REMOVE)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
     private Set<ProjectStatusReport> projectStatusReports;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private Set<Cost> expenses;
+    @Column(name = "created_date")
+    @CreatedDate
+    private Date createdDate;
+    @Column(name = "last_modified_date")
+    @LastModifiedDate
+    private Date lastModifiedDate;
+    @Column(name = "modified_by")
+    @LastModifiedBy
+    private String modifiedBy;
+
+    public void addCost(Cost cost) {
+        expenses.add(cost);
+    }
 
     public void addEmployee(Employee employee) {
         employees = employee;
@@ -108,20 +126,27 @@ public class Project {
         projectStatusReports.add(projectStatusReport);
     }
 
+    public Map<String, BigInteger[]> getCategoryBudgetExpensesRemaining() {
+
+        Map<String, BigInteger[]> result = new HashMap<>();
+        for (Map.Entry<String, BigInteger> entry : PMCostCategory.entrySet()) {
+            System.out.println("1- "+entry.getKey()+" "+entry.getValue());
+            BigInteger[]  budgetExpensesRemaining = new BigInteger[3];
+            System.out.println("2- "+entry.getKey()+" "+entry.getValue());
+            budgetExpensesRemaining[0] = entry.getValue();
+            System.out.println("3- "+entry.getKey()+" "+entry.getValue());
+            budgetExpensesRemaining[1] = expenses.stream().filter(e -> e.getPMCostCategory().equals(entry.getKey())).map(Cost::getGrossAmount).reduce(BigInteger::add).orElse(BigInteger.ZERO);
+            System.out.println("4- "+entry.getKey()+" "+entry.getValue());
+            budgetExpensesRemaining[2] = budgetExpensesRemaining[0].subtract(budgetExpensesRemaining[1]);
+            System.out.println("5- "+entry.getKey()+" "+entry.getValue());
+            result.put(entry.getKey(),budgetExpensesRemaining);
+            System.out.println("6- "+entry.getKey()+" "+entry.getValue());
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return "P" + sapNo + " " + name;
     }
-
-    @Column(name = "created_date")
-    @CreatedDate
-    private Date createdDate;
-
-    @Column(name = "last_modified_date")
-    @LastModifiedDate
-    private Date lastModifiedDate;
-
-    @Column(name = "modified_by")
-    @LastModifiedBy
-    private String modifiedBy;
 }

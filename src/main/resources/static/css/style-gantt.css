@@ -1,11 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
 
 .landing-view-demo{
-    min-height: 1755px;
+    min-height: 655px;
 }
 
 .demo-main-container{
-    height: 1755px;
+    height: 655px;
     z-index: 4; /* for fullscreen mode of gantt*/
 }
 .demo-main-content{

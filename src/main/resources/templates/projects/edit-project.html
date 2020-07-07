@@ -26,6 +26,7 @@
     <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
     <!-- DataTables Select JS -->
     <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
     <style>
         html, body {
             width: 100vw;
@@ -43,9 +44,9 @@
 
 <hr>
 <h3> Project </h3>
-<h5 style="font-style: italic;" class="orange-text"> PRO TIP: Kliknij przycisk SAVE CHANGES aby zapisać
-    zmiany.</h5>
 <h4 th:text="${project.name}"> Current Project</h4>
+<h6 class="blue-text"> Kliknij przycisk SAVE CHANGES aby zapisać
+    zmiany.</h6>
 <hr>
 <form id="projectform" th:action="@{/projects/save}" th:object="${project}" method="POST" onsubmit="saveGantt()">
     <!--    <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>-->
@@ -382,6 +383,48 @@
 
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div id="table" class="table-editable">
+
+                        <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
+                            <thead class="peach-gradient white-text">
+                            <tr>
+                                <th class="text-center">Category name</th>
+                                <th class="text-center">Budget</th>
+                                <th class="text-center">Spent</th>
+                                <th class="text-center">Remaining</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                                    <tr th:each="cat : ${costcat}">
+                                                        <td class="pt-3-half" contenteditable="true" th:text="${cat.getKey()}"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[0] > 0} ? ${cat.getValue()[0]} : '0'" style="text-align: right;"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[1] > 0} ? ${cat.getValue()[1]} : '0'" style="text-align: right;"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[2] > 0} ? ${cat.getValue()[2]} : '0'" style="text-align: right;"></td>
+                                                    </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th class="text-center">Category name</th>
+                                <th class="text-center">Budget</th>
+                                <th class="text-center">Spent</th>
+                                <th class="text-center">Remaining</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                        <a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-indigo btn-sm mb-3" style="width:200px">
+                            Edit Costs
+                        </a>
+                        <a th:href="@{/budget/costcat(id=${project.projectId})}" class="button btn btn-amber btn-sm mb-3" style="width:200px">
+                            Edit Cost Categories
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <table class="table table-bordered table-striped white-text" style=width:480px;>
                 <thead class="blue-gradient">
                 <tr>
@@ -448,7 +491,13 @@
 
 <script type="text/javascript" th:inline="javascript">
 
+
     $(document).ready(function () {
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 0,
+            digitGroupSeparator: " "
+        });
+
         $('#dtBasicExample').DataTable({
             "ordering": false,
             "paging": false,

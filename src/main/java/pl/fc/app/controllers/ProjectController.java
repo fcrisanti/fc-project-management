@@ -64,7 +64,6 @@ class ProjectController {
 
     @GetMapping("/new")
     public String displayProjectForm(Model model, Project project, RedirectAttributes redirectAttributes) {
-//        Project project = new Project();
         redirectAttributes.addAttribute("project",project);
         return modelAttributesLoader(model, project);
     }
@@ -79,6 +78,7 @@ class ProjectController {
         model.addAttribute("allEmployees", employees);
 
         model.addAttribute("project", project);
+        model.addAttribute("costcat",project.getCategoryBudgetExpensesRemaining());
 
         model.addAttribute("allCompanies", allCompanies);
         model.addAttribute("allGenesis", allGenesis);

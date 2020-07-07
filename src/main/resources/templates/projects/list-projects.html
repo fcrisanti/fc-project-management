@@ -240,7 +240,6 @@
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
             "paging": false, // false to disable pagination (or any other option)
-
             dom: 'Bfrtip',
             stateSave: true,
             columnDefs: [
@@ -248,7 +247,6 @@
                     targets: 1,
                     className: 'noVis'
                 }
-
             ],
 
             buttons: [
@@ -256,7 +254,7 @@
                 {
                     extend: 'excelHtml5',
                     autoFilter: true,
-                    sheetName: 'More Than ACE Export'
+                    sheetName: 'Proton Projects Export'
                 },
                 // 'csvHtml5',
                 {

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<head th:replace="layouts :: header">-->
+<head>
+    <!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PROTON</title>
+
+    <script src="/js/jquery-3.5.0.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" type="text/css">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">
+    <!-- Your custom styles (optional) -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <!-- DataTables CSS -->
+    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables JS -->
+    <script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+
+    <!-- DataTables Select CSS -->
+    <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables Select JS -->
+    <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+<!--    <style>-->
+<!--        html, body {-->
+<!--            width: 100vw;-->
+<!--        }-->
+<!--    </style>-->
+
+</head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<hr>
+<h3> Project </h3>
+
+<!--<h4 th:text="${project.name}"> Current Project</h4>-->
+<hr>
+<form id="costform" th:action="@{/budget/save}" th:object="${cost}">
+
+    <input type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()"
+           style="width:480px; margin-right:11px; margin-left: 5px">
+
+    <button type="submit" form="costform" class="btn btn-primary btn-sm mb-3" style="width:200px">Save Changes
+    </button>
+
+    <div class="row" style="width: 100vw">
+
+        <div class="column" style="margin-left:20px; margin-right:20px;">
+
+            <table id="dtBasicExample" class="table table-bordered table-striped" style=width:480px;>
+                <thead class="blue-gradient white-text">
+                <tr>
+                    <th> Parameter</th>
+                    <th> Value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th> Project</th>
+                    <td>
+                        <input type="text" id="projectString" name="projectString" autocomplete="off">
+                    </td>
+                <tr>
+                <tr>
+                    <th> Cost Title</th>
+                    <td>
+                        <input type="text" th:field="${cost.title}" placeholder="Oficjalna nazwa projektu" required>
+                    </td>
+                <tr>
+                    <th> Gross Amount</th>
+                    <td>
+                        <input type="number" th:field="${cost.grossAmount}" placeholder="PM projektu">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Type
+                    </th>
+                    <td>
+                        <select th:field="${cost.type}">
+                        <option th:each="type : ${T(pl.fc.app.enities.enums.CostType).values()}"
+                                    th:value="${type}"
+                                    th:text="${type}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Cost Description</th>
+                    <td>
+                        <textarea th:field="${cost.description}" placeholder="Opis projektu po Polsku"
+                                  height="48"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th> Company
+
+                    </th>
+                    <td>
+                        <select th:field="${cost.companies}">
+
+                            <option th:each="company : ${allCompanies}"
+                                    th:value="${company}"
+                                    th:text="${company}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th> Provider</th>
+                    <td>
+                    <textarea th:field="${cost.provider}" placeholder="Dostawcy wewnętrzni i zewnętrzni"
+                              height="48"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th> MPK</th>
+                    <td>
+                        <input type="text" th:field="${cost.MPK}" placeholder="Analityk projektu">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Invoice Number</th>
+                    <td>
+                        <input type="text" th:field="${cost.invoiceNumber}" placeholder="Techniczny projektu">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Numer zleceń</th>
+                    <td>
+                        <input type="text" th:field="${cost.MPK}" placeholder="w formacie CXPMPXXXX">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Date</th>
+                    <td>
+                        <input type="date" th:field="${cost.invoiceDate}" required>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" form="costform" class="btn-primary" style="width:200px">Save Changes</button>
+
+        </div>
+
+
+    </div>
+
+</form>
+
+<footer th:replace="layouts :: footer"></footer>
+
+<script type="text/javascript" th:inline="javascript">
+
+    var projectList = [[${idWithNames}]];
+    $("#projectString")
+        .autocomplete({
+            source: projectList,
+            autoFocus: true
+        });
+
+
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable({
+            "ordering": false,
+            "paging": false,
+            "searching": true,
+            'sDom': 't'
+        });
+    });
+
+    function doSearch() {
+        $('#dtBasicExample').DataTable().search($('#mySearchText').val()).draw();
+    }
+
+</script>
+</body>
+</html>

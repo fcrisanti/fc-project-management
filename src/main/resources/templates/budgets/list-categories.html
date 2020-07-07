@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<head th:replace="layouts :: header">-->
+<head>
+    <!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="csrf-token" th:content="${_csrf.token}">
+    <title>PROTON</title>
+    <script src="/js/jquery-3.5.0.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" type="text/css">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">
+    <!--    &lt;!&ndash; Your custom styles (optional) &ndash;&gt;-->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <!-- DataTables CSS -->
+    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables JS -->
+    <script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+
+    <!-- DataTables Select CSS -->
+    <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables Select JS -->
+    <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+    <!-- Bootstrap tooltips -->
+
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-select.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-text.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+
+</head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<hr>
+<h3> Project Costs Editor </h3>
+<h4 th:text="${project.name}"> Current Project</h4>
+<h6 class="blue-text"> Kliknij przycisk SAVE CHANGES aby zapisać
+    zmiany.</h6>
+<!--<a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>-->
+<button id="export-btn1" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
+    Save Changes
+</button>
+<a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-indigo btn-sm mb-3" style="width:200px">
+    Edit Costs
+</a>
+<a th:href="@{/projects/edit(id=${project.projectId})}" class="button btn btn-outline-blue btn-sm mb-3" style="width:200px">
+    Edit Project Data
+</a>
+
+<!-- Editable table -->
+<div class="card">
+
+    <div class="card-body">
+        <div id="table" class="table-editable">
+      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+              class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+            <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
+                <thead class="peach-gradient white-text">
+                <tr>
+                    <th class="text-center">Category name</th>
+                    <th class="text-center">Category budget</th>
+                    <th class="text-center">DELETE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cat : ${costcat}">
+                    <td class="pt-3-half" contenteditable="true" th:text="${cat.getKey()}"></td>
+                    <td class="pt-3-half">
+                        <input type="text" name="catBudget" id="catBudget" class="currencyInput" style="text-align:right;"
+                               th:value="${cat.getValue() > 0} ? ${cat.getValue()} : '0'"/>
+                    </td>
+                    <td class="pt-3-half">
+                        <!--              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"-->
+                        <!--                                                                         aria-hidden="true"></i></a></span>-->
+                        <!--                            <span class="table-down"><a href="#!" class="indigo-text"><i-->
+                        <!--                                    class="fas fa-long-arrow-alt-down"-->
+                        <!--                                    aria-hidden="true"></i></a></span>-->
+                        <span class="table-remove"><button type="button"
+                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th class="text-center">Category name</th>
+                    <th class="text-center">Category budget</th>
+                    <th class="text-center">DELETE</th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <button id="export-btn2" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
+                Save Changes
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Editable table -->
+
+<footer th:replace="layouts :: footer"></footer>
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 0,
+            digitGroupSeparator: " "
+        });
+
+        // $('#input').on('keyup', function() {
+        //     $('#output').val(autoNumericInstance.getNumericString());
+        // });
+
+        $('#table-ed').DataTable({
+            "paging": false, // false to disable pagination (or any other option)
+            dom: 'Bfrtip',
+            stateSave: true,
+            // columnDefs: [
+            //     {
+            //         targets: 1,
+            //         className: 'noVis',
+            //         orderDataType: 'dom-select'
+            //     }
+            // ],
+            "columnDefs": [
+                { "type": "html-input", "targets": [1 ] },
+            ],
+
+            buttons: [
+                'copyHtml5',
+                {
+                    extend: 'excelHtml5',
+                    autoFilter: true,
+                    sheetName: 'Proton Projects Export'
+                },
+                // 'csvHtml5',
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed two-column'
+                }
+            ],
+
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var search = $(`<input class="form-control form-control-sm" type="text" placeholder="Search">`)
+                        .appendTo($(column.footer()).empty())
+                        .on('change input', function () {
+                            var val = $(this).val()
+
+                            column
+                                .search(val ? val : '', true, false)
+                                .draw();
+                        });
+                });
+            }
+
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+
+    const $tableID = $('#table');
+    const $BTN = $('.export-btn');
+    const $EXPORT = $('#export');
+
+    const newTr = `
+<tr class="hide">
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+  </td>
+</tr>`;
+
+    // <td class="pt-3-half">
+    //     <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
+    // <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
+    // </td>
+
+    // $('#invoiceDate').change(function() {
+    //     alert( "Handler for .change() called." );
+    //     $('#date').html($(this).val());
+    // });
+
+    $('.table-add').on('click', 'i', () => {
+
+        const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+        if ($tableID.find('tbody tr').length === 0) {
+
+            $('tbody').append(newTr);
+        }
+
+        $tableID.find('table').append($clone);
+
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 0,
+            digitGroupSeparator: " "
+        });
+    });
+
+    $tableID.on('click', '.table-remove', function () {
+        if ($tableID.find('tr:not(:hidden)').length > 2) {
+            $(this).parents('tr').detach();
+        } else {
+            alert("Nie można usunąć ostatniego kosztu. W projekcie musi pozostać co najmniej jedna pozycja. Jeżeli w projekcie nie poniesiono kosztów możesz wyzerować jej wartości.");
+        }
+    });
+
+    $tableID.on('click', '.table-up', function () {
+
+        const $row = $(this).parents('tr');
+
+        if ($row.index() === 0) {
+            return;
+        }
+
+        $row.prev().before($row.get(0));
+    });
+
+    $tableID.on('click', '.table-down', function () {
+
+        const $row = $(this).parents('tr');
+        $row.next().after($row.get(0));
+    });
+
+    // A few jQuery helpers for exporting only
+    jQuery.fn.pop = [].pop;
+    jQuery.fn.shift = [].shift;
+
+    $BTN.on('click', () => {
+
+        const $rows = $tableID.find('tr:not(:hidden)');
+        const headers = [];
+        const data = [];
+
+        // Get the headers (add special header logic here)
+        $($rows.shift()).find('th:not(:empty)').each(function () {
+
+            headers.push($(this).text().toLowerCase());
+        });
+
+        // Turn all existing rows into a loopable array
+        $rows.each(function () {
+            const $td = $(this).find('td');
+            const h = {};
+
+            // Use the headers from earlier to name our hash keys
+            headers.forEach((header, i) => {
+
+                if ($td.eq(i).find('input').length) {
+                    h[header] = $td.eq(i).find('input').val();
+                } else if ($td.eq(i).find('option').val()) {
+                    h[header] = $td.eq(i).find('option').filter(':selected').val();
+                } else {
+                    h[header] = $td.eq(i).text();
+                }
+                //    h[header] = $td.eq(i).find('input').val();
+            });
+            data.push(h);
+        });
+        data.pop(); //delete last footer td
+
+        var IDfromURL = new URLSearchParams(window.location.search).get('id');
+
+        // Output the result
+        $EXPORT.text(JSON.stringify(data));
+        alert(JSON.stringify(data));
+        $.ajax({
+            type: "POST",
+            url: "/budget/" + IDfromURL + "/savecat",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            headers:
+                {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
+
+    })
+    ;
+
+</script>
+
+</body>
