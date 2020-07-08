@@ -59,7 +59,8 @@
 <a th:href="@{/budget/costcat(id=${project.projectId})}" class="button btn btn-amber btn-sm mb-3" style="width:200px">
     Edit Cost Categories
 </a>
-<a th:href="@{/projects/edit(id=${project.projectId})}" class="button btn btn-outline-blue btn-sm mb-3" style="width:200px">
+<a th:href="@{/projects/edit(id=${project.projectId})}" class="button btn btn-outline-blue btn-sm mb-3"
+   style="width:200px">
     Edit Project Data
 </a>
 
@@ -173,7 +174,8 @@
                 </tfoot>
             </table>
 
-            <button id="export-btn2" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
+            <button id="export-btn2" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3"
+                    style="width:200px">
                 Save Changes
             </button>
         </div>
@@ -188,7 +190,49 @@
 <script>
 
     $(document).ready(function () {
-        $.fn.dataTableExt.ofnSearch['html-input'] = function(value) {
+        var buttonCommon = {
+            exportOptions: {
+                format: {
+                    body: function (data, row, column, node) {
+
+                        var retorno = "", tag, respuesta = "", reponer = [];
+                        tag = $(node).find('input:hidden');
+                        if (tag.length > 0) {
+                            for (i = 0; i < tag.length; i++) {
+                                reponer.push(tag[i]);
+                                $(tag[i]).remove();
+                            }
+                        }
+                        tag = $(node).find('input:radio');
+                        if (tag.length > 0) {
+                            retorno = retorno + ($(node).find(':checked').length > 0 ? $(node).find(':checked').val() : " ");
+                        }
+                        tag = $(node).find('input:checkbox');
+                        if (tag.length == 1) {
+                            retorno = retorno + ($(node).find(':checked').length > 0 ? "Si" : "No");
+                        } else if (tag.length > 1) {
+                            retorno = retorno + ($(node).find(':checked').length > 0 ? $(node).find(':checked').val() : " ");
+                        }
+                        tag = $(node).find('input,select,textarea').not(':radio,:checkbox,:hidden');
+                        if (tag.length > 0) {
+                            retorno = retorno + ($(tag).map(function () {
+                                return $(this).val();
+                            }).get().join(','));
+                        }
+
+                        respuesta = (retorno != "") ? retorno : $.trim($(node).text());
+                        for (i = 0; i < reponer.length; i++) {
+                            $(node).append(reponer[i]);
+                        }
+
+                        return respuesta;
+                    }
+                }
+            }
+        };
+
+
+        $.fn.dataTableExt.ofnSearch['html-input'] = function (value) {
             return $(value).val();
         };
 
@@ -204,19 +248,21 @@
             //     }
             // ],
             "columnDefs": [
-                { "type": "html-input", "targets": [1, 2, 6, 7, 8] },
+                {"type": "html-input", "targets": [1, 2, 6, 7, 8]},
                 {"orderDataType": "dom-text", "targets": [2]},
                 {"orderDataType": "dom-text", "type": "date-euro", "targets": [0]},
                 {"orderDataType": "dom-select", "targets": [1, 6, 7, 8, 12]}
             ],
 
             buttons: [
-                'copyHtml5',
-                {
+                $.extend( true, {}, buttonCommon, {
+                    extend: 'copyHtml5'
+                } ),
+                $.extend( true, {}, buttonCommon, {
                     extend: 'excelHtml5',
                     autoFilter: true,
-                    sheetName: 'Proton Projects Export'
-                },
+                    sheetName: 'Proton Projects Export',
+                } ),
                 // 'csvHtml5',
                 {
                     extend: 'colvis',
