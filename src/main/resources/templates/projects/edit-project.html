@@ -398,13 +398,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                                                    <tr th:each="cat : ${costcat}">
+                                                    <tr th:each="cat : ${costcat}" th:if="${cat.getKey() != 'total'}">
                                                         <td class="pt-3-half" contenteditable="true" th:text="${cat.getKey()}"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[0] > 0} ? ${cat.getValue()[0]} : '0'" style="text-align: right;"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[1] > 0} ? ${cat.getValue()[1]} : '0'" style="text-align: right;"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[2] > 0} ? ${cat.getValue()[2]} : '0'" style="text-align: right;"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[0]}" style="text-align: right;"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[1]}" style="text-align: right;"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[2]}" style="text-align: right;"></td>
                                                     </tr>
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <th class="text-center font-weight-bold">Total</th>
+                                <th class="text-center font-weight-bold currencyInput" th:text="${costcat.get('total')[0]}">Budget</th>
+                                <th class="text-center font-weight-bold currencyInput" th:text="${costcat.get('total')[1]}">Spent</th>
+                                <th class="text-center font-weight-bold currencyInput" th:text="${costcat.get('total')[2]}">Remaining</th>
+                            </tr>
+                            </tfoot>
                         </table>
 
                         <a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-indigo btn-sm mb-3" style="width:200px">
