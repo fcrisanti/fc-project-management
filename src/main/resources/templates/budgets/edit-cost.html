@@ -173,6 +173,11 @@
 
 
     $(document).ready(function () {
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 0,
+            digitGroupSeparator: " "
+        });
+
         $('#dtBasicExample').DataTable({
             "ordering": false,
             "paging": false,

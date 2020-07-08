@@ -73,7 +73,7 @@ public class Cost {
         Cost createdCost = Cost.builder()
                 .companies(costDTO.companies)
                 .costCategory(CostCategory.getByDisplayValue(costDTO.category))
-                .grossAmount(new BigInteger(costDTO.amount))
+                .grossAmount(new BigInteger(costDTO.amount.replaceAll("\\s", "")))
                 .isIT(IsIT.getByDisplayValue(costDTO.it))
                 .invoiceNumber(costDTO.invoice)
                 .MPK(costDTO.mpk)

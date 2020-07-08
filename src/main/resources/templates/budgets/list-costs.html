@@ -42,6 +42,8 @@
             src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-text.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+
 </head>
 
 <body>
@@ -105,7 +107,7 @@
                         </select>
                     </td>
                     <td class="pt-3-half">
-                        <input type="number" name="grossAmount" id="grossAmount" min="0"
+                        <input type="text" class="currencyInput" name="grossAmount" id="grossAmount" min="0" style="text-align:right;"
                                th:value="${cost.grossAmount > 0} ? ${cost.grossAmount} : '0'"/>
                     </td>
                     <td class="pt-3-half" contenteditable="true" th:text="${cost.invoiceNumber}"></td>
@@ -190,6 +192,11 @@
 <script>
 
     $(document).ready(function () {
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 0,
+            digitGroupSeparator: " "
+        });
+
         var buttonCommon = {
             exportOptions: {
                 format: {
@@ -319,12 +326,19 @@
 
         const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
 
+        $('.currencyInput').removeClass("currencyInput");
+
         if ($tableID.find('tbody tr').length === 0) {
 
             $('tbody').append(newTr);
         }
 
         $tableID.find('table').append($clone);
+
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 0,
+            digitGroupSeparator: " "
+        });
     });
 
     $tableID.on('click', '.table-remove', function () {
