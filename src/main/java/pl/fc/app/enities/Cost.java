@@ -11,8 +11,6 @@ import pl.fc.app.enities.enums.CostCategory;
 import pl.fc.app.enities.enums.CostType;
 import pl.fc.app.enities.enums.IsIT;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
@@ -23,12 +21,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Getter
@@ -43,7 +39,7 @@ public class Cost {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cost_generator")
     @SequenceGenerator(name = "cost_generator", sequenceName = "cost_seq", allocationSize = 1)
     private long costId;
-    private BigInteger grossAmount;
+    private BigDecimal grossAmount;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate invoiceDate;
     private String title;
@@ -72,21 +68,21 @@ public class Cost {
     public static Cost create(CostDTO costDTO) {
         Cost createdCost = Cost.builder()
                 .companies(costDTO.companies)
-                .costCategory(CostCategory.getByDisplayValue(costDTO.category))
-                .grossAmount(new BigInteger(costDTO.amount.replaceAll("\\s", "")))
-                .isIT(IsIT.getByDisplayValue(costDTO.it))
-                .invoiceNumber(costDTO.invoice)
-                .MPK(costDTO.mpk)
-                .nazwaBiura(costDTO.biuro)
+                .costCategory(CostCategory.getByDisplayValue(costDTO.costCategory))
+                .grossAmount(!costDTO.grossAmount.isEmpty()? new BigDecimal(costDTO.grossAmount.replaceAll("\\s", "")) : BigDecimal.ZERO)
+                .isIT(IsIT.getByDisplayValue(costDTO.isIT))
+                .invoiceNumber(costDTO.invoiceNumber)
+                .MPK(costDTO.MPK)
+                .nazwaBiura(costDTO.nazwaBiura)
                 .nrZlecenia(costDTO.nrZlecenia)
                 .provider(costDTO.provider)
                 .title(costDTO.title)
-                .type(CostType.valueOf(costDTO.type))
-                .PMCostCategory(costDTO.pmCategory)
+                .type(!costDTO.type.equals("0") ? CostType.valueOf(costDTO.type) : null)
+                .PMCostCategory(costDTO.PMCostCategory)
                 .build();
 
-        if (!costDTO.data.isEmpty()) {
-            createdCost.setInvoiceDate(LocalDate.parse(costDTO.data));
+        if (!costDTO.invoiceDate.isEmpty()) {
+            createdCost.setInvoiceDate(LocalDate.parse(costDTO.invoiceDate));
         }
         return createdCost;
     }

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<head th:replace="layouts :: header">-->
+<head>
+    <!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="csrf-token" th:content="${_csrf.token}">
+    <title>PROTON</title>
+    <script src="/js/jquery-3.5.0.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" type="text/css">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">
+    <!--    &lt;!&ndash; Your custom styles (optional) &ndash;&gt;-->
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <!-- DataTables CSS -->
+    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables JS -->
+    <script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+
+    <!-- DataTables Select CSS -->
+    <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
+    <!-- DataTables Select JS -->
+    <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+    <!-- Bootstrap tooltips -->
+
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-select.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-text.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+<!--    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/css/dataTables.checkboxes.css" rel="stylesheet" />-->
+    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.12/js/dataTables.checkboxes.min.js"></script>
+
+</head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<hr>
+<h3> Project Costs Editor </h3>
+<h4 th:text="${project.getName()}"> Current Project</h4>
+<h6 class="blue-text"> Kliknij przycisk IMPORT SELECTED aby dodać wybrane koszty do projektu.</h6>
+<h6 class="amber-text"> Wartości oznaczone kolorem żółtym nie zostały poprawnie zaimportowane. Możesz je uzupełnić ręcznie lub pozostawić puste.</h6>
+<h6 class="blue-text"> Wiersze oznaczone kolorem niebieskim oznaczają pozycje, które istnieją już w repozyterium kosztów (identyfikacja po numerze faktury).</h6>
+<button id="export-btn1" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
+    Import Selected
+</button>
+<a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-indigo btn-sm mb-3" style="width:200px">
+    Edit Existing Costs
+</a>
+<a th:href="@{/budget/costcat(id=${project.projectId})}" class="button btn btn-amber btn-sm mb-3" style="width:200px">
+    Edit Cost Categories
+</a>
+<a th:href="@{/projects/edit(id=${project.projectId})}" class="button btn btn-outline-blue btn-sm mb-3"
+   style="width:200px">
+    Edit Project Data
+</a>
+
+
+<!-- Editable table -->
+<div class="card">
+    <div class="card-body">
+        <div id="table" class="table-editable">
+      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+              class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+            <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
+                <thead class="peach-gradient white-text">
+                <tr>
+                    <th></th>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Companies</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Invoice</th>
+                    <th class="text-center">Provider</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">IT?</th>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">Type</th>
+                    <th class="text-center">MPK</th>
+                    <th class="text-center">Biuro</th>
+                    <th class="text-center">Nr Zlecenia</th>
+                    <th class="text-center">PM CATEGORY</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cost : ${costs}" th:styleappend="${cost.exists? 'background-color : #99ccff' : '' }">
+                    <td>
+                    </td>
+                    <td id="date" class="pt-3-half">
+                        <input type="date" name="invoiceDate" id="invoiceDate" th:value="${cost.invoiceDate}">
+                    </td>
+                    <td class="pt-3-half">
+                        <select name="companies" id="companies">
+                            <option th:value="0" text="Not set"></option>
+                            <option th:each="company : ${allCompanies}"
+                                    th:selected="(${cost.companies} == ${company.toString()})"
+                                    th:text="${company}">
+                            </option>
+                        </select>
+                    </td>
+                    <td class="pt-3-half">
+                        <input type="text" class="currencyInput" name="grossAmount" id="grossAmount" min="0" style="text-align:right;"
+                               th:value="${cost.grossAmount}">
+                    </td>
+                    <td class="pt-3-half" contenteditable="true" th:text="${cost.invoiceNumber}"></td>
+                    <td class="pt-3-half" contenteditable="true" th:text="${cost.provider}"></td>
+                    <td class="pt-3-half" contenteditable="true" th:text="${cost.title}"></td>
+                    <td class="pt-3-half">
+                        <select name="isIT" id="isIT">
+                            <option th:value="0" text="Not set"></option>
+                            <option th:each="it : ${T(pl.fc.app.enities.enums.IsIT).values()}"
+                                    th:text="${it.displayValue}"
+                                    th:selected="${it.displayValue == cost.isIT}">
+                            </option>
+                        </select>
+                    </td>
+                    <td class="pt-3-half">
+                        <select name="costCategory" id="costCategory" class="required">
+                            <option th:value="0" text="Not set"></option>
+                            <option th:each="cat : ${T(pl.fc.app.enities.enums.CostCategory).values()}"
+                                    th:text="${cat.displayValue}"
+                                    th:selected="${cat.displayValue == cost.costCategory}">
+                            </option>
+                        </select>
+                    </td>
+                    <td class="pt-3-half">
+                        <select name="type" id="type">
+                            <option th:value="0" text="Not set"></option>
+                            <option th:each="costType : ${T(pl.fc.app.enities.enums.CostType).values()}"
+                                    th:text="${costType}"
+                                    th:selected="${costType.name() == cost.type}">
+                            </option>
+                        </select>
+                    </td>
+                    <td class="pt-3-half" contenteditable="true" th:text="${cost.MPK}"></td>
+                    <td class="pt-3-half" contenteditable="true" th:text="${cost.nazwaBiura}"></td>
+                    <td class="pt-3-half" contenteditable="true" th:text="${cost.nrZlecenia}"></td>
+                    <td class="pt-3-half">
+                        <select name="PMCostCategory" id="PMCostCategory">
+                            <option th:value="0" text="Not set"></option>
+                            <option th:each="cat : ${project.getPMCostCategory().keySet()}"
+                                    th:text="${cat}"
+                                    th:selected="${cost.PMCostCategory}">
+                            </option>
+                        </select>
+                    </td>
+
+                    <td class="pt-3-half">
+                        <span class="table-remove"><button type="button"
+                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th></th>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Companies</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Invoice</th>
+                    <th class="text-center">Provider</th>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">IT?</th>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">Type</th>
+                    <th class="text-center">MPK</th>
+                    <th class="text-center">Biuro</th>
+                    <th class="text-center">Nr Zlecenia</th>
+                    <th class="text-center">PM CATEGORY</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <button id="export-btn2" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3"
+                    style="width:200px">
+                Import Selected
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Editable table -->
+
+<footer th:replace="layouts :: footer"></footer>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('select').each(function(){
+                if($(this).val() == 0){
+                    $(this).css( "background-color", "yellow" );
+            }
+        });
+
+        $('input').each(function(){
+            if(!$(this).val()){
+                $(this).css( "background-color", "yellow" );
+            }
+        });
+
+            new AutoNumeric.multiple('.currencyInput', {
+                decimalPlaces: 2,
+                digitGroupSeparator: " "
+            });
+
+            var buttonCommon = {
+                exportOptions: {
+                    format: {
+                        body: function (data, row, column, node) {
+
+                            var retorno = "", tag, respuesta = "", reponer = [];
+                            tag = $(node).find('input:hidden');
+                            if (tag.length > 0) {
+                                for (i = 0; i < tag.length; i++) {
+                                    reponer.push(tag[i]);
+                                    $(tag[i]).remove();
+                                }
+                            }
+                            tag = $(node).find('input:radio');
+                            if (tag.length > 0) {
+                                retorno = retorno + ($(node).find(':checked').length > 0 ? $(node).find(':checked').val() : " ");
+                            }
+                            tag = $(node).find('input:checkbox');
+                            if (tag.length == 1) {
+                                retorno = retorno + ($(node).find(':checked').length > 0 ? "Si" : "No");
+                            } else if (tag.length > 1) {
+                                retorno = retorno + ($(node).find(':checked').length > 0 ? $(node).find(':checked').val() : " ");
+                            }
+                            tag = $(node).find('input,select,textarea').not(':radio,:checkbox,:hidden');
+                            if (tag.length > 0) {
+                                retorno = retorno + ($(tag).map(function () {
+                                    return $(this).val();
+                                }).get().join(','));
+                            }
+
+                            respuesta = (retorno != "") ? retorno : $.trim($(node).text());
+                            for (i = 0; i < reponer.length; i++) {
+                                $(node).append(reponer[i]);
+                            }
+
+                            return respuesta;
+                        }
+                    }
+                }
+            };
+
+
+            $.fn.dataTableExt.ofnSearch['html-input'] = function (value) {
+                return $(value).val();
+            };
+
+            $('#table-ed').DataTable({
+                "paging": false, // false to disable pagination (or any other option)
+                dom: 'Bfrtip',
+                stateSave: true,
+                // columnDefs: [
+                //     {
+                //         targets: 1,
+                //         className: 'noVis',
+                //         orderDataType: 'dom-select'
+                //     }
+                // ],
+                "columnDefs": [
+                    {"type": "html-input", "targets": [2, 3, 7, 8, 9]},
+                    {"orderDataType": "dom-text", "targets": [3]},
+                    {"orderDataType": "dom-text", "type": "date-euro", "targets": [1]},
+                    {"orderDataType": "dom-select", "targets": [2, 7, 8, 9, 13]},
+                    {
+                        orderable: false,
+                        // className: 'select-checkbox',
+                        targets:   0,
+                        checkboxes: {
+                            selectRow: true
+                        }
+                    }
+                ],
+                select: {
+                    style:    'multi',
+                    selector: 'td:first-child'
+                },
+
+
+                buttons: [
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'copyHtml5'
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        sheetName: 'Proton Projects Export',
+                    }),
+                    // 'csvHtml5',
+                    {
+                        extend: 'colvis',
+                        collectionLayout: 'fixed two-column'
+                    }
+                ],
+
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var search = $(`<input class="form-control form-control-sm" type="text" placeholder="Search">`)
+                            .appendTo($(column.footer()).empty())
+                            .on('change input', function () {
+                                var val = $(this).val()
+
+                                column
+                                    .search(val ? val : '', true, false)
+                                    .draw();
+                            });
+                    });
+                }
+
+
+
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+
+        const $tableID = $('#table');
+        const $BTN = $('.export-btn');
+        const $EXPORT = $('#export');
+
+        const newTr = `
+<tr class="hide">
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+  </td>
+</tr>`;
+
+        // <td class="pt-3-half">
+        //     <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
+        // <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
+        // </td>
+
+        // $('#invoiceDate').change(function() {
+        //     alert( "Handler for .change() called." );
+        //     $('#date').html($(this).val());
+        // });
+
+        $('.table-add').on('click', 'i', () => {
+
+            const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+            $('.currencyInput').removeClass("currencyInput");
+
+            if ($tableID.find('tbody tr').length === 0) {
+
+                $('tbody').append(newTr);
+            }
+
+            $tableID.find('table').append($clone);
+
+            new AutoNumeric.multiple('.currencyInput', {
+                decimalPlaces: 2,
+                digitGroupSeparator: " "
+            });
+        });
+
+        $tableID.on('click', '.table-remove', function () {
+            if ($tableID.find('tr:not(:hidden)').length > 3) {
+                $(this).parents('tr').detach();
+            } else {
+                alert("Nie można usunąć ostatniego kosztu. W projekcie musi pozostać co najmniej jedna pozycja. Jeżeli w projekcie nie poniesiono kosztów możesz wyzerować jej wartości.");
+            }
+        });
+
+        $tableID.on('click', '.table-up', function () {
+
+            const $row = $(this).parents('tr');
+
+            if ($row.index() === 0) {
+                return;
+            }
+
+            $row.prev().before($row.get(0));
+        });
+
+        $tableID.on('click', '.table-down', function () {
+
+            const $row = $(this).parents('tr');
+            $row.next().after($row.get(0));
+        });
+
+        // A few jQuery helpers for exporting only
+        jQuery.fn.pop = [].pop;
+        jQuery.fn.shift = [].shift;
+
+        $BTN.on('click', () => {
+
+            const $rows = $tableID.find('tr:not(:hidden)');
+            const headers = [];
+            const data = [];
+
+            // Get the headers (add special header logic here)
+            $($rows.shift()).find('th:not(:empty)').each(function () {
+
+                headers.push($(this).text().toLowerCase());
+            });
+
+            // Turn all existing rows into a loopable array
+
+            $rows.each(function () {
+                if ($(this).find("input[type=checkbox]").is(':checked')) {
+
+                    const $td = $(this).find('td');
+                    const h = {};
+
+                    // Use the headers from earlier to name our hash keys
+                    headers.forEach((header, i) => {
+                        if ($td.eq(i).find('input').length) {
+                            h[header] = $td.eq(i).find('input').val();
+                        } else if ($td.eq(i).find('option').val()) {
+                            h[header] = $td.eq(i).find('option').filter(':selected').val();
+                        } else {
+                            h[header] = $td.eq(i).text();
+                        }
+                        //    h[header] = $td.eq(i).find('input').val();
+                    });
+
+                    data.push(h);
+                }
+            });
+            // data.pop(); //delete last footer td
+
+            var IDfromURL = new URLSearchParams(window.location.search).get('id');
+
+            // Output the result
+            $EXPORT.text(JSON.stringify(data));
+            alert(JSON.stringify(data));
+            $.ajax({
+                type: "POST",
+                url: "/budget/" + IDfromURL + "/savenew",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                headers:
+                    {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+        })
+</script>
+
+</body>

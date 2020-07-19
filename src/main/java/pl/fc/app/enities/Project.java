@@ -24,7 +24,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
@@ -78,7 +78,7 @@ public class Project {
     private String descriptionEn;
     @Column(columnDefinition = "TEXT")
     private String comment;
-    private BigInteger budget;
+    private BigDecimal budget;
     private Boolean psrNotRequired;
 
     private DocumentState kickOffPresentation;
@@ -89,7 +89,7 @@ public class Project {
     private DocumentState closurePresentation;
 
     @ElementCollection
-    private Map<String, BigInteger> PMCostCategory;
+    private Map<String, BigDecimal> PMCostCategory;
 
     @Column(columnDefinition = "json")
     @JsonRawValue
@@ -126,21 +126,33 @@ public class Project {
         projectStatusReports.add(projectStatusReport);
     }
 
-    public Map<String, BigInteger[]> getCategoryBudgetExpensesRemaining() {
-        BigInteger sumBudget = BigInteger.ZERO;
-        BigInteger sumExpenses = BigInteger.ZERO;
+    public Map<String, BigDecimal[]> getCategoryBudgetExpensesRemainingAndUpdateBudget() {
+        BigDecimal sumBudget = BigDecimal.ZERO;
+        BigDecimal sumExpenses = BigDecimal.ZERO;
 
-        Map<String, BigInteger[]> result = new HashMap<>();
-        for (Map.Entry<String, BigInteger> entry : PMCostCategory.entrySet()) {
-            BigInteger[]  budgetExpensesRemaining = new BigInteger[3];
+        Map<String, BigDecimal[]> result = new HashMap<>();
+        for (Map.Entry<String, BigDecimal> entry : PMCostCategory.entrySet()) {
+            BigDecimal[]  budgetExpensesRemaining = new BigDecimal[3];
             budgetExpensesRemaining[0] = entry.getValue();
             sumBudget = sumBudget.add(budgetExpensesRemaining[0]);
-            budgetExpensesRemaining[1] = expenses.stream().filter(e -> e.getPMCostCategory().equals(entry.getKey())).map(Cost::getGrossAmount).reduce(BigInteger::add).orElse(BigInteger.ZERO);
+            budgetExpensesRemaining[1] = expenses.stream().filter(e -> e.getPMCostCategory().equals(entry.getKey())).map(Cost::getGrossAmount).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
             sumExpenses = sumExpenses.add(budgetExpensesRemaining[1]);
             budgetExpensesRemaining[2] = budgetExpensesRemaining[0].subtract(budgetExpensesRemaining[1]);
             result.put(entry.getKey(),budgetExpensesRemaining);
         }
-        result.put("total", new BigInteger[]{sumBudget,sumExpenses,sumBudget.subtract(sumExpenses)});
+        if(!(sumBudget.compareTo(BigDecimal.ZERO)==0)) {
+            this.setBudget(sumBudget);
+        }
+        result.put("total", new BigDecimal[]{sumBudget,sumExpenses,sumBudget.subtract(sumExpenses)});
+        return result;
+    }
+
+    public Map<String, BigDecimal> getExpensesByCompany() {
+        Map<String, BigDecimal> result = new HashMap<>();
+        for (String company : companies) {
+            BigDecimal  budgetExpensesRemaining = expenses.stream().filter(e -> e.getCompanies().equals(company)).map(Cost::getGrossAmount).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+            result.put(company,budgetExpensesRemaining);
+        }
         return result;
     }
 

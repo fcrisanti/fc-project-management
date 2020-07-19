@@ -65,6 +65,10 @@
    style="width:200px">
     Edit Project Data
 </a>
+<a th:href="@{/upload(id=${project.projectId})}" class="button btn btn-black btn-sm mb-3"
+   style="width:200px">
+    Import from Excel file
+</a>
 
 
 <!-- Editable table -->
@@ -193,7 +197,7 @@
 
     $(document).ready(function () {
         new AutoNumeric.multiple('.currencyInput', {
-            decimalPlaces: 0,
+            decimalPlaces: 2,
             digitGroupSeparator: " "
         });
 
@@ -336,13 +340,13 @@
         $tableID.find('table').append($clone);
 
         new AutoNumeric.multiple('.currencyInput', {
-            decimalPlaces: 0,
+            decimalPlaces: 2,
             digitGroupSeparator: " "
         });
     });
 
     $tableID.on('click', '.table-remove', function () {
-        if ($tableID.find('tr:not(:hidden)').length > 2) {
+        if ($tableID.find('tr:not(:hidden)').length > 3) {
             $(this).parents('tr').detach();
         } else {
             alert("Nie można usunąć ostatniego kosztu. W projekcie musi pozostać co najmniej jedna pozycja. Jeżeli w projekcie nie poniesiono kosztów możesz wyzerować jej wartości.");

@@ -1,12 +1,9 @@
 package pl.fc.app.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +13,6 @@ import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.enities.Employee;
 import pl.fc.app.enities.Project;
-import pl.fc.app.enities.ProjectStatusReport;
 import pl.fc.app.enities.variables.Company;
 import pl.fc.app.enities.variables.Genesis;
 import pl.fc.app.enities.variables.Status;
@@ -78,7 +74,8 @@ class ProjectController {
         model.addAttribute("allEmployees", employees);
 
         model.addAttribute("project", project);
-        model.addAttribute("costcat",project.getCategoryBudgetExpensesRemaining());
+        model.addAttribute("costcat",project.getCategoryBudgetExpensesRemainingAndUpdateBudget());
+        model.addAttribute("costcompany",project.getExpensesByCompany());
 
         model.addAttribute("allCompanies", allCompanies);
         model.addAttribute("allGenesis", allGenesis);
