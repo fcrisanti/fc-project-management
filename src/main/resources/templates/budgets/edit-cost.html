@@ -89,6 +89,7 @@
                     </th>
                     <td>
                         <select th:field="${cost.type}">
+                            <option th:value="0" text="Not set"></option>
                         <option th:each="type : ${T(pl.fc.app.enities.enums.CostType).values()}"
                                     th:value="${type}"
                                     th:text="${type}">
@@ -108,10 +109,10 @@
 
                     </th>
                     <td>
-                        <select th:field="${cost.companies}">
-
+                        <select name="companies" id="companies">
+                            <option th:value="0" text="Not set"></option>
                             <option th:each="company : ${allCompanies}"
-                                    th:value="${company}"
+                                    th:selected="(${cost.companies} == ${company.toString()})"
                                     th:text="${company}">
                             </option>
                         </select>

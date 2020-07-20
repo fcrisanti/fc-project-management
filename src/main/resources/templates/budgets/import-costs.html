@@ -54,7 +54,7 @@
 <hr>
 <h3> Project Costs Editor </h3>
 <h4 th:text="${project.getName()}"> Current Project</h4>
-<h6 class="blue-text"> Kliknij przycisk IMPORT SELECTED aby dodać wybrane koszty do projektu.</h6>
+<h6 class="blue-text"> Zaznacz koszty, które chcesz zaimportować. Kliknij przycisk IMPORT SELECTED aby dodać wybrane koszty do projektu.</h6>
 <h6 class="amber-text"> Wartości oznaczone kolorem żółtym nie zostały poprawnie zaimportowane. Możesz je uzupełnić ręcznie lub pozostawić puste.</h6>
 <h6 class="blue-text"> Wiersze oznaczone kolorem niebieskim oznaczają pozycje, które istnieją już w repozyterium kosztów (identyfikacja po numerze faktury).</h6>
 <button id="export-btn1" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
@@ -288,7 +288,8 @@
                         // className: 'select-checkbox',
                         targets:   0,
                         checkboxes: {
-                            selectRow: true
+                            selectRow: true,
+                            stateSave: false
                         }
                     }
                 ],
@@ -350,16 +351,6 @@
     <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
   </td>
 </tr>`;
-
-        // <td class="pt-3-half">
-        //     <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-        // <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
-        // </td>
-
-        // $('#invoiceDate').change(function() {
-        //     alert( "Handler for .change() called." );
-        //     $('#date').html($(this).val());
-        // });
 
         $('.table-add').on('click', 'i', () => {
 
@@ -450,7 +441,6 @@
 
             // Output the result
             $EXPORT.text(JSON.stringify(data));
-            alert(JSON.stringify(data));
             $.ajax({
                 type: "POST",
                 url: "/budget/" + IDfromURL + "/savenew",
@@ -458,7 +448,8 @@
                 contentType: "application/json; charset=utf-8",
                 datatype: "json",
                 headers:
-                    {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                    {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: window.location.href = "/projects/edit?id=" + IDfromURL
             });
         })
 </script>

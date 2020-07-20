@@ -103,6 +103,7 @@
                     </td>
                     <td class="pt-3-half">
                         <select name="companies" id="companies">
+                            <option value="0" text="Not set"></option>
                             <!--                            <option th:each="company : ${T(pl.fc.app.enities.enums.Company).values()}"-->
                             <option th:each="company : ${allCompanies}"
                                     th:selected="(${cost.companies} == ${company.toString()})"
@@ -420,9 +421,9 @@
             contentType: "application/json; charset=utf-8",
             datatype: "json",
             headers:
-                {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+                {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: window.location.href = "/projects/edit?id=" + IDfromURL
         });
-
     })
     ;
 

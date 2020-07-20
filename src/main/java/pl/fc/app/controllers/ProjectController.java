@@ -76,6 +76,7 @@ class ProjectController {
         model.addAttribute("project", project);
         model.addAttribute("costcat",project.getCategoryBudgetExpensesRemainingAndUpdateBudget());
         model.addAttribute("costcompany",project.getExpensesByCompany());
+        model.addAttribute("costyear",project.getExpensesByYear());
 
         model.addAttribute("allCompanies", allCompanies);
         model.addAttribute("allGenesis", allGenesis);
@@ -92,6 +93,8 @@ class ProjectController {
                 redirectAttributes.addFlashAttribute("project",project);
                 return "redirect:/projects/new";
             }
+        } else {
+            project.setPMCostCategory(projectService.findByID(project.getProjectId()).get().getPMCostCategory());
         }
         projectService.save(project);
         return "redirect:/projects";

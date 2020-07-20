@@ -4,7 +4,7 @@ public enum CostCategory {
     OTHER("Inne"),
     MAINTENANCE("Maitenance"),
     PERSONAL("Osobowe"),
-    PERSONAL_EXTERNAL("Osobowe-zew."),
+    PERSONAL_EXTERNAL("Osobowe-zewnętrzne"),
     SOFTWARE("Software"),
     MARKETING("Marketing");
 

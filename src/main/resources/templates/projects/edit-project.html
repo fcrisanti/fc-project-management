@@ -386,6 +386,7 @@
 
             <div class="card">
                 <div class="card-body">
+                    <h5>Budget split by PM Category</h5>
                     <div id="table" class="table-editable">
 
                         <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
@@ -399,18 +400,18 @@
                             </thead>
                             <tbody>
                                                     <tr th:each="cat : ${costcat}" th:if="${cat.getKey() != 'total'}">
-                                                        <td class="pt-3-half" contenteditable="true" th:text="${cat.getKey()}"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[0]}" style="text-align: right;"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[1]}" style="text-align: right;"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat.getValue()[2]}" style="text-align: right;"></td>
+                                                        <td class="pt-3-half" th:text="${cat?.getKey()}"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[0]}" style="text-align: right;"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[1]}" style="text-align: right;"></td>
+                                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[2]}" style="text-align: right;"></td>
                                                     </tr>
                             </tbody>
                             <tfoot>
                             <tr>
                                 <th class="text-center font-weight-bold">Total</th>
-                                <th class="text-center font-weight-bold currencyInput" th:text="${costcat.get('total')[0]}">Budget</th>
-                                <th class="text-center font-weight-bold currencyInput" th:text="${costcat.get('total')[1]}">Spent</th>
-                                <th class="text-center font-weight-bold currencyInput" th:text="${costcat.get('total')[2]}">Remaining</th>
+                                <th class="text-center font-weight-bold currencyInput" th:if="${costcat!=null}" th:text="${costcat?.get('total')[0]}">Budget</th>
+                                <th class="text-center font-weight-bold currencyInput" th:if="${costcat!=null}" th:text="${costcat?.get('total')[1]}">Spent</th>
+                                <th class="text-center font-weight-bold currencyInput" th:if="${costcat!=null}" th:text="${costcat?.get('total')[2]}">Remaining</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -421,6 +422,62 @@
                         <a th:href="@{/budget/costcat(id=${project.projectId})}" class="button btn btn-amber btn-sm mb-3" style="width:200px">
                             Edit Cost Categories
                         </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5>Costs split by Company</h5>
+                    <div  class="table-editable">
+
+                        <table  class="table table-bordered table-responsive-md table-striped text-center">
+                            <thead class="purple-gradient white-text">
+                            <tr>
+                                <th class="text-center">Company name</th>
+                                <th class="text-center">Spent</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="company : ${costcompany}" th:if="${company.getKey() != 'total'}">
+                                <td class="pt-3-half" th:text="${company.getKey()!='0'? company.getKey() : 'Other/Not set' }"></td>
+                                <td class="pt-3-half currencyInput" th:text="${company?.getValue()}" style="text-align: right;"></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th class="text-center font-weight-bold">Total</th>
+                                <th class="font-weight-bold currencyInput" th:text="${costcompany?.get('total')}" style="text-align: right;">Spent</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5>Costs split by Year</h5>
+                    <div  class="table-editable">
+
+                        <table  class="table table-bordered table-responsive-md table-striped text-center">
+                            <thead class="young-passion-gradient white-text">
+                            <tr>
+                                <th class="text-center">Year</th>
+                                <th class="text-center">Spent</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="year : ${costyear}" th:if="${year.getKey() != 0}">
+                                <td class="pt-3-half" th:text="${year?.getKey()}"></td>
+                                <td class="pt-3-half currencyInput" th:text="${year?.getValue()}" style="text-align: right;"></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th class="text-center font-weight-bold">Total</th>
+                                <th class="font-weight-bold currencyInput" th:text="${costyear?.get(0)}" style="text-align: right;">Spent</th>
+                            </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>

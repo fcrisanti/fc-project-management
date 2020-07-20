@@ -30,7 +30,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -131,28 +133,53 @@ public class Project {
         BigDecimal sumExpenses = BigDecimal.ZERO;
 
         Map<String, BigDecimal[]> result = new HashMap<>();
-        for (Map.Entry<String, BigDecimal> entry : PMCostCategory.entrySet()) {
-            BigDecimal[]  budgetExpensesRemaining = new BigDecimal[3];
-            budgetExpensesRemaining[0] = entry.getValue();
-            sumBudget = sumBudget.add(budgetExpensesRemaining[0]);
-            budgetExpensesRemaining[1] = expenses.stream().filter(e -> e.getPMCostCategory().equals(entry.getKey())).map(Cost::getGrossAmount).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-            sumExpenses = sumExpenses.add(budgetExpensesRemaining[1]);
-            budgetExpensesRemaining[2] = budgetExpensesRemaining[0].subtract(budgetExpensesRemaining[1]);
-            result.put(entry.getKey(),budgetExpensesRemaining);
-        }
-        if(!(sumBudget.compareTo(BigDecimal.ZERO)==0)) {
-            this.setBudget(sumBudget);
-        }
-        result.put("total", new BigDecimal[]{sumBudget,sumExpenses,sumBudget.subtract(sumExpenses)});
+        if(PMCostCategory!=null) {
+            for (Map.Entry<String, BigDecimal> entry : PMCostCategory.entrySet()) {
+                BigDecimal[] budgetExpensesRemaining = new BigDecimal[3];
+                budgetExpensesRemaining[0] = entry.getValue();
+                sumBudget = sumBudget.add(budgetExpensesRemaining[0]);
+                budgetExpensesRemaining[1] = expenses.stream().filter(e -> e.getPMCostCategory().equals(entry.getKey())).map(Cost::getGrossAmount).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+                sumExpenses = sumExpenses.add(budgetExpensesRemaining[1]);
+                budgetExpensesRemaining[2] = budgetExpensesRemaining[0].subtract(budgetExpensesRemaining[1]);
+                result.put(entry.getKey(), budgetExpensesRemaining);
+            }
+            if (!(sumBudget.compareTo(BigDecimal.ZERO) == 0)) {
+                this.setBudget(sumBudget);
+            }
+            result.put("total", new BigDecimal[]{sumBudget, sumExpenses, sumBudget.subtract(sumExpenses)});
+        } else return null;
+        return result;
+    }
+
+    public Map<Integer, BigDecimal> getExpensesByYear() {
+        BigDecimal sumExpenses = BigDecimal.ZERO;
+        Map<Integer, BigDecimal> result = new HashMap<>();
+        if(expenses!=null) {
+            Set<Integer> years = expenses.stream().filter(c -> c.getInvoiceDate()!=null).map(Cost::getInvoiceDate).filter(Objects::nonNull).map(LocalDate::getYear).collect(Collectors.toSet());
+
+            for (Integer year : years) {
+                BigDecimal budgetExpensesRemaining = expenses.stream().filter(e -> e.getInvoiceDate() != null).filter(e -> e.getInvoiceDate().getYear() == (year)).map(Cost::getGrossAmount).filter(Objects::nonNull).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+                sumExpenses = sumExpenses.add(budgetExpensesRemaining);
+                result.put(year, budgetExpensesRemaining);
+            }
+            result.put(0, sumExpenses);
+        } else return null;
         return result;
     }
 
     public Map<String, BigDecimal> getExpensesByCompany() {
+        BigDecimal sumExpenses = BigDecimal.ZERO;
         Map<String, BigDecimal> result = new HashMap<>();
-        for (String company : companies) {
-            BigDecimal  budgetExpensesRemaining = expenses.stream().filter(e -> e.getCompanies().equals(company)).map(Cost::getGrossAmount).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-            result.put(company,budgetExpensesRemaining);
-        }
+        if(expenses!=null) {
+            Set<String> companies = expenses.stream().filter(Objects::nonNull).filter(c -> c.getCompanies() != null).map(Cost::getCompanies).collect(Collectors.toSet());
+
+            for (String company : companies) {
+                BigDecimal budgetExpensesRemaining = expenses.stream().filter(e -> e.getCompanies().equals(company)).map(Cost::getGrossAmount).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+                sumExpenses = sumExpenses.add(budgetExpensesRemaining);
+                result.put(company, budgetExpensesRemaining);
+            }
+            result.put("total", sumExpenses);
+        } else return null;
         return result;
     }
 
