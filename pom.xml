@@ -20,7 +20,6 @@
         <hibernate-types.version>2.9.8</hibernate-types.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

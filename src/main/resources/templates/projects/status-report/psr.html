@@ -1661,12 +1661,14 @@
                 <div class="t m0 xc h5 yd ff4 fs4 fc2 sc0 ls0 ws0">REALIZED:</div>
                 <div class="t m0 xc h5 ye ff4 fs4 fc2 sc0 ls0 ws0">PLANNED:</div>
                 <div class="t m0 xd h5 yf ff4 fs4 fc2 sc0 ls0 ws0">FORECAST:</div>
-                <div class="t m0 xe h6 yd ff1 fs4 fc3 sc0 ls0 ws0"><a
-                        th:text="${projectStatusReport.realizedBudget}"></a></div>
+                <div class="t m0 xe h6 yd ff1 fs4 fc3 sc0 ls0 ws0"><a th:if="${projectStatusReport.realizedBudget!=null}"
+                        th:text="${#strings.substring(projectStatusReport.realizedBudget, 0, #strings.length(projectStatusReport?.realizedBudget)-3)}"></a></div>
                 <div class="t m0 xe h6 y10 ff1 fs4 fc3 sc0 ls0 ws0"><a
-                        th:text="${projectStatusReport.plannedBudget}"></a></div>
+                        th:if="${projectStatusReport.plannedBudget!=null}"
+                        th:text="${#strings.substring(projectStatusReport.plannedBudget, 0, #strings.length(projectStatusReport?.plannedBudget)-3)}"></a></div>
                 <div class="t m0 xe h6 y11 ff1 fs4 fc3 sc0 ls0 ws0"><a
-                        th:text="${projectStatusReport.forecastBudget}"></a></div>
+                        th:if="${projectStatusReport.forecastBudget!=null}"
+                        th:text="${#strings.substring(projectStatusReport.forecastBudget, 0, #strings.length(projectStatusReport?.forecastBudget)-3)}"></a></div>
                 <div class="t m0 xf h5 y12 ff4 fs4 fc2 sc0 ls1 ws0">GO<span class="ls0">-LIVE DATE</span></div>
                 <div class="t m0 x10 h5 y13 ff4 fs4 fc2 sc0 ls0 ws0">FROM INAU<span class="_ _1"></span>GURATION:</div>
                 <div class="t m0 xc h5 y14 ff4 fs4 fc2 sc0 ls0 ws0">PLANNED:</div>
