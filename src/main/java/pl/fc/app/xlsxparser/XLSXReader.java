@@ -52,7 +52,7 @@ public class XLSXReader {
 
         List<Map<String, String>> columnNamesAndValuesList = new ArrayList<>();
         List<CostDTO> costDTOS = new ArrayList<>();
-        DataFormatter formatter = new DataFormatter();
+        DataFormatter formatter = new DataFormatter(new Locale("pl"));
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
