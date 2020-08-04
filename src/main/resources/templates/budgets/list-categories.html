@@ -1,127 +1,335 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--<head th:replace="layouts :: header">-->
+<html>
 <head>
-    <!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title th:text="${project.name}">PROTON</title>
     <meta name="csrf-token" th:content="${_csrf.token}">
-    <title>PROTON</title>
-    <script src="/js/jquery-3.5.0.min.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" type="text/css">
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!-- Material Design Bootstrap -->
-    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">
-    <!--    &lt;!&ndash; Your custom styles (optional) &ndash;&gt;-->
-    <link href="/css/style.css" rel="stylesheet" type="text/css">
-    <!-- DataTables CSS -->
-    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables JS -->
-    <script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+    <link href="/css/sing/application.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+
+    <!-- DataTables CSS -->
+    <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
     <!-- DataTables Select CSS -->
     <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables Select JS -->
-    <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
-    <!-- Bootstrap tooltips -->
+    <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <!-- Material Design Bootstrap -->
+    <!--    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">-->
 
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
-    <script type="text/javascript"
-            src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-select.js"></script>
-    <script type="text/javascript"
-            src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-text.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js"></script>
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
 
-    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+    <link rel="shortcut icon" href="/codebase/planet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PROTON">
+    <meta name="keywords"
+          content="bootstrap admin template,admin template,admin dashboard,admin dashboard template,admin,dashboard,bootstrap,template">
+    <meta name="author" content="Francesco Crisanti">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+        chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+        https://code.google.com/p/chromium/issues/detail?id=332189
+        */
+    </script>
 
 </head>
+<body class="nav-collapsed" style="overflow-x: unset;">
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
 
-<body>
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo d-none d-md-block">
+            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
+                <b>PROTON</b></a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status d-md-none">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar float-right">
+                            <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                        </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                            13
+                        </span>
+                &nbsp;
+                Philip <strong>Smith</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+        </div>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/projects">
+                            <span class="icon">
+                                <i class="fi flaticon-home"></i>
+                            </span>
+                    Project List
+                </a>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/psr">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/employees">
+                            <span class="icon">
+                                <i class="fi flaticon-users"></i>
+                            </span>
+                    PMO
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#">
+                            <span class="icon">
+                                <i class="fi flaticon-calculator"></i>
+                            </span>
+                    Budget
+                </a>
+            </li>
+        </ul>
 
-<nav th:replace="layouts :: navbar"></nav>
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-dashboard">
 
-<hr>
-<h3> Project Costs Editor </h3>
-<h4 th:text="${project.name}"> Current Project</h4>
-<h6 class="blue-text"> Kliknij przycisk SAVE CHANGES aby zapisać
-    zmiany.</h6>
-<!--<a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>-->
-<button id="export-btn1" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
-    Save Changes
-</button>
-<a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-indigo btn-sm mb-3" style="width:200px">
-    Edit Costs
-</a>
-<a th:href="@{/projects/edit(id=${project.projectId})}" class="button btn btn-outline-blue btn-sm mb-3" style="width:200px">
-    Edit Project Data
-</a>
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header mr-md-3">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                        <i class="la la-bars"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
 
-<!-- Editable table -->
-<div class="card">
+                    <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                        <span class="square square-lg d-md-none"><i class="la la-bars"></i></span>
+                        <i class="la la-bars d-none d-md-block"></i>
+                    </a>
+                </li>
 
-    <div class="card-body">
-        <div id="table" class="table-editable">
-      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-              class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
-            <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
-                <thead class="peach-gradient white-text">
-                <tr>
-                    <th class="text-center">Category name</th>
-                    <th class="text-center">Category budget</th>
-                    <th class="text-center">DELETE</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="cat : ${costcat}">
-                    <td class="pt-3-half" contenteditable="true" th:text="${cat.getKey()}"></td>
-                    <td class="pt-3-half">
-                        <input type="text" name="catBudget" id="catBudget" class="currencyInput" style="text-align:right;"
-                               th:value="${cat.getValue() > 0} ? ${cat.getValue()} : '0'"/>
-                    </td>
-                    <td class="pt-3-half">
-                        <!--              <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up"-->
-                        <!--                                                                         aria-hidden="true"></i></a></span>-->
-                        <!--                            <span class="table-down"><a href="#!" class="indigo-text"><i-->
-                        <!--                                    class="fas fa-long-arrow-alt-down"-->
-                        <!--                                    aria-hidden="true"></i></a></span>-->
-                        <span class="table-remove"><button type="button"
-                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
-                    </td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th class="text-center">Category name</th>
-                    <th class="text-center">Category budget</th>
-                    <th class="text-center">DELETE</th>
-                </tr>
-                </tfoot>
-            </table>
+            </ul>
+            <ul class="nav navbar-nav navbar-right d-md-none">
+                <li class="nav-item">
+                    <!-- toggles chat -->
+                    <a class="nav-link" href="#" data-toggle="chat-sidebar">
+                        <span class="square square-lg"><i class="la la-globe"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand d-md-none" href="/dashboard/index.html">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                sing
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
+        </div>
 
-            <button id="export-btn2" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
+        <!-- this part is hidden for xs screens -->
+        <div class="navbar-header mobile-hidden">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
+                </div>
+            </form>
+            <span class="table-add"><a href="#!" class="text-success"><i
+                    class="btn btn-primary" aria-hidden="true">Add Category</i></a></span>New items will appear at the table bottom
+            <button id="export-btn1" NAME="export-btn" class="export-btn btn btn-primary">
                 Save Changes
             </button>
+            <a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-default">
+                Edit Costs
+            </a>
+            <a th:href="@{/projects/edit(id=${project.projectId})}" class="button btn btn-default">
+                Edit Project
+            </a>
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
+
+            <ul class="nav navbar-nav float-right">
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle no-caret nav-link" data-toggle="dropdown">
+                        <i class="la la-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
+
+<div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Project</li>
+            <li class="breadcrumb-item active">Edit Cost Categories</li>
+        </ol>
+        <h2 class="page-title">PM Cost Categories Editor - <span class="fw-semi-bold" th:text="${project.name}">PM Cost Categories</span></h2>
+
+        <div class="row">
+            <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            PM Cost Category <span class="fw-semi-bold">List</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <!-- Editable table -->
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="table" class="table-editable">
+                                    <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
+                                        <thead class="peach-gradient white-text">
+                                        <tr>
+                                            <th class="text-center">Category name</th>
+                                            <th class="text-center">Category budget</th>
+                                            <th class="text-center">DELETE</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="cat : ${costcat}">
+                                            <td class="pt-3-half" contenteditable="true" th:text="${cat.getKey()}"></td>
+                                            <td class="pt-3-half">
+                                                <input type="text" name="catBudget" id="catBudget" class="currencyInput" style="text-align:right;"
+                                                       th:value="${cat.getValue() > 0} ? ${cat.getValue()} : '0'"/>
+                                            </td>
+                                            <td class="pt-3-half">
+                                                <span class="table-remove"><button type="button"
+                                                                                   class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th class="text-center">Category name</th>
+                                            <th class="text-center">Category budget</th>
+                                            <th class="text-center">DELETE</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    <button id="export-btn2" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Editable table -->
+                    </div>
+                    <h5>
+                        You can edit any text by clicking on it. <span class="fw-semi-bold">If you change a category name already assigned to some costs those costs will loose their allocation.</span>
+                    </h5>
+                </section>
+            </div>
+        </div>
+
+        <footer th:replace="layouts :: footer"></footer>
+    </main>
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
 </div>
 
-<!-- Editable table -->
+<!-- common libraries. required for every page-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/jquery-pjax/jquery.pjax.js"></script>
+<script src="/node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/node_modules/bootstrap/js/dist/util.js"></script>
+<script src="/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/node_modules/widgster/widgster.js"></script>
+<script src="/node_modules/pace.js/pace.js"
+        data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }'></script>
+<script src="/node_modules/hammerjs/hammer.js"></script>
+<script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
 
-<footer th:replace="layouts :: footer"></footer>
+<!-- DataTables JS -->
+<script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+<!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>-->
+
+
+<!-- DataTables Select JS -->
+<script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+<!-- common app js -->
+<script src="/js/sing/settings.js"></script>
+<script src="/js/sing/app.js"></script>
+
+<!-- Page scripts -->
+<script src="/node_modules/jquery-sparkline/jquery.sparkline.js"></script>
+<script type="text/javascript"
+        src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-select.js"></script>
+<script type="text/javascript"
+        src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/custom-data-source/dom-text.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/date-eu.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+<!-- page specific js -->
+<script src="/js/sing/tables.js"></script>
 
 
 <script>
 
+    function doSearch() {
+        $('#table-ed').DataTable().search($('#mySearchText').val()).draw();
+    }
 
     $(document).ready(function () {
 
@@ -299,5 +507,5 @@
     ;
 
 </script>
-
 </body>
+</html>

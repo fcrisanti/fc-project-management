@@ -8,8 +8,6 @@ import pl.fc.app.dao.IProjectRepository;
 import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,173 +1,394 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--<head th:replace="layouts :: header">-->
+<html>
 <head>
-<!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>PROTON</title>
-    <script src="/js/jquery-3.5.0.min.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="/css/mdb.min.css" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/sing/application.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+
+
+
     <!-- DataTables CSS -->
-    <link href="/css/addons/datatables.min.css" rel="stylesheet">
-    <!-- DataTables JS -->
-    <script src="/js/addons/datatables.min.js" type="text/javascript"></script>
-
+    <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
     <!-- DataTables Select CSS -->
-    <link href="/css/addons/datatables-select.min.css" rel="stylesheet">
-    <!-- DataTables Select JS -->
-    <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
-    <!-- Bootstrap tooltips -->
+    <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <!-- Material Design Bootstrap -->
+    <!--    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">-->
 
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+
+    <link rel="shortcut icon" href="/codebase/planet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PROTON">
+    <meta name="keywords"
+          content="bootstrap admin template,admin template,admin dashboard,admin dashboard template,admin,dashboard,bootstrap,template">
+    <meta name="author" content="Francesco Crisanti">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+        chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+        https://code.google.com/p/chromium/issues/detail?id=332189
+        */
+    </script>
+
 </head>
+<body class="nav-collapsed" style="overflow-x: unset;">
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
 
-<body>
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo d-none d-md-block">
+            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
+                <b>PROTON</b></a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status d-md-none">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar float-right">
+                            <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                        </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                            13
+                        </span>
+                &nbsp;
+                Philip <strong>Smith</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+        </div>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/projects">
+                            <span class="icon">
+                                <i class="fi flaticon-home"></i>
+                            </span>
+                    Project List
+                </a>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/psr">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/employees">
+                            <span class="icon">
+                                <i class="fi flaticon-users"></i>
+                            </span>
+                    PMO
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#">
+                            <span class="icon">
+                                <i class="fi flaticon-calculator"></i>
+                            </span>
+                    Budget
+                </a>
+            </li>
+        </ul>
 
-<nav th:replace="layouts :: navbar"></nav>
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-dashboard">
 
-<hr>
-<h3> Project Status Reports </h3>
-<hr>
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header mr-md-3">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                        <i class="la la-bars"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
+
+                    <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                        <span class="square square-lg d-md-none"><i class="la la-bars"></i></span>
+                        <i class="la la-bars d-none d-md-block"></i>
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right d-md-none">
+                <li class="nav-item">
+                    <!-- toggles chat -->
+                    <a class="nav-link" href="#" data-toggle="chat-sidebar">
+                        <span class="square square-lg"><i class="la la-globe"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand d-md-none" href="/dashboard/index.html">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                sing
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
+        </div>
+
+        <!-- this part is hidden for xs screens -->
+        <div class="navbar-header mobile-hidden">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
+                </div>
+            </form>
+            Month
+            <select name="month" id="month">
+                <option th:each="months : ${T(java.time.Month).values()}"
+                        th:text="${months.getValue()}"
+                        th:selected="${months.getValue() == month}"
+                >
+                </option>
+            </select>
+            Year
+            <input type="number" th:value="${year}" name="year" style="width:60px" min="2020" max="2099" placeholder="year"
+                   required>
+            <button class="btn btn-primary" onclick="getPeriod()">Change Period</button>
+            <span>Filter by:</span>
+            <button id="ALL" class="btn btn-sm btn-amber btn-rounded btn-default" onclick="reset()">ALL</button>
+            <button id="CL" class="btn btn-sm btn-teal btn-rounded btn-default" onclick="filter('CL')">CL</button>
+            <button id="CNL" class="btn btn-sm btn-green btn-rounded btn-default" onclick="filter('CNL')">CNL</button>
+            <button id="VIG" class="btn btn-sm btn-red btn-rounded btn-default" onclick="filter('VIG')">VIG</button>
+            <button id="GENESIS" class="btn btn-sm btn-deep-purple btn-default" onclick="genesis()">GENESIS</button>
+
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
+
+            <ul class="nav navbar-nav float-right">
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle no-caret nav-link" data-toggle="dropdown">
+                        <i class="la la-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">DASHBOARD</li>
+            <li class="breadcrumb-item active">Project List</li>
+        </ol>
+        <h2 class="page-title">Status Reports - <span class="fw-semi-bold" id="companyOrGenesis">All</span></h2>
+
+        <div class="row">
+            <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Status Reports <span class="fw-semi-bold">List</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <table id="dtPsr" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+
+                            <thead class="blue-gradient white-text">
+                            <tr>
+                                <th> Sap No</th>
+                                <th> Guardian</th>
+                                <th> Project</th>
+
+                                <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Scope</th>
+                                <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Schedule</th>
+                                <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Cost</th>
+                                <th> Status</th>
+                                <th> Company</th>
+                                <th> Stream</th>
+                                <th> Project Manager</th>
+                                <th> EDIT</th>
+                                <th> VIEW</th>
+                                <th> DOWNLOAD</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="psr : ${projectStatusReports}">
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="P+${psr.project.sapNo}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.employees}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.name}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.scope.name()}+'.png'" height="55" width="55" th:alt="${psr.scope.name()}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.schedule.name()}+'.png'" height="55" width="55" th:alt="${psr.schedule.name()}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.cost.name()}+'.png'" height="55" width="55" th:alt="${psr.cost.name()}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.status}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.companies}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.genesis}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.projectManager}"></a></td>
+
+                                <td><a th:href="@{/psr/{id}/{year}/{month}(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-red btn-sm m-0">EDIT</a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-blue btn-sm m-0">VIEW</a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view/pdf(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PDF</a>
+                                    <a th:href="@{/psr/{id}/{year}/{month}/view/ppt(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PPT</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th> Sap No</th>
+                                <th> Guardian</th>
+                                <th> Project</th>
+                                <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Scope</th>
+                                <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Schedule</th>
+                                <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Cost</th>
+                                <th> Status</th>
+                                <th> Company</th>
+                                <th> Stream</th>
+                                <th> Project Manager</th>
+                                <th> EDIT</th>
+                                <th> VIEW</th>
+                                <th> DOWNLOAD</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <br>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <h2 class="page-title">Status Reports - <span class="fw-semi-bold">Missing</span></h2>
+        <div class="row">
+            <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Projects with <span class="fw-semi-bold">missing Status Reports</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                    <table id="dtBasicExample" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+
+                        <thead class="ripe-malinka-gradient white-text">
+                        <tr>
+                            <th> Sap No</th>
+                            <th> Guardian</th>
+                            <th> Project</th>
+                            <th> Status</th>
+                            <th> Company</th>
+                            <th> Stream</th>
+                            <th> Project Manager</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="project : ${projects}">
+                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="P+${project.sapNo}"></a></td>
+                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.employees}"></a></td>
+                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a></td>
+                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.status}"></a></td>
+                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.companies}"></a></td>
+                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.genesis}"></a></td>
+                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectManager}"></a></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th> Sap No</th>
+                            <th> Guardian</th>
+                            <th> Project</th>
+                            <th> Status</th>
+                            <th> Company</th>
+                            <th> Stream</th>
+                            <th> Project Manager</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer th:replace="layouts :: footer"></footer>
+    </main>
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+
+<!-- common libraries. required for every page-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/jquery-pjax/jquery.pjax.js"></script>
+<script src="/node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/node_modules/bootstrap/js/dist/util.js"></script>
+<script src="/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/node_modules/widgster/widgster.js"></script>
+<script src="/node_modules/pace.js/pace.js"
+        data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }'></script>
+<script src="/node_modules/hammerjs/hammer.js"></script>
+<script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
+
+<!-- DataTables JS -->
+<!--<script src="/js/addons/datatables.min.js" type="text/javascript"></script>-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
 
 
-<button id="ALL" class="btn btn-sm btn-amber btn-rounded" onclick="reset()">ALL</button>
-<button id="CL" class="btn btn-sm btn-teal btn-rounded" onclick="filter('CL')">CL</button>
-<button id="CNL" class="btn btn-sm btn-green btn-rounded" onclick="filter('CNL')">CNL</button>
-<button id="VIG" class="btn btn-sm btn-red btn-rounded" onclick="filter('VIG')">VIG</button>
-<button id="GENESIS" class="btn btn-sm btn-deep-purple btn-rounded" onclick="genesis()">GENESIS</button>
-<!--<button id="RED" class="btn btn-sm btn-outline-red btn-rounded" style="float: right;"-->
-<!--        onclick="location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ';">CZERWONY PRZYCISK-->
-<!--</button>-->
+<!-- DataTables Select JS -->
+<script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
 
-Month
-<select name="month" id="month">
-    <option th:each="months : ${T(java.time.Month).values()}"
-            th:text="${months.getValue()}"
-            th:selected="${months.getValue() == month}"
-    >
-    </option>
-</select>
-Year
-<input type="number" th:value="${year}" name="year" style="width:60px" min="2020" max="2099" placeholder="year"
-       required>
-<button class="btn btn-sm btn-indigo btn-rounded" onclick="getPeriod()">CHANGE PERIOD</button>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
 
+<!-- common app js -->
+<script src="/js/sing/settings.js"></script>
+<script src="/js/sing/app.js"></script>
 
-<table id="dtPsr" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
-
-    <thead class="blue-gradient white-text">
-    <tr>
-        <th> Sap No</th>
-        <th> Guardian</th>
-        <th> Project</th>
-
-        <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Scope</th>
-        <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Schedule</th>
-        <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Cost</th>
-        <th> Status</th>
-        <th> Company</th>
-        <th> Stream</th>
-        <th> Project Manager</th>
-        <th> EDIT</th>
-        <th> VIEW</th>
-        <th> DOWNLOAD</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="psr : ${projectStatusReports}">
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="P+${psr.project.sapNo}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.employees}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.name}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.scope.name()}+'.png'" height="55" width="55" th:alt="${psr.scope.name()}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.schedule.name()}+'.png'" height="55" width="55" th:alt="${psr.schedule.name()}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.cost.name()}+'.png'" height="55" width="55" th:alt="${psr.cost.name()}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.status}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.companies}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.genesis}"></a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.projectManager}"></a></td>
-
-        <td><a th:href="@{/psr/{id}/{year}/{month}(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-red btn-sm m-0">EDIT</a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-blue btn-sm m-0">VIEW</a></td>
-        <td><a th:href="@{/psr/{id}/{year}/{month}/view/pdf(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PDF</a>
-            <a th:href="@{/psr/{id}/{year}/{month}/view/ppt(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PPT</a>
-        </td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <th> Sap No</th>
-        <th> Guardian</th>
-        <th> Project</th>
-        <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Scope</th>
-        <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Schedule</th>
-        <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Cost</th>
-        <th> Status</th>
-        <th> Company</th>
-        <th> Stream</th>
-        <th> Project Manager</th>
-        <th> EDIT</th>
-        <th> VIEW</th>
-        <th> DOWNLOAD</th>
-    </tr>
-    </tfoot>
-</table>
-<br>
-<hr>
-<h3 style="color: red"> Missing PSR </h3>
-<hr>
-
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
-
-    <thead class="ripe-malinka-gradient white-text">
-    <tr>
-        <th> Sap No</th>
-        <th> Guardian</th>
-        <th> Project</th>
-        <th> Status</th>
-        <th> Company</th>
-        <th> Stream</th>
-        <th> Project Manager</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="project : ${projects}">
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="P+${project.sapNo}"></a></td>
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.employees}"></a></td>
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a></td>
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.status}"></a></td>
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.companies}"></a></td>
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.genesis}"></a></td>
-        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectManager}"></a></td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <th> Sap No</th>
-        <th> Guardian</th>
-        <th> Project</th>
-        <th> Status</th>
-        <th> Company</th>
-        <th> Stream</th>
-        <th> Project Manager</th>
-    </tr>
-    </tfoot>
-</table>
+<!-- Page scripts -->
+<script src="/node_modules/jquery-sparkline/jquery.sparkline.js"></script>
+<!-- page specific js -->
+<script src="/js/sing/tables.js"></script>
 
 
 <script>
@@ -181,6 +402,7 @@ Year
             .columns()
             .search("")
             .draw();
+        document.getElementById("companyOrGenesis").innerHTML = "All";
     }
 
     function filter(value) {
@@ -193,6 +415,7 @@ Year
             .column(7)
             .search(value)
             .draw();
+        document.getElementById("companyOrGenesis").innerHTML = value;
     }
 
     function genesis() {
@@ -205,6 +428,7 @@ Year
             .column(8)
             .search('^((?!NOT_GENESIS).)*$', true, false)
             .draw();
+        document.getElementById("companyOrGenesis").innerHTML = "Genesis";
     }
 
 
@@ -300,5 +524,5 @@ Year
         window.location.href = action_src;
     }
 </script>
-
 </body>
+</html>

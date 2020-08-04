@@ -1,682 +1,1008 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title>PROTON</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="/css/sing/application.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+
+
+    <!-- DataTables CSS -->
+    <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
+    <!-- DataTables Select CSS -->
+    <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <!-- Material Design Bootstrap -->
+    <!--    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">-->
+
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+
+    <link rel="shortcut icon" href="/codebase/planet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PROTON">
+    <meta name="keywords"
+          content="bootstrap admin template,admin template,admin dashboard,admin dashboard template,admin,dashboard,bootstrap,template">
+    <meta name="author" content="Francesco Crisanti">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <style id="Rejestr Swift_781_Styles">
-        <!--table
-        {mso-displayed-decimal-separator:"\,";
-            mso-displayed-thousand-separator:" ";}
-        .xl15781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:General;
-            text-align:general;
-            vertical-align:bottom;
-            mso-background-source:auto;
-            mso-pattern:auto;
-            white-space:nowrap;}
-        .xl66781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:Fixed;
-            text-align:center;
-            vertical-align:middle;
-            border-top:.5pt solid windowtext;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:1.0pt solid windowtext;
-            background:#BFBFBF;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl67781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:Fixed;
-            text-align:center;
-            vertical-align:middle;
-            border-top:.5pt solid windowtext;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:.5pt solid windowtext;
-            background:#BFBFBF;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl68781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:General;
-            text-align:center;
-            vertical-align:middle;
-            border-top:none;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:.5pt solid windowtext;
-            background:#BFBFBF;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl69781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:"yyyy\\-mm\\-dd\;\@";
-            text-align:center;
-            vertical-align:middle;
-            border-top:.5pt solid windowtext;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:.5pt solid windowtext;
-            background:#BFBFBF;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl70781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:Fixed;
-            text-align:center;
-            vertical-align:middle;
-            border-top:.5pt solid windowtext;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:none;
-            background:#BFBFBF;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl71781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:General;
-            text-align:left;
-            vertical-align:bottom;
-            mso-background-source:auto;
-            mso-pattern:auto;
-            white-space:nowrap;}
-        .xl72781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:700;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:Fixed;
-            text-align:center;
-            vertical-align:middle;
-            border-top:1.0pt solid windowtext;
-            border-right:none;
-            border-bottom:.5pt solid windowtext;
-            border-left:1.0pt solid windowtext;
-            background:#FCD5B4;
-            mso-pattern:black none;
-            white-space:nowrap;}
-        .xl73781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:700;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:Fixed;
-            text-align:center;
-            vertical-align:middle;
-            border-top:1.0pt solid windowtext;
-            border-right:none;
-            border-bottom:.5pt solid windowtext;
-            border-left:none;
-            background:#FCD5B4;
-            mso-pattern:black none;
-            white-space:nowrap;}
-        .xl74781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:700;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:Fixed;
-            text-align:center;
-            vertical-align:middle;
-            border-top:1.0pt solid windowtext;
-            border-right:1.0pt solid windowtext;
-            border-bottom:.5pt solid windowtext;
-            border-left:none;
-            background:#FCD5B4;
-            mso-pattern:black none;
-            white-space:nowrap;}
-        .xl75781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:700;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:General;
-            text-align:center;
-            vertical-align:bottom;
-            border:1.0pt solid windowtext;
-            background:#8064A2;
-            mso-pattern:black none;
-            white-space:nowrap;}
-        .xl76781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:"yyyy\\-mm\\-dd\;\@";
-            text-align:center;
-            vertical-align:middle;
-            border-top:.5pt solid windowtext;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:.5pt solid windowtext;
-            background:#F79646;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl77781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:Fixed;
-            text-align:center;
-            vertical-align:middle;
-            border-top:.5pt solid windowtext;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:.5pt solid windowtext;
-            background:#F79646;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl78781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:700;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:General;
-            text-align:general;
-            vertical-align:bottom;
-            mso-background-source:auto;
-            mso-pattern:auto;
-            white-space:nowrap;}
-        .xl79781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:General;
-            text-align:center;
-            vertical-align:middle;
-            border-top:none;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:1.0pt solid windowtext;
-            background:#F79646;
-            mso-pattern:black none;
-            white-space:normal;}
-        .xl80781
-        {padding-top:1px;
-            padding-right:1px;
-            padding-left:1px;
-            mso-ignore:padding;
-            color:black;
-            font-size:11.0pt;
-            font-weight:400;
-            font-style:normal;
-            text-decoration:none;
-            font-family:Calibri, sans-serif;
-            mso-font-charset:238;
-            mso-number-format:General;
-            text-align:center;
-            vertical-align:middle;
-            border-top:none;
-            border-right:.5pt solid windowtext;
-            border-bottom:1.0pt solid windowtext;
-            border-left:.5pt solid windowtext;
-            background:#F79646;
-            mso-pattern:black none;
-            white-space:normal;}
+        <!--
+        table {
+            mso-displayed-decimal-separator: "\,";
+            mso-displayed-thousand-separator: " ";
+        }
+
+        .xl15781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: General;
+            text-align: general;
+            vertical-align: bottom;
+            mso-background-source: auto;
+            mso-pattern: auto;
+            white-space: nowrap;
+        }
+
+        .xl66781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: Fixed;
+            text-align: center;
+            vertical-align: middle;
+            border-top: .5pt solid windowtext;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: 1.0pt solid windowtext;
+            background: #BFBFBF;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl67781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: Fixed;
+            text-align: center;
+            vertical-align: middle;
+            border-top: .5pt solid windowtext;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: .5pt solid windowtext;
+            background: #BFBFBF;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl68781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: General;
+            text-align: center;
+            vertical-align: middle;
+            border-top: none;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: .5pt solid windowtext;
+            background: #BFBFBF;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl69781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: "yyyy\\-mm\\-dd\;\@";
+            text-align: center;
+            vertical-align: middle;
+            border-top: .5pt solid windowtext;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: .5pt solid windowtext;
+            background: #BFBFBF;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl70781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: Fixed;
+            text-align: center;
+            vertical-align: middle;
+            border-top: .5pt solid windowtext;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: none;
+            background: #BFBFBF;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl71781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: General;
+            text-align: left;
+            vertical-align: bottom;
+            mso-background-source: auto;
+            mso-pattern: auto;
+            white-space: nowrap;
+        }
+
+        .xl72781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: Fixed;
+            text-align: center;
+            vertical-align: middle;
+            border-top: 1.0pt solid windowtext;
+            border-right: none;
+            border-bottom: .5pt solid windowtext;
+            border-left: 1.0pt solid windowtext;
+            background: #FCD5B4;
+            mso-pattern: black none;
+            white-space: nowrap;
+        }
+
+        .xl73781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: Fixed;
+            text-align: center;
+            vertical-align: middle;
+            border-top: 1.0pt solid windowtext;
+            border-right: none;
+            border-bottom: .5pt solid windowtext;
+            border-left: none;
+            background: #FCD5B4;
+            mso-pattern: black none;
+            white-space: nowrap;
+        }
+
+        .xl74781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: Fixed;
+            text-align: center;
+            vertical-align: middle;
+            border-top: 1.0pt solid windowtext;
+            border-right: 1.0pt solid windowtext;
+            border-bottom: .5pt solid windowtext;
+            border-left: none;
+            background: #FCD5B4;
+            mso-pattern: black none;
+            white-space: nowrap;
+        }
+
+        .xl75781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: General;
+            text-align: center;
+            vertical-align: bottom;
+            border: 1.0pt solid windowtext;
+            background: #8064A2;
+            mso-pattern: black none;
+            white-space: nowrap;
+        }
+
+        .xl76781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: "yyyy\\-mm\\-dd\;\@";
+            text-align: center;
+            vertical-align: middle;
+            border-top: .5pt solid windowtext;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: .5pt solid windowtext;
+            background: #F79646;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl77781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: Fixed;
+            text-align: center;
+            vertical-align: middle;
+            border-top: .5pt solid windowtext;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: .5pt solid windowtext;
+            background: #F79646;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl78781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 700;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: General;
+            text-align: general;
+            vertical-align: bottom;
+            mso-background-source: auto;
+            mso-pattern: auto;
+            white-space: nowrap;
+        }
+
+        .xl79781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: General;
+            text-align: center;
+            vertical-align: middle;
+            border-top: none;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: 1.0pt solid windowtext;
+            background: #F79646;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
+        .xl80781 {
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+            mso-ignore: padding;
+            color: black;
+            font-size: 11.0pt;
+            font-weight: 400;
+            font-style: normal;
+            text-decoration: none;
+            font-family: Calibri, sans-serif;
+            mso-font-charset: 238;
+            mso-number-format: General;
+            text-align: center;
+            vertical-align: middle;
+            border-top: none;
+            border-right: .5pt solid windowtext;
+            border-bottom: 1.0pt solid windowtext;
+            border-left: .5pt solid windowtext;
+            background: #F79646;
+            mso-pattern: black none;
+            white-space: normal;
+        }
+
         -->
     </style>
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+        chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+        https://code.google.com/p/chromium/issues/detail?id=332189
+        */
+    </script>
+
 </head>
-<body>
-<nav th:replace="layouts :: navbar"></nav>
+<body class="nav-collapsed" style="overflow-x: unset;">
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
 
-<section class="my-5">
-    <div style="margin-left: 2%">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h2>Upload Costs Excel File</h2>
-                <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-                <form method="post" th:action="@{/upload/file}" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input type="hidden" th:value="${id}" name="id"/>
-                        <input type="file" name="file" class="form-control-file">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Przetwórz wybrany plik</button>
-                </form>
-            </div>
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo d-none d-md-block">
+            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
+                <b>PROTON</b></a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status d-md-none">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar float-right">
+                            <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                        </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                            13
+                        </span>
+                &nbsp;
+                Philip <strong>Smith</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
         </div>
-        <div class="row">
-            <br>
-            <br>
-            <h4 style="background-color: #FFFF00">Wartości których nie uda się poprawnie zaimportować zostaną oznaczone kolorem żółtym i będzie można je wprowadzić ręcznie.</h4></h2>
-            <h4>Wytyczne dotyczące pliku z którego dane będą importowane (ważne są dokładne nazwy kolumn, nie ich kolejność): </h4>
-            <br>
-            <table style="border-collapse:
- collapse;table-layout:fixed;width:1607pt" width="2141" cellspacing="0" cellpadding="0" border="0">
-                <colgroup><col style="mso-width-source:userset;mso-width-alt:1194;width:25pt" width="34">
-                    <col style="mso-width-source:userset;mso-width-alt:938;width:20pt" width="26">
-                    <col style="mso-width-source:userset;mso-width-alt:4864;width:103pt" width="137">
-                    <col style="mso-width-source:userset;mso-width-alt:1991;
- width:42pt" width="56" span="2">
-                    <col style="mso-width-source:userset;mso-width-alt:4864;
- width:103pt" width="137" span="2">
-                    <col style="mso-width-source:userset;mso-width-alt:2076;width:44pt" width="58">
-                    <col style="mso-width-source:userset;mso-width-alt:4807;width:101pt" width="135">
-                    <col style="mso-width-source:userset;mso-width-alt:4721;width:100pt" width="133">
-                    <col style="mso-width-source:userset;mso-width-alt:4750;
- width:100pt" width="134" span="2">
-                    <col style="mso-width-source:userset;mso-width-alt:4579;width:97pt" width="129">
-                    <col style="mso-width-source:userset;mso-width-alt:10808;width:228pt" width="304">
-                    <col style="mso-width-source:userset;mso-width-alt:2247;width:47pt" width="63">
-                    <col style="mso-width-source:userset;mso-width-alt:3584;width:76pt" width="101">
-                    <col style="mso-width-source:userset;mso-width-alt:2389;width:50pt" width="67">
-                    <col style="mso-width-source:userset;mso-width-alt:2161;width:46pt" width="61">
-                    <col style="mso-width-source:userset;mso-width-alt:2218;width:47pt" width="62">
-                    <col style="mso-width-source:userset;mso-width-alt:1194;width:25pt" width="34">
-                    <col style="mso-width-source:userset;mso-width-alt:1678;width:35pt" width="47">
-                    <col style="mso-width-source:userset;mso-width-alt:1507;width:32pt" width="42">
-                    <col style="mso-width-source:userset;mso-width-alt:1934;width:41pt" width="54">
-                </colgroup><tbody><tr style="height:15.0pt" height="20">
-                <td colspan="19" class="xl72781" style="border-right:1.0pt solid black;
-  height:15.0pt;width:1474pt" width="1964" height="20">Dane dotyczące faktury</td>
-                <td colspan="4" class="xl75781" style="border-left:none;width:133pt" width="177">Dane
-                    księgowe</td>
-            </tr>
-            <tr style="mso-height-source:userset;height:43.2pt" height="58">
-                <td class="xl66781" style="height:43.2pt;border-top:none;
-  width:25pt" width="34" height="58">REP.</td>
-                <td class="xl70781" style="border-top:none;width:20pt" width="26">rok</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:103pt" width="137">Odbiorca FV</td>
-                <td class="xl67781" style="border-top:none;border-left:none;
-  width:42pt" width="56">Nazwa projektu</td>
-                <td class="xl67781" style="border-top:none;border-left:none;
-  width:42pt" width="56">Nr projektu</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:103pt" width="137">Numer faktury</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:103pt" width="137">Sprzedawca</td>
-                <td class="xl69781" style="border-top:none;border-left:none;
-  width:44pt" width="58">Data sprzedaży</td>
-                <td class="xl76781" style="border-top:none;border-left:none;
-  width:101pt" width="135">Data wystawienia</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:100pt" width="133">Przedmiot usługi</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:100pt" width="134">Kategoria kosztu</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:100pt" width="134">Podkategoria kosztu</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:97pt" width="129">Opex/Capex</td>
-                <td class="xl77781" style="border-top:none;border-left:none;
-  width:228pt" width="304">Wykonanie budżetu brutto</td>
-                <td class="xl69781" style="border-top:none;border-left:none;
-  width:47pt" width="63">Data akceptacji kosztu</td>
-                <td class="xl67781" style="border-top:none;border-left:none;
-  width:76pt" width="101">Kierownik merytoryczny/osoba zlecająca</td>
-                <td class="xl67781" style="border-top:none;border-left:none;
-  width:50pt" width="67">Refaktura z VIG spółka</td>
-                <td class="xl67781" style="border-top:none;border-left:none;
-  width:46pt" width="61">Numer refaktury</td>
-                <td class="xl67781" style="border-top:none;border-left:none;
-  width:47pt" width="62">Data wystawienia</td>
-                <td class="xl79781" style="width:25pt" width="34">MPK</td>
-                <td class="xl80781" style="border-left:none;width:35pt" width="47">Nazwa biura</td>
-                <td class="xl68781" style="border-left:none;width:32pt" width="42">GMPK</td>
-                <td class="xl80781" style="border-left:none;width:41pt" width="54">NR zlecenia</td>
-            </tr>
-            <tr class="xl78781" style="height:14.4pt" height="19">
-                <td class="xl78781" style="height:14.4pt" height="19"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781">Dozwolone wartości:</td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781">Dowolne 255 znaków</td>
-                <td class="xl78781">Dowolne 255 znaków</td>
-                <td class="xl78781"></td>
-                <td class="xl78781">rodzaj komórki - Data</td>
-                <td class="xl78781">Dowolne 255 znaków</td>
-                <td class="xl78781">Dozwolone wartości:</td>
-                <td class="xl78781">Dozwolone wartości:</td>
-                <td class="xl78781">Dozwolone wartości:</td>
-                <td class="xl78781">rodzaj komórki - Liczbowe, Walutowe, Księgowe</td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-                <td class="xl78781"></td>
-            </tr>
-            <tr style="height:14.4pt" height="19">
-                <td class="xl15781" style="height:14.4pt" height="19"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">CL</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">IT</td>
-                <td class="xl71781">Maintenance</td>
-                <td class="xl15781">OPEX</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-            </tr>
-            <tr style="height:14.4pt" height="19">
-                <td class="xl15781" style="height:14.4pt" height="19"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">CNL</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">Non IT</td>
-                <td class="xl15781">Osobowe-zewnętrzne</td>
-                <td class="xl15781">CAPEX</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-            </tr>
-            <tr style="height:14.4pt" height="19">
-                <td class="xl15781" style="height:14.4pt" height="19"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">VIG</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">Software</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-            </tr>
-            <tr style="height:14.4pt" height="19">
-                <td class="xl15781" style="height:14.4pt" height="19"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">Other</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-            </tr>
-            <tr style="height:14.4pt" height="19">
-                <td class="xl15781" style="height:14.4pt" height="19"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">Marketing</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-            </tr>
-            <tr style="height:14.4pt" height="19">
-                <td class="xl15781" style="height:14.4pt" height="19"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781">Osobowe</td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-            </tr>
-            <tr style="height:14.4pt" height="19">
-                <td class="xl15781" style="height:14.4pt" height="19"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl71781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-                <td class="xl15781"></td>
-            </tr>
-            <!--[if supportMisalignedColumns]-->
-            <tr style="display:none" height="0">
-                <td style="width:25pt" width="34"></td>
-                <td style="width:20pt" width="26"></td>
-                <td style="width:103pt" width="137"></td>
-                <td style="width:42pt" width="56"></td>
-                <td style="width:42pt" width="56"></td>
-                <td style="width:103pt" width="137"></td>
-                <td style="width:103pt" width="137"></td>
-                <td style="width:44pt" width="58"></td>
-                <td style="width:101pt" width="135"></td>
-                <td style="width:100pt" width="133"></td>
-                <td style="width:100pt" width="134"></td>
-                <td style="width:100pt" width="134"></td>
-                <td style="width:97pt" width="129"></td>
-                <td style="width:228pt" width="304"></td>
-                <td style="width:47pt" width="63"></td>
-                <td style="width:76pt" width="101"></td>
-                <td style="width:50pt" width="67"></td>
-                <td style="width:46pt" width="61"></td>
-                <td style="width:47pt" width="62"></td>
-                <td style="width:25pt" width="34"></td>
-                <td style="width:35pt" width="47"></td>
-                <td style="width:32pt" width="42"></td>
-                <td style="width:41pt" width="54"></td>
-            </tr>
-            <!--[endif]-->
-            </tbody></table>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/projects">
+                            <span class="icon">
+                                <i class="fi flaticon-home"></i>
+                            </span>
+                    Project List
+                </a>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/psr">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/employees">
+                            <span class="icon">
+                                <i class="fi flaticon-users"></i>
+                            </span>
+                    PMO
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#">
+                            <span class="icon">
+                                <i class="fi flaticon-calculator"></i>
+                            </span>
+                    Budget
+                </a>
+            </li>
+        </ul>
 
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-dashboard">
+
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header mr-md-3">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                        <i class="la la-bars"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
+
+                    <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                        <span class="square square-lg d-md-none"><i class="la la-bars"></i></span>
+                        <i class="la la-bars d-none d-md-block"></i>
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right d-md-none">
+                <li class="nav-item">
+                    <!-- toggles chat -->
+                    <a class="nav-link" href="#" data-toggle="chat-sidebar">
+                        <span class="square square-lg"><i class="la la-globe"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand d-md-none" href="/dashboard/index.html">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                sing
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
+        </div>
+
+        <!-- this part is hidden for xs screens -->
+        <div class="navbar-header mobile-hidden">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
+                               oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
+                </div>
+            </form>
+
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
+
+            <ul class="nav navbar-nav float-right">
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle no-caret nav-link" data-toggle="dropdown">
+                        <i class="la la-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
-</section>
+</nav>
+
+<div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Costs</li>
+            <li class="breadcrumb-item active">Import from Excel</li>
+        </ol>
+        <h2 class="page-title">Import from Excel file Wizard - <span class="fw-semi-bold">Choose file to import</span>
+        </h2>
+
+        <div class="row">
+            <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Select <span class="fw-semi-bold">File</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div class="col-md-8 mx-auto">
+                            <h2>Upload Excel File with Project Costs</h2>
+                            <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+                            <form method="post" th:action="@{/upload/file}" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <input type="hidden" th:value="${id}" name="id"/>
+                                    <input type="file" name="file" class="form-control-file">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Import selected file</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Reference <span class="fw-semi-bold">File</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+
+                        <h5 style="background-color: #FFFF00">Wartości których nie uda się poprawnie zaimportować
+                            zostaną oznaczone kolorem żółtym i będzie można je wprowadzić ręcznie.</h5>
+                        <h5>Wytyczne dotyczące pliku z którego dane będą importowane (ważne są dokładne nazwy kolumn,
+                            nie ich kolejność): </h5>
+                        <br>
+                        <table style="border-collapse:
+ collapse;table-layout:fixed;width:1607pt" width="2141" cellspacing="0" cellpadding="0" border="0">
+                            <colgroup>
+                                <col style="mso-width-source:userset;mso-width-alt:1194;width:25pt" width="34">
+                                <col style="mso-width-source:userset;mso-width-alt:938;width:20pt" width="26">
+                                <col style="mso-width-source:userset;mso-width-alt:4864;width:103pt" width="137">
+                                <col style="mso-width-source:userset;mso-width-alt:1991;
+ width:42pt" width="56" span="2">
+                                <col style="mso-width-source:userset;mso-width-alt:4864;
+ width:103pt" width="137" span="2">
+                                <col style="mso-width-source:userset;mso-width-alt:2076;width:44pt" width="58">
+                                <col style="mso-width-source:userset;mso-width-alt:4807;width:101pt" width="135">
+                                <col style="mso-width-source:userset;mso-width-alt:4721;width:100pt" width="133">
+                                <col style="mso-width-source:userset;mso-width-alt:4750;
+ width:100pt" width="134" span="2">
+                                <col style="mso-width-source:userset;mso-width-alt:4579;width:97pt" width="129">
+                                <col style="mso-width-source:userset;mso-width-alt:10808;width:228pt" width="304">
+                                <col style="mso-width-source:userset;mso-width-alt:2247;width:47pt" width="63">
+                                <col style="mso-width-source:userset;mso-width-alt:3584;width:76pt" width="101">
+                                <col style="mso-width-source:userset;mso-width-alt:2389;width:50pt" width="67">
+                                <col style="mso-width-source:userset;mso-width-alt:2161;width:46pt" width="61">
+                                <col style="mso-width-source:userset;mso-width-alt:2218;width:47pt" width="62">
+                                <col style="mso-width-source:userset;mso-width-alt:1194;width:25pt" width="34">
+                                <col style="mso-width-source:userset;mso-width-alt:1678;width:35pt" width="47">
+                                <col style="mso-width-source:userset;mso-width-alt:1507;width:32pt" width="42">
+                                <col style="mso-width-source:userset;mso-width-alt:1934;width:41pt" width="54">
+                            </colgroup>
+                            <tbody>
+                            <tr style="height:15.0pt" height="20">
+                                <td colspan="19" class="xl72781" style="border-right:1.0pt solid black;
+  height:15.0pt;width:1474pt" width="1964" height="20">Dane dotyczące faktury
+                                </td>
+                                <td colspan="4" class="xl75781" style="border-left:none;width:133pt" width="177">Dane
+                                    księgowe
+                                </td>
+                            </tr>
+                            <tr style="mso-height-source:userset;height:43.2pt" height="58">
+                                <td class="xl66781" style="height:43.2pt;border-top:none;
+  width:25pt" width="34" height="58">REP.
+                                </td>
+                                <td class="xl70781" style="border-top:none;width:20pt" width="26">rok</td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:103pt" width="137">Odbiorca FV
+                                </td>
+                                <td class="xl67781" style="border-top:none;border-left:none;
+  width:42pt" width="56">Nazwa projektu
+                                </td>
+                                <td class="xl67781" style="border-top:none;border-left:none;
+  width:42pt" width="56">Nr projektu
+                                </td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:103pt" width="137">Numer faktury
+                                </td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:103pt" width="137">Sprzedawca
+                                </td>
+                                <td class="xl69781" style="border-top:none;border-left:none;
+  width:44pt" width="58">Data sprzedaży
+                                </td>
+                                <td class="xl76781" style="border-top:none;border-left:none;
+  width:101pt" width="135">Data wystawienia
+                                </td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:100pt" width="133">Przedmiot usługi
+                                </td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:100pt" width="134">Kategoria kosztu
+                                </td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:100pt" width="134">Podkategoria kosztu
+                                </td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:97pt" width="129">Opex/Capex
+                                </td>
+                                <td class="xl77781" style="border-top:none;border-left:none;
+  width:228pt" width="304">Wykonanie budżetu brutto
+                                </td>
+                                <td class="xl69781" style="border-top:none;border-left:none;
+  width:47pt" width="63">Data akceptacji kosztu
+                                </td>
+                                <td class="xl67781" style="border-top:none;border-left:none;
+  width:76pt" width="101">Kierownik merytoryczny/osoba zlecająca
+                                </td>
+                                <td class="xl67781" style="border-top:none;border-left:none;
+  width:50pt" width="67">Refaktura z VIG spółka
+                                </td>
+                                <td class="xl67781" style="border-top:none;border-left:none;
+  width:46pt" width="61">Numer refaktury
+                                </td>
+                                <td class="xl67781" style="border-top:none;border-left:none;
+  width:47pt" width="62">Data wystawienia
+                                </td>
+                                <td class="xl79781" style="width:25pt" width="34">MPK</td>
+                                <td class="xl80781" style="border-left:none;width:35pt" width="47">Nazwa biura</td>
+                                <td class="xl68781" style="border-left:none;width:32pt" width="42">GMPK</td>
+                                <td class="xl80781" style="border-left:none;width:41pt" width="54">NR zlecenia</td>
+                            </tr>
+                            <tr class="xl78781" style="height:14.4pt" height="19">
+                                <td class="xl78781" style="height:14.4pt" height="19"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781">Dozwolone wartości:</td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781">Dowolne 255 znaków</td>
+                                <td class="xl78781">Dowolne 255 znaków</td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781">rodzaj komórki - Data</td>
+                                <td class="xl78781">Dowolne 255 znaków</td>
+                                <td class="xl78781">Dozwolone wartości:</td>
+                                <td class="xl78781">Dozwolone wartości:</td>
+                                <td class="xl78781">Dozwolone wartości:</td>
+                                <td class="xl78781">rodzaj komórki - Liczbowe, Walutowe, Księgowe</td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                                <td class="xl78781"></td>
+                            </tr>
+                            <tr style="height:14.4pt" height="19">
+                                <td class="xl15781" style="height:14.4pt" height="19"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">CL</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">IT</td>
+                                <td class="xl71781">Maintenance</td>
+                                <td class="xl15781">OPEX</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                            </tr>
+                            <tr style="height:14.4pt" height="19">
+                                <td class="xl15781" style="height:14.4pt" height="19"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">CNL</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">Non IT</td>
+                                <td class="xl15781">Osobowe-zewnętrzne</td>
+                                <td class="xl15781">CAPEX</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                            </tr>
+                            <tr style="height:14.4pt" height="19">
+                                <td class="xl15781" style="height:14.4pt" height="19"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">VIG</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">Software</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                            </tr>
+                            <tr style="height:14.4pt" height="19">
+                                <td class="xl15781" style="height:14.4pt" height="19"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">Other</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                            </tr>
+                            <tr style="height:14.4pt" height="19">
+                                <td class="xl15781" style="height:14.4pt" height="19"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">Marketing</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                            </tr>
+                            <tr style="height:14.4pt" height="19">
+                                <td class="xl15781" style="height:14.4pt" height="19"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781">Osobowe</td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                            </tr>
+                            <tr style="height:14.4pt" height="19">
+                                <td class="xl15781" style="height:14.4pt" height="19"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl71781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                                <td class="xl15781"></td>
+                            </tr>
+                            <!--[if supportMisalignedColumns]-->
+                            <tr style="display:none" height="0">
+                                <td style="width:25pt" width="34"></td>
+                                <td style="width:20pt" width="26"></td>
+                                <td style="width:103pt" width="137"></td>
+                                <td style="width:42pt" width="56"></td>
+                                <td style="width:42pt" width="56"></td>
+                                <td style="width:103pt" width="137"></td>
+                                <td style="width:103pt" width="137"></td>
+                                <td style="width:44pt" width="58"></td>
+                                <td style="width:101pt" width="135"></td>
+                                <td style="width:100pt" width="133"></td>
+                                <td style="width:100pt" width="134"></td>
+                                <td style="width:100pt" width="134"></td>
+                                <td style="width:97pt" width="129"></td>
+                                <td style="width:228pt" width="304"></td>
+                                <td style="width:47pt" width="63"></td>
+                                <td style="width:76pt" width="101"></td>
+                                <td style="width:50pt" width="67"></td>
+                                <td style="width:46pt" width="61"></td>
+                                <td style="width:47pt" width="62"></td>
+                                <td style="width:25pt" width="34"></td>
+                                <td style="width:35pt" width="47"></td>
+                                <td style="width:32pt" width="42"></td>
+                                <td style="width:41pt" width="54"></td>
+                            </tr>
+                            <!--[endif]-->
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </section>
+            </div>
+        </div>
+
+        <footer th:replace="layouts :: footer"></footer>
+    </main>
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+
+<!-- common libraries. required for every page-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/jquery-pjax/jquery.pjax.js"></script>
+<script src="/node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/node_modules/bootstrap/js/dist/util.js"></script>
+<script src="/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/node_modules/widgster/widgster.js"></script>
+<script src="/node_modules/pace.js/pace.js"
+        data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }'></script>
+<script src="/node_modules/hammerjs/hammer.js"></script>
+<script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
+
+<!-- DataTables JS -->
+<script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+<!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>-->
+
+
+<!-- DataTables Select JS -->
+<script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+<!-- common app js -->
+<script src="/js/sing/settings.js"></script>
+<script src="/js/sing/app.js"></script>
+
+<!-- Page scripts -->
+<script src="/node_modules/jquery-sparkline/jquery.sparkline.js"></script>
+<!-- page specific js -->
+<script src="/js/sing/tables.js"></script>
 
 </body>
 </html>

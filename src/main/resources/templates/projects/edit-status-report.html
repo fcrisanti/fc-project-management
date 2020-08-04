@@ -1,253 +1,483 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-<!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>PROTON</title>
-    <script src="/js/jquery-3.5.0.min.js"></script>
-    <!-- jsPDF library -->
-    <script src="/js/jspdf.min.js"></script>
-    <script src="/js/html2pdf.bundle.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-    <!--<head th:replace="layouts :: header">-->
-    <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!-- Material Design Bootstrap -->
-    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">
-    <!-- Your custom styles (optional) -->
-    <link href="/css/style.css" rel="stylesheet" type="text/css">
-    <!-- DataTables CSS -->
-    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables JS -->
-    <script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+    <title th:text="${project?.name}">PROTON</title>
+    <link href="/css/sing/application.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+
+
+    <!-- DataTables CSS -->
+    <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
     <!-- DataTables Select CSS -->
     <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables Select JS -->
-    <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
-    <!-- Bootstrap tooltips -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <!-- Material Design Bootstrap -->
+    <!--    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">-->
 
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script type="module" src="https://unpkg.com/x-frame-bypass"></script>
-    <style>
-        table, td, th {
-            border: 1px solid #595959;
-            border-collapse: collapse;
-        }
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
 
-        td, th {
-            padding: 3px;
-            width: 133px;
-            height: 25px;
-        }
-
-        .even {
-            background: #fbf8f0;
-        }
-
-        .odd {
-            background: #fefcf9;
-        }
-    </style>
-
+    <link rel="shortcut icon" href="/codebase/planet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PROTON">
+    <meta name="keywords"
+          content="proton ppm">
+    <meta name="author" content="Francesco Crisanti">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+        chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+        https://code.google.com/p/chromium/issues/detail?id=332189
+        */
+    </script>
 
 </head>
+<body class="nav-collapsed" style="overflow-x: unset;">
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
 
-<body>
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo d-none d-md-block">
+            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
+                <b>PROTON</b></a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status d-md-none">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar float-right">
+                            <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                        </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                            13
+                        </span>
+                &nbsp;
+                Francesco <strong>Crisanti</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+        </div>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/projects">
+                            <span class="icon">
+                                <i class="fi flaticon-home"></i>
+                            </span>
+                    Project List
+                </a>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/psr">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/employees">
+                            <span class="icon">
+                                <i class="fi flaticon-users"></i>
+                            </span>
+                    PMO
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#">
+                            <span class="icon">
+                                <i class="fi flaticon-calculator"></i>
+                            </span>
+                    Budget
+                </a>
+            </li>
+        </ul>
 
-<nav th:replace="layouts :: navbar"></nav>
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-dashboard">
 
-<hr>
-<h3 th:text="'PSR of '+${project.name}"> PSR </h3>
-<hr>
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header mr-md-3">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                        <i class="la la-bars"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
 
+                    <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                        <span class="square square-lg d-md-none"><i class="la la-bars"></i></span>
+                        <i class="la la-bars d-none d-md-block"></i>
+                    </a>
+                </li>
 
-<div class="row" style="width: 600vw; margin: 30px">
-    <div class="html-content" style="width: 800px;height: 650px;">
-        <div id="edit" style="width: 800px;height: 650px;">
-            <form th:action="@{/psr/{id}/save(id=${project.projectId})}" th:object="${projectStatusReport}"
-                  method="POST">
-                <div th:if="${errorMessage}">
-                    <div th:text="${errorMessage}" class="red-text"></div>
+            </ul>
+            <ul class="nav navbar-nav navbar-right d-md-none">
+                <li class="nav-item">
+                    <!-- toggles chat -->
+                    <a class="nav-link" href="#" data-toggle="chat-sidebar">
+                        <span class="square square-lg"><i class="la la-globe"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand d-md-none" href="/projects">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                sing
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
+        </div>
+
+        <!-- this part is hidden for xs screens -->
+        <div class="navbar-header mobile-hidden">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
+                               oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm mb-3"> Save PSR</button>
-                <a th:href="@{/psr/{id}(id=${project.projectId})}" class="btn btn-green btn-sm mb-3"> New
-                    PSR </a>
-                <button type="submit" class="btn btn-amber btn-sm mb-3" onclick="resetPsrIdAndSave()"> Duplicate</button>
-                Month
-                <select th:field="${projectStatusReport.month}">
-                    <option th:each="month : ${T(java.time.Month).values()}"
-                            th:value="${month}"
-                            th:text="${month.getValue()}">
-                    </option>
-                </select>
-                <input type="hidden" th:value="${projectStatusReport.psrId}" name="psrId" id="psrId">
-                Year
-                <input type="number" th:field="${projectStatusReport.year}" style="width:60px" min="2020" max="2099"
-                       placeholder="year"
-                       required>
-                <br>
-                <small>
-                    <i th:text="${projectStatusReport.modifiedBy!=null } ? ${ 'Last modified by '+projectStatusReport.modifiedBy+' on '+projectStatusReport.lastModifiedDate}"></i>
-                </small>
-                <div class="column">
-                    <table class="table table-bordered table-striped">
-                        <colgroup>
-                            <col style="background-color:#aeea00">
-                            <col span="2">
-                            <col style="background-color:#ccff90">
-                        </colgroup>
-                        <tbody>
-                        <tr>
-                            <td>PROJECT DESCRIPTION:</td>
-                            <td colspan="2" style="background-color:#FFFF00">COST (PLN)</td>
-                            <td>PM:
-                                <input type="text" name="projectManager" id="projectManager"
-                                       th:value="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.projectManager}">
-                        </tr>
-                        <tr>
-                            <td rowspan="6" th:text="${project.descriptionEn}"></td>
-                            <td style="background-color:#FFFF00">REALIZED:</td>
-                            <td style="background-color:#FFFF00">
-                                <input type="number" th:field="${projectStatusReport.realizedBudget}" step="1">
-                            </td>
-                            <td rowspan="2">SCOPE
-                                <select th:field="${projectStatusReport.scope}">
-                                    <option th:each="scope : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
-                                            th:value="${scope}"
-                                            th:text="${scope}">
-                                    </option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="background-color:#FFFF00">PLANNED:</td>
-                            <td style="background-color:#FFFF00">
-                                <input type="number"
-                                       th:value="${projectStatusReport.plannedBudget != null} ? ${projectStatusReport.plannedBudget} : ${project.budget}"
-                                       id="plannedBudget" name="plannedBudget" step="1">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="background-color:#FFFF00">FORECAST:</td>
-                            <td style="background-color:#FFFF00">
-                                <input type="number" th:field="${projectStatusReport.forecastBudget}" step="1">
-                            </td>
-                            <td rowspan="2">SCHEDULE
-                                <select th:field="${projectStatusReport.schedule}">
-                                    <option th:each="schedule : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
-                                            th:value="${schedule}"
-                                            th:text="${schedule}">
-                                    </option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="background-color:#64dd17" colspan="2">GO-LIVE DATE</td>
-                        </tr>
-                        <tr>
-                            <td style="background-color:#64dd17">FROM INAUGURATION:</td>
-                            <td style="background-color:#64dd17">
-                                <a th:text="${project.goLivePlanned}"></a>
-                            </td>
-                            <td rowspan="2">COST
-                                <select th:field="${projectStatusReport.cost}">
-                                    <option th:each="cost : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
-                                            th:value="${cost}"
-                                            th:text="${cost}">
-                                    </option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="background-color:#64dd17">PLANNED:</td>
-                            <td style="background-color:#64dd17">
-                                <input type="date" th:field="${projectStatusReport.projectGoLive}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>WORKS COMPLETED
-                                (last month)
-                            </td>
-                            <td colspan="3">
-                                <textarea maxlength="255" th:field="${projectStatusReport.completedWorks1}"></textarea>
-                                <textarea maxlength="255" th:field="${projectStatusReport.completedWorks2}"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>NEXT STEPS
-                                (next month)
-                            </td>
-                            <td colspan="3">
-                                <textarea maxlength="255" th:field="${projectStatusReport.nextSteps1}"></textarea>
-                                <textarea maxlength="255" th:field="${projectStatusReport.nextSteps2}"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding-bottom: 50px;">ISSUES /RISKS &amp; MITIGATIONS</td>
-                            <td colspan="3">
-                                <textarea maxlength="255" th:field="${projectStatusReport.risks1}"></textarea>
-                                <textarea maxlength="255" th:field="${projectStatusReport.risks2}"></textarea>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <button type="submit" class="btn btn-primary btn-sm mb-3"> Save PSR</button>
-                <a th:href="@{/projects/edit(id=${project.projectId})}" class="btn btn-outline-blue btn-sm mb-3"> Edit Project </a>
             </form>
+            <button type="submit" form="projectform" class="btn btn-primary" style="width:200px">Save Changes
+            </button>
+            <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
+               style="width:250px">Edit Project</a>
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
+
+            <ul class="nav navbar-nav float-right">
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle no-caret nav-link" data-toggle="dropdown">
+                        <i class="la la-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
-    <div id="editor"></div>
+</nav>
 
-    <div class="column">
-        <table id="dtBasicExample" class="table table-bordered table-striped" style="margin-left: 30px;">
-            <thead class="aqua-gradient" style="color: white">
-            <tr>
-                <th> MONTH</th>
-                <th> YEAR</th>
-                <th> EDIT</th>
-                <th> VIEW</th>
-                <th> DOWNLOAD</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="psr : ${project.projectStatusReports}">
-                <td>
-                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
-                       th:text="${psr.month.getValue()}"></a></td>
-                <td>
-                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
-                       th:text="${psr.year}"></a></td>
-                <td>
-                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
-                       class="btn btn-red btn-sm m-0">EDIT</a></td>
-                <td>
-                    <button type="button" class="btn btn-indigo btn-sm m-0"
-                            th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
-                    >VIEW
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-amber btn-sm m-0"
-                            th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/pdf(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
-                    >PDF
-                    </button>
-                    <button type="button" class="btn btn-amber btn-sm m-0"
-                            th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/ppt(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
-                    >PPT
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Project List</li>
+            <li class="breadcrumb-item active" th:text="P+${project.sapNo}"></li>
+        </ol>
+        <h2 class="page-title">Project Status Reports - <span class="fw-semi-bold" id="companyOrGenesis"
+                                                              th:text="${project.name}">All</span></h2>
+
+        <div class="row">
+
+
+
+            <div class="flex-column" style="flex-grow: 0; flex-shrink: 0;">
+                <i th:text="${project.modifiedBy!=null } ? ${ 'Last modified by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
+                <section class="widget col-lg-12">
+                    <header>
+                        <h5>
+                            Project <span class="fw-semi-bold">Status Report</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+
+                        <div class="html-content" style="width: 800px;">
+                            <div id="edit" style="width: 800px;">
+                                <form id="projectform" th:action="@{/psr/{id}/save(id=${project.projectId})}"
+                                      th:object="${projectStatusReport}"
+                                      method="POST">
+                                    <div th:if="${errorMessage}">
+                                        <div th:text="${errorMessage}" class="red-text"></div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"> Save PSR</button>
+                                    <a th:href="@{/psr/{id}(id=${project.projectId})}"
+                                       class="btn btn-default"> New
+                                        PSR </a>
+                                    <button type="submit" class="btn btn-default"
+                                            onclick="resetPsrIdAndSave()"> Duplicate
+                                    </button>
+                                    Month
+                                    <select th:field="${projectStatusReport.month}">
+                                        <option th:each="month : ${T(java.time.Month).values()}"
+                                                th:value="${month}"
+                                                th:text="${month.getValue()}">
+                                        </option>
+                                    </select>
+                                    <input type="hidden" th:value="${projectStatusReport.psrId}" name="psrId"
+                                           id="psrId">
+                                    Year
+                                    <input type="number" th:field="${projectStatusReport.year}" style="width:60px"
+                                           min="2020" max="2099"
+                                           placeholder="year"
+                                           required>
+                                    <br>
+
+                                    <div class="column">
+                                        <table class="table table-bordered table-striped">
+                                            <tbody>
+                                            <tr>
+                                                <td>PROJECT DESCRIPTION:</td>
+                                                <td colspan="2" >COST (PLN)</td>
+                                                <td>PM:
+                                                    <input type="text" name="projectManager" id="projectManager"
+                                                           th:value="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.projectManager}">
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="6" th:text="${project.descriptionEn}"></td>
+                                                <td >REALIZED:</td>
+                                                <td >
+                                                    <input type="number"
+                                                           th:field="${projectStatusReport.realizedBudget}" step="1">
+                                                </td>
+                                                <td rowspan="2">SCOPE
+                                                    <select th:field="${projectStatusReport.scope}">
+                                                        <option th:each="scope : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
+                                                                th:value="${scope}"
+                                                                th:text="${scope}">
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >PLANNED:</td>
+                                                <td >
+                                                    <input type="number"
+                                                           th:value="${projectStatusReport.plannedBudget != null} ? ${projectStatusReport.plannedBudget} : ${project.budget}"
+                                                           id="plannedBudget" name="plannedBudget" step="1">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >FORECAST:</td>
+                                                <td >
+                                                    <input type="number"
+                                                           th:field="${projectStatusReport.forecastBudget}" step="1">
+                                                </td>
+                                                <td rowspan="2">SCHEDULE
+                                                    <select th:field="${projectStatusReport.schedule}">
+                                                        <option th:each="schedule : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
+                                                                th:value="${schedule}"
+                                                                th:text="${schedule}">
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td  colspan="2">GO-LIVE DATE</td>
+                                            </tr>
+                                            <tr>
+                                                <td >FROM INAUGURATION:</td>
+                                                <td >
+                                                    <a th:text="${project.goLivePlanned}"></a>
+                                                </td>
+                                                <td rowspan="2">COST
+                                                    <select th:field="${projectStatusReport.cost}">
+                                                        <option th:each="cost : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
+                                                                th:value="${cost}"
+                                                                th:text="${cost}">
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td >PLANNED:</td>
+                                                <td >
+                                                    <input type="date" th:field="${projectStatusReport.projectGoLive}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>WORKS COMPLETED
+                                                    (last month)
+                                                </td>
+                                                <td colspan="3">
+                                                    <textarea maxlength="255"
+                                                              th:field="${projectStatusReport.completedWorks1}"></textarea>
+                                                    <textarea maxlength="255"
+                                                              th:field="${projectStatusReport.completedWorks2}"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>NEXT STEPS
+                                                    (next month)
+                                                </td>
+                                                <td colspan="3">
+                                                    <textarea maxlength="255"
+                                                              th:field="${projectStatusReport.nextSteps1}"></textarea>
+                                                    <textarea maxlength="255"
+                                                              th:field="${projectStatusReport.nextSteps2}"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-bottom: 50px;">ISSUES /RISKS &amp; MITIGATIONS</td>
+                                                <td colspan="3">
+                                                    <textarea maxlength="255"
+                                                              th:field="${projectStatusReport.risks1}"></textarea>
+                                                    <textarea maxlength="255"
+                                                              th:field="${projectStatusReport.risks2}"></textarea>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"> Save PSR</button>
+                                    <a th:href="@{/projects/edit(id=${project.projectId})}"
+                                       class="btn btn-default"> Edit Project </a>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="editor"></div>
+
+                    </div>
+
+                </section>
+            </div>
+
+            <div class="flex-column" style="flex-grow: 0; flex-shrink: 0; padding: 22px;">
+                <section class="widget col-lg-auto">
+                    <header>
+                        <h5>
+                            All <span class="fw-semi-bold">Status Reports</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+
+                        <div class="column">
+                            <table id="dtBasicExample" class="table table-bordered table-striped">
+                                <thead class="aqua-gradient" style="color: white">
+                                <tr>
+                                    <th> MONTH</th>
+                                    <th> YEAR</th>
+                                    <th> EDIT</th>
+                                    <th> VIEW</th>
+                                    <th> DOWNLOAD</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="psr : ${project.projectStatusReports}">
+                                    <td>
+                                        <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                                           th:text="${psr.month.getValue()}"></a></td>
+                                    <td>
+                                        <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                                           th:text="${psr.year}"></a></td>
+                                    <td>
+                                        <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                                           class="btn btn-red btn-sm m-0">EDIT</a></td>
+                                    <td>
+                                        <button type="button" class="btn btn-indigo btn-sm m-0"
+                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
+                                        >VIEW
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-amber btn-sm m-0"
+                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/pdf(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
+                                        >PDF
+                                        </button>
+                                        <button type="button" class="btn btn-amber btn-sm m-0"
+                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/ppt(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
+                                        >PPT
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </form>
     </div>
+
+
+        <footer th:replace="layouts :: footer"></footer>
+    </main>
 </div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+
+<!-- common libraries. required for every page-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/jquery-pjax/jquery.pjax.js"></script>
+<script src="/node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/node_modules/bootstrap/js/dist/util.js"></script>
+<script src="/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/node_modules/widgster/widgster.js"></script>
+<script src="/node_modules/pace.js/pace.js"
+        data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }'></script>
+<script src="/node_modules/hammerjs/hammer.js"></script>
+<script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
+
+<!-- DataTables JS -->
+<!--<script src="/js/addons/datatables.min.js" type="text/javascript"></script>-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+
+<!-- DataTables Select JS -->
+<script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+<!-- common app js -->
+<script src="/js/sing/settings.js"></script>
+<script src="/js/sing/app.js"></script>
+
+<!-- Page scripts -->
+<script src="/node_modules/jquery-sparkline/jquery.sparkline.js"></script>
+<!-- page specific js -->
+<script src="/js/sing/tables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+
 
 <footer th:replace="layouts :: footer"></footer>
 <script>
@@ -258,7 +488,7 @@
 
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
-            "searching": true,
+            "searching": false,
             "paging": false,
         });
     });
@@ -270,5 +500,5 @@
     }
 
 </script>
-
 </body>
+</html>

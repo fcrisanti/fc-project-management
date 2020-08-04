@@ -14,9 +14,9 @@
 }
 
 #gantt_here{
-    width:calc(100% - 550px);
+    /*width:calc(100% - 550px);*/
     height: 100%;
-    position:absolute;
+    /*position:absolute;*/
     background: #fff;
 }
 

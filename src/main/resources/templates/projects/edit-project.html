@@ -1,550 +1,873 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--<head th:replace="layouts :: header">-->
+<html>
 <head>
-    <!--    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>PROTON</title>
-    <script src="/js/jquery-3.5.0.min.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" type="text/css">
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <!-- Material Design Bootstrap -->
-    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">
-    <!-- Your custom styles (optional) -->
-    <link href="/css/style.css" rel="stylesheet" type="text/css">
-    <!-- DataTables CSS -->
-    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables JS -->
-    <script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+    <title th:text="${project?.name}">PROTON</title>
+    <link href="/css/sing/application.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+
+
+    <!-- DataTables CSS -->
+    <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
     <!-- DataTables Select CSS -->
     <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
-    <!-- DataTables Select JS -->
-    <script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
-    <style>
-        html, body {
-            width: 100vw;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <!-- Material Design Bootstrap -->
+    <!--    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">-->
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="/codebase/dhtmlxgantt.js"></script>
-    <link href="/codebase/dhtmlxgantt.css" rel="stylesheet">
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+
+    <link rel="shortcut icon" href="/codebase/planet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PROTON">
+    <meta name="keywords"
+          content="proton ppm">
+    <meta name="author" content="Francesco Crisanti">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+        chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+        https://code.google.com/p/chromium/issues/detail?id=332189
+        */
+    </script>
+
 </head>
+<body class="nav-collapsed" style="overflow-x: unset;">
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
 
-<body>
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo d-none d-md-block">
+            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
+                <b>PROTON</b></a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status d-md-none">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar float-right">
+                            <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                        </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                            13
+                        </span>
+                &nbsp;
+                Francesco <strong>Crisanti</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+        </div>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/projects">
+                            <span class="icon">
+                                <i class="fi flaticon-home"></i>
+                            </span>
+                    Project List
+                </a>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/psr">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/employees">
+                            <span class="icon">
+                                <i class="fi flaticon-users"></i>
+                            </span>
+                    PMO
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#">
+                            <span class="icon">
+                                <i class="fi flaticon-calculator"></i>
+                            </span>
+                    Budget
+                </a>
+            </li>
+        </ul>
 
-<nav th:replace="layouts :: navbar"></nav>
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-dashboard">
 
-<hr>
-<h3> Project </h3>
-<h4 th:text="${project.name}"> Current Project</h4>
-<h6 class="blue-text"> Kliknij przycisk SAVE CHANGES aby zapisać
-    zmiany.</h6>
-<hr>
-<form id="projectform" th:action="@{/projects/save}" th:object="${project}" method="POST" onsubmit="saveGantt()">
-    <!--    <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3"> New Project </a>-->
-    <input type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()"
-           style="width:480px; margin-right:11px; margin-left: 5px">
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header mr-md-3">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                        <i class="la la-bars"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
 
-    <button type="submit" form="projectform" class="btn btn-primary btn-sm mb-3" style="width:200px">Save Changes
-    </button>
-    <a th:href="@{/psr/{id}(id=${project.projectId})}" type="button" class="btn btn-red btn-sm mb-3"
-       style="width:250px">Project Status Reports (beta)</a>
-    <i th:text="${project.modifiedBy!=null } ? ${ 'Last modified by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
-    <div class="row" style="width: 100vw">
+                    <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                        <span class="square square-lg d-md-none"><i class="la la-bars"></i></span>
+                        <i class="la la-bars d-none d-md-block"></i>
+                    </a>
+                </li>
 
-        <div class="column" style="margin-left:20px; margin-right:20px;">
-
-            <!--            <h4 th:text="${project.name}"> Current Project</h4>-->
-            <input type="hidden" th:field="${project.projectId}">
-            <input type="hidden" th:field="${project.jsonGantt}" id="jsonGantt" value="jsonGantt">
-
-            <table id="dtBasicExample" class="table table-bordered table-striped" style=width:480px;>
-                <thead class="blue-gradient white-text">
-                <tr>
-                    <th> Parameter</th>
-                    <th> Value</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th> Project Name</th>
-                    <td>
-                        <input type="text" th:field="${project.name}" placeholder="Oficjalna nazwa projektu" required>
-                    </td>
-                <tr>
-                    <th> Project ID</th>
-                    <div th:if="${errorMessage}">
-                        <div th:text="${errorMessage}" class="red-text"></div>
-                    </div>
-                    <td>P
-                        <input type="number" th:field="${project.sapNo}" placeholder="XXXX" required>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Project Manager</th>
-                    <td>
-                        <input type="text" th:field="${project.projectManager}" placeholder="PM projektu">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Description PL</th>
-                    <td>
-                        <textarea th:field="${project.descriptionPl}" placeholder="Opis projektu po Polsku"
-                                  height="48"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Description EN</th>
-                    <td>
-                    <textarea th:field="${project.descriptionEn}" placeholder="Opis projektu po Angielsku"
-                              height="48"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th> PMO</th>
-                    <td>
-                        <select name="employees" id="employees">
-                            <option th:each="employee : ${allEmployees}"
-                                    th:value="${employee.employeeId}"
-                                    th:text="${employee}"
-                                    th:selected="${project.employees != null} ? ${employee.employeeId == project.employees.getEmployeeId()} : ${employee.employeeId == 1}"
-                            >
-                            </option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Status</th>
-                    <td>
-                        <select th:field="${project.status}">
-                            <option th:each="status : ${allStatuses}"
-                                    th:value="${status}"
-                                    th:text="${status}" th:default="TO_BE_OPENED">
-                            </option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Company
-                        <p style="margin-bottom: 0px; font-size: x-small"> Aby wybrać więcej niż 1 przytrzymaj CTRL</p>
-                    </th>
-                    <td>
-                        <select th:field="${project.companies}" multiple="multiple">
-                            <!--                            <option th:each="company : ${T(pl.fc.app.enities.enums.Company).values()}"-->
-                            <option th:each="company : ${allCompanies}"
-                                    th:value="${company}"
-                                    th:text="${company}">
-                            </option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Stream</th>
-                    <td>
-                        <select th:field="${project.genesis}">
-                            <!--                            <option th:each="genesis : ${T(pl.fc.app.enities.enums.Genesis).values()}"-->
-                            <option th:each="genesis : ${allGenesis}"
-                                    th:value="${genesis}" th:default="NOT_GENESIS"
-                                    th:text="${genesis}">
-                            </option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Project Sponsor</th>
-                    <td>
-                    <textarea th:field="${project.projectSponsor}" placeholder="Sponsor projektu"
-                              height="48"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Steering Committee Members</th>
-                    <td>
-                    <textarea th:field="${project.steeringCom}" placeholder="Członkowie KS projektu"
-                              height="48"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Steering Committee / MBM meetings</th>
-                    <td>
-                    <textarea th:field="${project.steeringComMeetings}" placeholder="Daty KS / MBM"
-                              height="48"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Last approved budget</th>
-                    <td>
-                        <input type="number" th:field="${project.budget}">PLN
-                    </td>
-                </tr>
-                <tr>
-                    <th> Cost Allocation Key</th>
-                    <td>
-                    <textarea th:field="${project.costAllocationKey}" placeholder="Klucz podziału kosztów między spółki"
-                              height="48"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Providers</th>
-                    <td>
-                    <textarea th:field="${project.externalProviders}" placeholder="Dostawcy wewnętrzni i zewnętrzni"
-                              height="48"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th> Analyst</th>
-                    <td>
-                        <input type="text" th:field="${project.analyst}" placeholder="Analityk projektu">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Technical Manager</th>
-                    <td>
-                        <input type="text" th:field="${project.techManager}" placeholder="Techniczny projektu">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Numer zleceń</th>
-                    <td>
-                        <input type="text" th:field="${project.MPK}" placeholder="w formacie CXPMPXXXX">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Date of the Initiative Notification</th>
-                    <td>
-                        <input type="date" th:field="${project.inaugurationDate}">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Kick-off</th>
-                    <td>
-                        <input type="date" th:field="${project.kickOff}">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Go Live Planned</th>
-                    <td>
-                        <input type="date" th:field="${project.goLivePlanned}">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Go Live Final</th>
-                    <td>
-                        <input type="date" th:field="${project.goLiveFinal}">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Project Closure</th>
-                    <td>
-                        <input type="date" th:field="${project.projectClosure}">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Depreciation Start Date</th>
-                    <td>
-                        <input type="date" th:field="${project.depreciationStartDate}">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Priority [1-5]</th>
-                    <td>
-                        <input type="number" th:field="${project.priority}" min="1" max="5">
-                    </td>
-                </tr>
-                <tr>
-                    <th> Appraisal MB's [0%-150%]</th>
-                    <td>
-                        <input type="number" th:field="${project.appraisal}" min="0" max="150">%
-                    </td>
-                </tr>
-                <tr>
-                    <th> PMO comment/other</th>
-                    <td>
-                    <textarea th:field="${project.comment}" placeholder="Komentarz lub dodatkowe informacje"
-                              height="48"></textarea>
-                    </td>
-                </tr>
-                <!--                <tr>-->
-                <!--                    <th> JSON</th>-->
-                <!--                    <td th:text="${project.jsonGantt}">-->
-                <!--                    </td>-->
-                <!--                </tr>-->
-                </tbody>
-            </table>
-            <button type="submit" form="projectform" class="btn-primary" style="width:200px">Save Changes</button>
-
+            </ul>
+            <ul class="nav navbar-nav navbar-right d-md-none">
+                <li class="nav-item">
+                    <!-- toggles chat -->
+                    <a class="nav-link" href="#" data-toggle="chat-sidebar">
+                        <span class="square square-lg"><i class="la la-globe"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand d-md-none" href="/projects">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                sing
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
         </div>
 
-        <div id="fullscreen_view" class="landing-view-demo" style="width:calc(100% - 565px); height: 1710px;">
-            <script src="/codebase/dhtmlxgantt.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <script src="/codebase/dhtmlxgantt_marker.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <script src="/codebase/ext/dhtmlxgantt_fullscreen.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_critical_path.js"-->
-            <!--                type="text/javascript" charset="utf-8"></script>-->
-            <!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_auto_scheduling.js"-->
-            <!--                type="text/javascript" charset="utf-8"></script>-->
-            <script src="/codebase/dhtmlxgantt_tooltip.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_undo.js"-->
-            <!--                type="text/javascript" charset="utf-8"></script>-->
-            <script src="/codebase/api.js" async="true" type="text/javascript"
-                    charset="utf-8"></script>
+        <!-- this part is hidden for xs screens -->
+        <div class="navbar-header mobile-hidden">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
+                               oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
+                </div>
+            </form>
+            <button type="submit" form="projectform" class="btn btn-primary" style="width:200px">Save Changes
+            </button>
+            <a th:href="@{/psr/{id}(id=${project.projectId})}" type="button" class="btn btn-default"
+               style="width:250px">View Status Reports</a>
+            <a th:href="@{/budget(id=${project.projectId})}"
+               class="button btn btn-default" style="width:200px">
+                Edit Costs
+            </a>
 
-            <script src="/codebase/nav_menu.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <script src="/codebase/layout.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <script src="/codebase/zoom.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <script src="/codebase/zoom_to_fit.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <script src="/codebase/grid_struct.js"
-                    type="text/javascript" charset="utf-8"></script>
-            <script src="/codebase/fit_task_text.js"
-                    type="text/javascript" charset="utf-8"></script>
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
 
-            <link rel="stylesheet"
-                  href="/codebase/dhtmlxgantt.css"
-                  type="text/css" media="screen" title="no title" charset="utf-8">
-            <link rel="stylesheet"
-                  href="/css/style-gantt.css"
-                  type="text/css" charset="utf-8">
+            <ul class="nav navbar-nav float-right">
 
-            <div class="demo-main-container">
-                <div class="header gantt-demo-header">
-                    <ul class="gantt-controls">
-                        <li class="gantt-menu-item"><a data-action="collapseAll"><img
-                                src="/codebase/imgs/ic-collapse-all-24.png">Collapse
-                            All</a></li>
-                        <li class="gantt-menu-item gantt-menu-item-last"><a data-action="expandAll"><img
-                                src="/codebase/imgs/ic-expand-all-24.png">Expand All</a>
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle no-caret nav-link" data-toggle="dropdown">
+                        <i class="la la-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
                         </li>
-                        <li class="gantt-menu-item"><a data-action="undo"
-                                                       class=" menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled"><img
-                                src="/codebase/imgs/ic-undo-24.png">Undo</a></li>
-                        <li class="gantt-menu-item gantt-menu-item-last"><a data-action="redo"
-                                                                            class=" menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled"><img
-                                src="/codebase/imgs/ic-redo-24.png">Redo</a></li>
-                        <!--                                            <li class="gantt-menu-item"><a data-action="toggleAutoScheduling"><img-->
-                        <!--                                                    src="/codebase/imgs/ic-auto-scheduling-24.png">Auto-->
-                        <!--                                                Scheduling</a></li>-->
-                        <!--                                            <li class="gantt-menu-item"><a data-action="toggleCriticalPath"><img-->
-                        <!--                                                    src="/codebase/imgs/ic-critical-path-24.png">Critical-->
-                        <!--                                                Path</a></li>-->
-                        <li class="gantt-menu-item gantt-menu-item-right"><a onclick="fullscreen()"><img
-                                src="/codebase/imgs/ic-fullscreen-24.png">Fullscreen</a>
-                        </li>
-                        <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a><img
-                                src="/codebase/imgs/ic-export-24.png">Export</a>
-                            <ul class="gantt-controls">
-                                <li class="gantt-menu-item"><a data-action="toPDF"><img
-                                        src="/codebase/imgs/ic-file-24.png">PDF</a>
-                                </li>
-                                <li class="gantt-menu-item"><a data-action="toPNG"><img
-                                        src="/codebase/imgs/ic-file-24.png">PNG</a>
-                                </li>
-                                <li class="gantt-menu-item"><a data-action="toExcel"><img
-                                        src="/codebase/imgs/ic-file-24.png">Excel</a>
-                                </li>
-                                <li class="gantt-menu-item"><a data-action="toMSProject"><img
-                                        src="/codebase/imgs/ic-file-24.png">MS
-                                    Project</a></li>
-                            </ul>
-                        </li>
-                        <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a
-                                data-action="zoomToFit"><img
-                                src="/codebase/imgs/ic-zoom-to-fit-24.png">Zoom to
-                            Fit</a></li>
-                        <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomOut"><img
-                                src="/codebase/imgs/ic-zoom-out.png">Zoom Out</a>
-                        </li>
-                        <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomIn"><img
-                                src="/codebase/imgs/ic-zoom-in.png">Zoom In</a></li>
-
                     </ul>
-                </div>
-
-                <div id="gantt_here" class="column">
-                    <!--            <div id="gantt_here" class="column" style="width: 950px; height: 100%; overflow:hidden;">-->
-                    <!--                <div class="gantt_layout_cell gantt_layout_root gantt_layout gantt_layout_x gantt_container gantt_layout_cell_border_left gantt_layout_cell_border_top gantt_layout_cell_border_right gantt_layout_cell_border_bottom"-->
-                    <!--                     data-cell-id="main" style="height: 100%; overflow:hidden;">-->
-                    <!--                </div>-->
-
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h5>Budget split by PM Category</h5>
-                    <div id="table" class="table-editable">
-
-                        <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
-                            <thead class="peach-gradient white-text">
-                            <tr>
-                                <th class="text-center">Category name</th>
-                                <th class="text-center">Budget</th>
-                                <th class="text-center">Spent</th>
-                                <th class="text-center">Remaining</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                                    <tr th:each="cat : ${costcat}" th:if="${cat.getKey() != 'total'}">
-                                                        <td class="pt-3-half" th:text="${cat?.getKey()}"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[0]}" style="text-align: right;"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[1]}" style="text-align: right;"></td>
-                                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[2]}" style="text-align: right;"></td>
-                                                    </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th class="text-center font-weight-bold">Total</th>
-                                <th class="text-center font-weight-bold currencyInput" th:if="${costcat!=null}" th:text="${costcat?.get('total')[0]}">Budget</th>
-                                <th class="text-center font-weight-bold currencyInput" th:if="${costcat!=null}" th:text="${costcat?.get('total')[1]}">Spent</th>
-                                <th class="text-center font-weight-bold currencyInput" th:if="${costcat!=null}" th:text="${costcat?.get('total')[2]}">Remaining</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-
-                        <a th:href="@{/budget(id=${project.projectId})}" class="button btn btn-indigo btn-sm mb-3" style="width:200px">
-                            Edit Costs
-                        </a>
-                        <a th:href="@{/budget/costcat(id=${project.projectId})}" class="button btn btn-amber btn-sm mb-3" style="width:200px">
-                            Edit Cost Categories
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5>Costs split by Company</h5>
-                    <div  class="table-editable">
-
-                        <table  class="table table-bordered table-responsive-md table-striped text-center">
-                            <thead class="purple-gradient white-text">
-                            <tr>
-                                <th class="text-center">Company name</th>
-                                <th class="text-center">Spent</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="company : ${costcompany}" th:if="${company.getKey() != 'total'}">
-                                <td class="pt-3-half" th:text="${company.getKey()!='0'? company.getKey() : 'Other/Not set' }"></td>
-                                <td class="pt-3-half currencyInput" th:text="${company?.getValue()}" style="text-align: right;"></td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th class="text-center font-weight-bold">Total</th>
-                                <th class="font-weight-bold currencyInput" th:text="${costcompany?.get('total')}" style="text-align: right;">Spent</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5>Costs split by Year</h5>
-                    <div  class="table-editable">
-
-                        <table  class="table table-bordered table-responsive-md table-striped text-center">
-                            <thead class="young-passion-gradient white-text">
-                            <tr>
-                                <th class="text-center">Year</th>
-                                <th class="text-center">Spent</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="year : ${costyear}" th:if="${year.getKey() != 0}">
-                                <td class="pt-3-half" th:text="${year?.getKey()}"></td>
-                                <td class="pt-3-half currencyInput" th:text="${year?.getValue()}" style="text-align: right;"></td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th class="text-center font-weight-bold">Total</th>
-                                <th class="font-weight-bold currencyInput" th:text="${costyear?.get(0)}" style="text-align: right;">Spent</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <table class="table table-bordered table-striped white-text" style=width:480px;>
-                <thead class="blue-gradient">
-                <tr>
-                    <th>KICK OFF PRESENTATION</th>
-                    <th>BUSINESS CASE</th>
-                    <th>PROJECT MANDATE</th>
-                    <th>SCHEDULE</th>
-                    <th>DPIA</th>
-                    <th>CLOSURE PROJECT PRESENTATION</th>
-                    <th>PSR NOT REQUIRED (default unchecked)</th>
-                </tr>
-                <tr>
-                    <td>
-                        <select th:field="${project.kickOffPresentation}">
-                            <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
-                                    th:value="${state}" th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
-                                    th:text="${state}">
-                            </option>
-                        </select>
-                    </td>
-                    <td><select th:field="${project.businessCase}">
-                        <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
-                                th:value="${state}" th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
-                                th:text="${state}">
-                        </option>
-                    </select></td>
-                    <td><select th:field="${project.projectMandate}">
-                        <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
-                                th:value="${state}" th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
-                                th:text="${state}">
-                        </option>
-                    </select></td>
-                    <td><select th:field="${project.schedule}">
-                        <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
-                                th:value="${state}" th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
-                                th:text="${state}">
-                        </option>
-                    </select></td>
-                    <td><select th:field="${project.DPIA}">
-                        <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
-                                th:value="${state}" th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
-                                th:text="${state}">
-                        </option>
-                    </select></td>
-                    <td><select th:field="${project.closurePresentation}">
-                        <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
-                                th:value="${state}" th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
-                                th:text="${state}">
-                        </option>
-                    </select></td>
-                    <td>
-                        <input type="checkbox" name="psrNotRequired" th:checked="${project.psrNotRequired}"/>
-                    </td>
-                </tr>
-            </table>
+                </li>
+            </ul>
         </div>
     </div>
-</form>
+</nav>
+
+<div class="content-wrap">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+
+    <main id="content" class="content" role="main">
+        <!-- Page content -->
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Project List</li>
+            <li class="breadcrumb-item active" th:text="P+${project.sapNo}"></li>
+        </ol>
+        <h2 class="page-title">Project - <span class="fw-semi-bold" id="companyOrGenesis"
+                                               th:text="${project.name}">All</span></h2>
+
+        <form id="projectform" th:action="@{/projects/save}" th:object="${project}" method="POST" onsubmit="saveGantt()">
+            <i th:text="${project.modifiedBy!=null } ? ${ 'Last modified by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
+        <div class="flex-column" style="flex-grow: 0; flex-shrink: 0;">
+            <section class="widget">
+                <header>
+                    <h5>
+                        Project <span class="fw-semi-bold">Properties</span>
+                    </h5>
+                </header>
+                <div class="widget-body">
+                    <div class="row">
+                        <div class="flex-column" style="margin-left:20px;">
+
+                            <!--            <h4 th:text="${project.name}"> Current Project</h4>-->
+                            <input type="hidden" th:field="${project.projectId}">
+                            <input type="hidden" th:field="${project.jsonGantt}" id="jsonGantt" value="jsonGantt">
+
+                            <table id="dtBasicExample" class="table table-bordered table-striped"
+                                   style="width:450px; height: 610px;">
+
+                                <tbody>
+                                <tr>
+                                    <th> Project Name</th>
+                                    <td>
+                                        <input type="text" th:field="${project.name}"
+                                               placeholder="Oficjalna nazwa projektu" required>
+                                    </td>
+                                <tr>
+                                    <th> Project ID</th>
+                                    <div th:if="${errorMessage}">
+                                        <div th:text="${errorMessage}" class="red-text"></div>
+                                    </div>
+                                    <td>P
+                                        <input type="number" th:field="${project.sapNo}" placeholder="XXXX"
+                                               required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Project Manager</th>
+                                    <td>
+                                        <input type="text" th:field="${project.projectManager}"
+                                               placeholder="PM projektu">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Description PL</th>
+                                    <td>
+                        <textarea th:field="${project.descriptionPl}" placeholder="Opis projektu po Polsku"
+                                  height="48"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Description EN</th>
+                                    <td>
+                    <textarea th:field="${project.descriptionEn}" placeholder="Opis projektu po Angielsku"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> PMO</th>
+                                    <td>
+                                        <select name="employees" id="employees">
+                                            <option th:each="employee : ${allEmployees}"
+                                                    th:value="${employee.employeeId}"
+                                                    th:text="${employee}"
+                                                    th:selected="${project.employees != null} ? ${employee.employeeId == project.employees.getEmployeeId()} : ${employee.employeeId == 1}"
+                                            >
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Status</th>
+                                    <td>
+                                        <select th:field="${project.status}">
+                                            <option th:each="status : ${allStatuses}"
+                                                    th:value="${status}"
+                                                    th:text="${status}" th:default="TO_BE_OPENED">
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Company
+                                        <p style="margin-bottom: 0px; font-size: x-small"> Aby wybrać więcej niż 1
+                                            przytrzymaj CTRL</p>
+                                    </th>
+                                    <td>
+                                        <select th:field="${project.companies}" multiple="multiple">
+                                            <!--                            <option th:each="company : ${T(pl.fc.app.enities.enums.Company).values()}"-->
+                                            <option th:each="company : ${allCompanies}"
+                                                    th:value="${company}"
+                                                    th:text="${company}">
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Stream</th>
+                                    <td>
+                                        <select th:field="${project.genesis}">
+                                            <!--                            <option th:each="genesis : ${T(pl.fc.app.enities.enums.Genesis).values()}"-->
+                                            <option th:each="genesis : ${allGenesis}"
+                                                    th:value="${genesis}" th:default="NOT_GENESIS"
+                                                    th:text="${genesis}">
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="flex-column">
+                            <table id="dtBasicExample2" class="table table-bordered table-striped"
+                                   style="width:450px; height: 610px;">
+
+                                <tbody>
+                                <tr>
+                                    <th> Project Sponsor</th>
+                                    <td>
+                    <textarea th:field="${project.projectSponsor}" placeholder="Sponsor projektu"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Steering Committee Members</th>
+                                    <td>
+                    <textarea th:field="${project.steeringCom}" placeholder="Członkowie KS projektu"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Steering Committee / MBM meetings</th>
+                                    <td>
+                    <textarea th:field="${project.steeringComMeetings}" placeholder="Daty KS / MBM"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Last approved budget</th>
+                                    <td>
+                                        <input type="number" th:field="${project.budget}">PLN
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Cost Allocation Key</th>
+                                    <td>
+                    <textarea th:field="${project.costAllocationKey}" placeholder="Klucz podziału kosztów między spółki"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Providers</th>
+                                    <td>
+                    <textarea th:field="${project.externalProviders}" placeholder="Dostawcy wewnętrzni i zewnętrzni"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="flex-column">
+                            <table id="dtBasicExample2" class="table table-bordered table-striped"
+                                   style="width:450px; height: 610px;">
+
+                                <tbody>
+                                <tr>
+
+
+                                <tr>
+                                    <th> Analyst</th>
+                                    <td>
+                                        <input type="text" th:field="${project.analyst}"
+                                               placeholder="Analityk projektu">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Technical Manager</th>
+                                    <td>
+                                        <input type="text" th:field="${project.techManager}"
+                                               placeholder="Techniczny projektu">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Numer zleceń</th>
+                                    <td>
+                                        <input type="text" th:field="${project.MPK}"
+                                               placeholder="w formacie CXPMPXXXX">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Date of the Initiative Notification</th>
+                                    <td>
+                                        <input type="date" th:field="${project.inaugurationDate}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Kick-off</th>
+                                    <td>
+                                        <input type="date" th:field="${project.kickOff}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Go Live Planned</th>
+                                    <td>
+                                        <input type="date" th:field="${project.goLivePlanned}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Go Live Final</th>
+                                    <td>
+                                        <input type="date" th:field="${project.goLiveFinal}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Project Closure</th>
+                                    <td>
+                                        <input type="date" th:field="${project.projectClosure}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Depreciation Start Date</th>
+                                    <td>
+                                        <input type="date" th:field="${project.depreciationStartDate}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Priority [1-5]</th>
+                                    <td>
+                                        <input type="number" th:field="${project.priority}" min="1" max="5">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Appraisal MB's [0%-150%]</th>
+                                    <td>
+                                        <input type="number" th:field="${project.appraisal}" min="0" max="150">%
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> PMO comment/other</th>
+                                    <td>
+                    <textarea th:field="${project.comment}" placeholder="Komentarz lub dodatkowe informacje"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
+                                <!--                <tr>-->
+                                <!--                    <th> JSON</th>-->
+                                <!--                    <td th:text="${project.jsonGantt}">-->
+                                <!--                    </td>-->
+                                <!--                </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" form="projectform" style="width:200px">Save
+                        Changes
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div class="flex-column" style="flex-grow: 0; flex-shrink: 0;">
+            <section class="widget" >
+                <header>
+                    <h5>
+                        Project <span class="fw-semi-bold">Schedule</span>
+                    </h5>
+                </header>
+                <div class="widget-body">
+                    <div id="fullscreen_view" >
+                        <script src="/codebase/dhtmlxgantt.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <script src="/codebase/dhtmlxgantt_marker.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <script src="/codebase/ext/dhtmlxgantt_fullscreen.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_critical_path.js"-->
+                        <!--                type="text/javascript" charset="utf-8"></script>-->
+                        <!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_auto_scheduling.js"-->
+                        <!--                type="text/javascript" charset="utf-8"></script>-->
+                        <script src="/codebase/dhtmlxgantt_tooltip.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_undo.js"-->
+                        <!--                type="text/javascript" charset="utf-8"></script>-->
+                        <script src="/codebase/api.js" async="true" type="text/javascript"
+                                charset="utf-8"></script>
+
+                        <script src="/codebase/nav_menu.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <script src="/codebase/layout.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <script src="/codebase/zoom.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <script src="/codebase/zoom_to_fit.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <script src="/codebase/grid_struct.js"
+                                type="text/javascript" charset="utf-8"></script>
+                        <script src="/codebase/fit_task_text.js"
+                                type="text/javascript" charset="utf-8"></script>
+
+                        <link rel="stylesheet"
+                              href="/codebase/dhtmlxgantt.css"
+                              type="text/css" media="screen" title="no title" charset="utf-8">
+                        <link rel="stylesheet"
+                              href="/css/style-gantt.css"
+                              type="text/css" charset="utf-8">
+
+                        <div>
+                            <div class="header gantt-demo-header">
+                                <ul class="gantt-controls">
+                                    <li class="gantt-menu-item"><a data-action="collapseAll"><img
+                                            src="/codebase/imgs/ic-collapse-all-24.png">Collapse
+                                        All</a></li>
+                                    <li class="gantt-menu-item gantt-menu-item-last"><a data-action="expandAll"><img
+                                            src="/codebase/imgs/ic-expand-all-24.png">Expand All</a>
+                                    </li>
+                                    <li class="gantt-menu-item"><a data-action="undo"
+                                                                   class=" menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled"><img
+                                            src="/codebase/imgs/ic-undo-24.png">Undo</a></li>
+                                    <li class="gantt-menu-item gantt-menu-item-last"><a data-action="redo"
+                                                                                        class=" menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled"><img
+                                            src="/codebase/imgs/ic-redo-24.png">Redo</a></li>
+                                    <!--                                            <li class="gantt-menu-item"><a data-action="toggleAutoScheduling"><img-->
+                                    <!--                                                    src="/codebase/imgs/ic-auto-scheduling-24.png">Auto-->
+                                    <!--                                                Scheduling</a></li>-->
+                                    <!--                                            <li class="gantt-menu-item"><a data-action="toggleCriticalPath"><img-->
+                                    <!--                                                    src="/codebase/imgs/ic-critical-path-24.png">Critical-->
+                                    <!--                                                Path</a></li>-->
+                                    <li class="gantt-menu-item gantt-menu-item-right"><a onclick="fullscreen()"><img
+                                            src="/codebase/imgs/ic-fullscreen-24.png">Fullscreen</a>
+                                    </li>
+                                    <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a><img
+                                            src="/codebase/imgs/ic-export-24.png">Export</a>
+                                        <ul class="gantt-controls">
+                                            <li class="gantt-menu-item"><a data-action="toPDF"><img
+                                                    src="/codebase/imgs/ic-file-24.png">PDF</a>
+                                            </li>
+                                            <li class="gantt-menu-item"><a data-action="toPNG"><img
+                                                    src="/codebase/imgs/ic-file-24.png">PNG</a>
+                                            </li>
+                                            <li class="gantt-menu-item"><a data-action="toExcel"><img
+                                                    src="/codebase/imgs/ic-file-24.png">Excel</a>
+                                            </li>
+                                            <li class="gantt-menu-item"><a data-action="toMSProject"><img
+                                                    src="/codebase/imgs/ic-file-24.png">MS
+                                                Project</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a
+                                            data-action="zoomToFit"><img
+                                            src="/codebase/imgs/ic-zoom-to-fit-24.png">Zoom to
+                                        Fit</a></li>
+                                    <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomOut"><img
+                                            src="/codebase/imgs/ic-zoom-out.png">Zoom Out</a>
+                                    </li>
+                                    <li class="gantt-menu-item gantt-menu-item-right"><a data-action="zoomIn"><img
+                                            src="/codebase/imgs/ic-zoom-in.png">Zoom In</a></li>
+
+                                </ul>
+                            </div>
+
+                            <div id="gantt_here" class="column">
+                                <!--            <div id="gantt_here" class="column" style="width: 950px; height: 100%; overflow:hidden;">-->
+                                <!--                <div class="gantt_layout_cell gantt_layout_root gantt_layout gantt_layout_x gantt_container gantt_layout_cell_border_left gantt_layout_cell_border_top gantt_layout_cell_border_right gantt_layout_cell_border_bottom"-->
+                                <!--                     data-cell-id="main" style="height: 100%; overflow:hidden;">-->
+                                <!--                </div>-->
+
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" form="projectform" style="width:200px;margin-top: 13px;">Save
+                        Changes
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <div class="row">
+        <div class="flex-column col-lg-8" style="flex-grow: 0; flex-shrink: 0;">
+            <section class="widget">
+                <header>
+                    <h5>
+                        Project <span class="fw-semi-bold">Budget</span>
+                    </h5>
+                </header>
+                <div class="widget-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Budget split by PM Category</h5>
+                            <div id="table" class="table-editable">
+
+                                <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
+                                    <thead class="peach-gradient white-text">
+                                    <tr>
+                                        <th class="text-center">Category name</th>
+                                        <th class="text-center">Budget</th>
+                                        <th class="text-center">Spent</th>
+                                        <th class="text-center">Remaining</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="cat : ${costcat}" th:if="${cat.getKey() != 'total'}">
+                                        <td class="pt-3-half" th:text="${cat?.getKey()}"></td>
+                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[0]}"
+                                            style="text-align: right;"></td>
+                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[1]}"
+                                            style="text-align: right;"></td>
+                                        <td class="pt-3-half currencyInput" th:text="${cat?.getValue()[2]}"
+                                            style="text-align: right;"></td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th class="text-center font-weight-bold">Total</th>
+                                        <th class="text-center font-weight-bold currencyInput"
+                                            th:if="${costcat!=null}" th:text="${costcat?.get('total')[0]}">
+                                            Budget
+                                        </th>
+                                        <th class="text-center font-weight-bold currencyInput"
+                                            th:if="${costcat!=null}" th:text="${costcat?.get('total')[1]}">Spent
+                                        </th>
+                                        <th class="text-center font-weight-bold currencyInput"
+                                            th:if="${costcat!=null}" th:text="${costcat?.get('total')[2]}">
+                                            Remaining
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+
+                                <a th:href="@{/budget(id=${project.projectId})}"
+                                   class="button btn btn-default btn-sm mb-3" style="width:200px">
+                                    Edit Costs
+                                </a>
+                                <a th:href="@{/budget/costcat(id=${project.projectId})}"
+                                   class="button btn btn-default btn-sm mb-3" style="width:200px">
+                                    Edit Cost Categories
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+                    <div class="flex-column col-lg-4" style="flex-grow: 0; flex-shrink: 0;">
+                        <section class="widget">
+                            <header>
+                                <h5>
+                                    Project <span class="fw-semi-bold">Costs</span>
+                                </h5>
+                            </header>
+                            <div class="widget-body">
+                                <div class="card">
+                                    <div class="card-body">
+                            <h5>Costs split by Company</h5>
+                            <div class="table-editable">
+
+                                <table class="table table-bordered table-responsive-md table-striped text-center">
+                                    <thead class="purple-gradient white-text">
+                                    <tr>
+                                        <th class="text-center">Company name</th>
+                                        <th class="text-center">Spent</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="company : ${costcompany}"
+                                        th:if="${company.getKey() != 'total'}">
+                                        <td class="pt-3-half"
+                                            th:text="${company.getKey()!='0'? company.getKey() : 'Other/Not set' }"></td>
+                                        <td class="pt-3-half currencyInput" th:text="${company?.getValue()}"
+                                            style="text-align: right;"></td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th class="text-center font-weight-bold">Total</th>
+                                        <th class="font-weight-bold currencyInput"
+                                            th:text="${costcompany?.get('total')}" style="text-align: right;">
+                                            Spent
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Costs split by Year</h5>
+                            <div class="table-editable">
+
+                                <table class="table table-bordered table-responsive-md table-striped text-center">
+                                    <thead class="young-passion-gradient white-text">
+                                    <tr>
+                                        <th class="text-center">Year</th>
+                                        <th class="text-center">Spent</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="year : ${costyear}" th:if="${year.getKey() != 0}">
+                                        <td class="pt-3-half" th:text="${year?.getKey()}"></td>
+                                        <td class="pt-3-half currencyInput" th:text="${year?.getValue()}"
+                                            style="text-align: right;"></td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th class="text-center font-weight-bold">Total</th>
+                                        <th class="font-weight-bold currencyInput" th:text="${costyear?.get(0)}"
+                                            style="text-align: right;">Spent
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        </div>
+
+        <div class="flex-column" style="flex-grow: 0; flex-shrink: 0;">
+            <section class="widget">
+                <header>
+                    <h5>
+                        Project <span class="fw-semi-bold">Files</span>
+                    </h5>
+                </header>
+                <div class="widget-body">
+
+                    <table class="table table-bordered table-striped white-text">
+                        <thead class="blue-gradient">
+                        <tr>
+                            <th>KICK OFF PRESENTATION</th>
+                            <th>BUSINESS CASE</th>
+                            <th>PROJECT MANDATE</th>
+                            <th>SCHEDULE</th>
+                            <th>DPIA</th>
+                            <th>CLOSURE PROJECT PRESENTATION</th>
+                            <th>PSR NOT REQUIRED (default unchecked)</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select th:field="${project.kickOffPresentation}">
+                                    <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
+                                            th:value="${state}"
+                                            th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
+                                            th:text="${state}">
+                                    </option>
+                                </select>
+                            </td>
+                            <td><select th:field="${project.businessCase}">
+                                <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
+                                        th:value="${state}"
+                                        th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
+                                        th:text="${state}">
+                                </option>
+                            </select></td>
+                            <td><select th:field="${project.projectMandate}">
+                                <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
+                                        th:value="${state}"
+                                        th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
+                                        th:text="${state}">
+                                </option>
+                            </select></td>
+                            <td><select th:field="${project.schedule}">
+                                <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
+                                        th:value="${state}"
+                                        th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
+                                        th:text="${state}">
+                                </option>
+                            </select></td>
+                            <td><select th:field="${project.DPIA}">
+                                <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
+                                        th:value="${state}"
+                                        th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
+                                        th:text="${state}">
+                                </option>
+                            </select></td>
+                            <td><select th:field="${project.closurePresentation}">
+                                <option th:each="state : ${T(pl.fc.app.enities.enums.DocumentState).values()}"
+                                        th:value="${state}"
+                                        th:selected="${T(pl.fc.app.enities.enums.DocumentState).BRAK}"
+                                        th:text="${state}">
+                                </option>
+                            </select></td>
+                            <td>
+                                <input type="checkbox" name="psrNotRequired"
+                                       th:checked="${project.psrNotRequired}"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="submit" class="btn btn-primary" form="projectform" style="width:200px;">Save
+                        Changes
+                    </button>
+                </div>
+            </section>
+        </div>
+        </form>
+    </main>
 </div>
-</div>
-<!--        <a data-action="undo" class=" menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled menu-item-disabled"><img src="demo/imgs/ic_undo_24.png">Undo</a>-->
+
 
 <footer th:replace="layouts :: footer"></footer>
+</main>
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+
+<!-- common libraries. required for every page-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/jquery-pjax/jquery.pjax.js"></script>
+<script src="/node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/node_modules/bootstrap/js/dist/util.js"></script>
+<script src="/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/node_modules/widgster/widgster.js"></script>
+<script src="/node_modules/pace.js/pace.js"
+        data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }'></script>
+<script src="/node_modules/hammerjs/hammer.js"></script>
+<script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
+
+<!-- DataTables JS -->
+<!--<script src="/js/addons/datatables.min.js" type="text/javascript"></script>-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+
+<!-- DataTables Select JS -->
+<script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+<!-- common app js -->
+<script src="/js/sing/settings.js"></script>
+<script src="/js/sing/app.js"></script>
+
+<!-- Page scripts -->
+<script src="/node_modules/jquery-sparkline/jquery.sparkline.js"></script>
+<!-- page specific js -->
+<script src="/js/sing/tables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+
 
 <script type="text/javascript" th:inline="javascript">
 
@@ -555,12 +878,12 @@
             digitGroupSeparator: " "
         });
 
-        $('#dtBasicExample').DataTable({
-            "ordering": false,
-            "paging": false,
-            "searching": true,
-            'sDom': 't'
-        });
+        // $('#dtBasicExample').DataTable({
+        //     "ordering": false,
+        //     "paging": false,
+        //     "searching": true,
+        //     'sDom': 't'
+        // });
 
         $('#table-ed').DataTable({
             "ordering": true,
@@ -570,9 +893,9 @@
         });
     });
 
-    function doSearch() {
-        $('#dtBasicExample').DataTable().search($('#mySearchText').val()).draw();
-    }
+    // function doSearch() {
+    //     $('#dtBasicExample').DataTable().search($('#mySearchText').val()).draw();
+    // }
 
     gantt.plugins({
         // auto_scheduling: true,
@@ -590,7 +913,7 @@
         undo: true
     });
 
-
+    gantt.config.autosize = "y";
     gantt.init("gantt_here");
 
     gantt.config.lightbox.sections = [
@@ -705,5 +1028,5 @@
     })
 
 </script>
-
 </body>
+</html>

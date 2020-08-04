@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import static pl.fc.app.xlsxparser.XLSXReader.readXlsx;
-
 
 @SpringBootApplication
 @EnableJpaRepositories
