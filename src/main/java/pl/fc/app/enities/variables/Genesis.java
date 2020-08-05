@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Genesis {
+public class    Genesis {
     public Genesis(String name) {
         this.name = name;
     }

@@ -4,6 +4,8 @@
 <head>
     <title>PROTON</title>
     <link href="/css/sing/application.min.css" rel="stylesheet">
+    <link href="/css/genesis.css" rel="stylesheet">
+    <link href="/css/status.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
 
@@ -265,11 +267,11 @@
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
                                        th:text="${project.name}"></a></td>
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
-                                       th:text="${project.status}"></a></td>
+                                       th:text="${project.status}" th:class="${project.status} == 'TO_BE_OPENED' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${project.status}"></a></td>
                                 <!--        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.company}"></a></td>-->
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
-                                       th:text="${project.companies}"></a></td>
-                                <td><a th:class="${project.genesis} == 'NOT_GENESIS' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success'" style="background-color:#c222ff" th:href="@{/projects/edit(id=${project.projectId})}"
+                                       th:text="${#strings.substring(project.companies, 1, #strings.length(project.companies)-1)}"></a></td>
+                                <td><a th:class="${project.genesis} == 'NOT_GENESIS' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${project.genesis}" th:href="@{/projects/edit(id=${project.projectId})}"
                                        th:text="${project.genesis}"></a></td>
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
                                        th:text="${project.projectManager}"></a>
@@ -454,7 +456,7 @@
     function less() {
 
         $('#dtBasicExample').DataTable()
-            .columns([8, 9, 10, 11, 14, 15, 16, 19, 17, 18, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30]).visible(false, false)
+            .columns([9, 10, 11, 12,  15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]).visible(false, false)
             .columns.adjust().draw(false);
     }
 
