@@ -6,7 +6,7 @@
     background-color: #21ae8c !important
 }
 
-.ANALYSIS .ON_HOLD {
+.ANALYSIS, .ON_HOLD {
     background-color: #fda700 !important
 }
 
@@ -18,7 +18,7 @@
     background-color: #798892 !important
 }
 
-.KILLED .CANCELLED .TO_BE_CANCELLED .DECISION_NEEDED .OUT_OF_PROJECT_PATH .REPLACED {
+.KILLED, .CANCELLED, .TO_BE_CANCELLED, .DECISION_NEEDED, .OUT_OF_PROJECT_PATH, .REPLACED {
     background-color: #fd5f00 !important
 }
 

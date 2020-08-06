@@ -6,7 +6,8 @@
     <link href="/css/sing/application.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
-
+    <link href="/css/genesis.css" rel="stylesheet">
+    <link href="/css/status.css" rel="stylesheet">
 
 
     <!-- DataTables CSS -->
@@ -240,7 +241,8 @@
                                 <th> Project</th>
 
                                 <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Scope</th>
-                                <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Schedule</th>
+                                <th style="padding-right:0pt;  word-wrap:break-word;max-width: 62px;
+font-size: x-small;"> Schedule</th>
                                 <th style="padding-right:0pt;  word-wrap:break-word;width:55px"> Cost</th>
                                 <th> Status</th>
                                 <th> Company</th>
@@ -259,9 +261,10 @@
                                 <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.scope.name()}+'.png'" height="55" width="55" th:alt="${psr.scope.name()}"></a></td>
                                 <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.schedule.name()}+'.png'" height="55" width="55" th:alt="${psr.schedule.name()}"></a></td>
                                 <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.cost.name()}+'.png'" height="55" width="55" th:alt="${psr.cost.name()}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.status}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.companies}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.genesis}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.status}" th:class="${psr.project.status} == 'TO_BE_OPENED' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${psr.project.status}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${#strings.substring(psr.project.companies, 1, #strings.length(psr.project.companies)-1)}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:class="${psr.project.genesis} == 'NOT_GENESIS' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${psr.project.genesis}"
+                                                                                                                                                                   th:text="${psr.project.genesis}"></a></td>
                                 <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.projectManager}"></a></td>
 
                                 <td><a th:href="@{/psr/{id}/{year}/{month}(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-red btn-sm m-0">EDIT</a></td>

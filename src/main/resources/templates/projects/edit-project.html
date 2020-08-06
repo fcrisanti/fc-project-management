@@ -164,8 +164,7 @@
             <form class="navbar-form" role="search">
                 <div class="form-group">
                     <div class="input-group input-group-no-border ml-4">
-                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
-                               oninput="doSearch()">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()">
                         <span class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="la la-search"></i>
@@ -380,7 +379,7 @@
                         </div>
 
                         <div class="flex-column">
-                            <table id="dtBasicExample2" class="table table-bordered table-striped"
+                            <table id="dtBasicExample3" class="table table-bordered table-striped"
                                    style="width:450px; height: 610px;">
 
                                 <tbody>
@@ -844,8 +843,8 @@
 <script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
 
 <!-- DataTables JS -->
-<!--<script src="/js/addons/datatables.min.js" type="text/javascript"></script>-->
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+<script src="/js/addons/datatables.min.js" type="text/javascript"></script>
+<!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>-->
 
 
 <!-- DataTables Select JS -->
@@ -871,19 +870,11 @@
 
 <script type="text/javascript" th:inline="javascript">
 
-
     $(document).ready(function () {
         new AutoNumeric.multiple('.currencyInput', {
             decimalPlaces: 0,
             digitGroupSeparator: " "
         });
-
-        // $('#dtBasicExample').DataTable({
-        //     "ordering": false,
-        //     "paging": false,
-        //     "searching": true,
-        //     'sDom': 't'
-        // });
 
         $('#table-ed').DataTable({
             "ordering": true,
@@ -892,10 +883,6 @@
             'sDom': 't'
         });
     });
-
-    // function doSearch() {
-    //     $('#dtBasicExample').DataTable().search($('#mySearchText').val()).draw();
-    // }
 
     gantt.plugins({
         // auto_scheduling: true,
@@ -1025,7 +1012,7 @@
                 gantt.collapse();
             }
         }
-    })
+    });
 
 </script>
 </body>
