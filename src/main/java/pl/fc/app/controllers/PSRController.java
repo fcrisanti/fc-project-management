@@ -74,6 +74,12 @@ class PSRController {
         return "projects/edit-status-report";
     }
 
+    @GetMapping("/new/{id}/{year}/{month}")
+    public String editNewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+        findProjectAndAddPsrAttributes(id, month, year, model);
+        return "projects/edit-new-status";
+    }
+
     @GetMapping("{id}/{year}/{month}/view")
     public String viewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
         findProjectAndAddPsrAttributes(id, month, year, model);

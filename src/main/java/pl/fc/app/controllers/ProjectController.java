@@ -77,6 +77,7 @@ class ProjectController {
         model.addAttribute("costcat",project.getCategoryBudgetExpensesRemainingAndUpdateBudget());
         model.addAttribute("costcompany",project.getExpensesByCompany());
         model.addAttribute("costyear",project.getExpensesByYear());
+        model.addAttribute("costit",project.getExpensesByIsIT());
 
         model.addAttribute("allCompanies", allCompanies);
         model.addAttribute("allGenesis", allGenesis);

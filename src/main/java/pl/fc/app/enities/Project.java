@@ -10,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.fc.app.enities.enums.DocumentState;
+import pl.fc.app.enities.enums.IsIT;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -180,6 +181,29 @@ public class Project {
             }
             result.put("total", sumExpenses);
         } else return null;
+        return result;
+    }
+
+    public Map<String, BigDecimal> getExpensesByIsIT() {
+        BigDecimal sumExpenses = BigDecimal.ZERO;
+        BigDecimal IT = BigDecimal.ZERO;
+        BigDecimal NonIT = BigDecimal.ZERO;
+        Map<String, BigDecimal> result = new HashMap<>();
+        if(expenses!=null) {
+            for (Cost cost : expenses) {
+                if (cost.getGrossAmount() != null) {
+                    if (cost.getIsIT() == IsIT.IT) {
+                        IT = IT.add(cost.getGrossAmount());
+                    } else if (cost.getIsIT() == IsIT.NON_IT) {
+                        NonIT = NonIT.add(cost.getGrossAmount());
+                    }
+                    sumExpenses = sumExpenses.add(cost.getGrossAmount());
+                }
+            }
+                result.put("IT", IT);
+                result.put("Non IT", NonIT);
+            }
+            result.put("total", sumExpenses);
         return result;
     }
 

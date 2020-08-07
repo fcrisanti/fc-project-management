@@ -735,6 +735,42 @@
                         </div>
                     </div>
                 </div>
+                            <div class="widget-body">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Costs split by Type</h5>
+                                        <div class="table-editable">
+
+                                            <table class="table table-bordered table-responsive-md table-striped text-center">
+                                                <thead class="purple-gradient white-text">
+                                                <tr>
+                                                    <th class="text-center">Type</th>
+                                                    <th class="text-center">Spent</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="it : ${costit}"
+                                                    th:if="${it.getKey() != 'total'}">
+                                                    <td class="pt-3-half"
+                                                        th:text="${it.getKey()!='0'? it.getKey() : 'Other/Not set' }"></td>
+                                                    <td class="pt-3-half currencyInput" th:text="${it?.getValue()}"
+                                                        style="text-align: right;"></td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <th class="text-center font-weight-bold">Total</th>
+                                                    <th class="font-weight-bold currencyInput"
+                                                        th:text="${costit?.get('total')}" style="text-align: right;">
+                                                        Spent
+                                                    </th>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
             </section>
         </div>
         </div>
