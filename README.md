@@ -21,7 +21,47 @@ Password: test
     - jQuery
     - DataTables (datatables.net)
     - Sing App Free Bootstrap template (MIT-licensed https://github.com/flatlogic/sing-app)
-   
+
+# Features:
+
+### 1. All Projects Listing
+
+Editable project list with advanced sorting and export options (based on DataTables and jQuery)
+
+![Project List](https://raw.githubusercontent.com/fcrisanti/fc-project-management/master/screenshots/projectview.png)
+
+### 2. Project View and Editing
+
+Project Properties, Schedule (dxhtmlgantt) and Budget editing with cost import from Excel file
+
+![Single Project View](https://raw.githubusercontent.com/fcrisanti/fc-project-management/master/screenshots/projectedit.png)
+
+### 3. Project Status Reporting
+
+Project Status Reports summary view with period selector and missing reports view
+
+![Status Report List](https://raw.githubusercontent.com/fcrisanti/fc-project-management/master/screenshots/statusreports.png)
+
+Status Reports editing with PDF and PPT (PowerPoint) export
+
+![Status Report List](https://raw.githubusercontent.com/fcrisanti/fc-project-management/master/screenshots/reportseditor.png)
+
+### 4. Employee Management
+
+Employee view with employee projects
+
+![Status Report List](https://raw.githubusercontent.com/fcrisanti/fc-project-management/master/screenshots/employeeview.png)
+
+### 5. and many more including:
+
+* editable glossaries of project parameters
+* editable custom budget categories
+* automatic expenditures calculations divided by year, type and custom defined categories
+* export to Excel or copy to clipboard feature for almost every table
+* advanced multi-criteria table searching
+* various checks before saving projects and status reports
+* Active Directory support (based on Spring Security)
+
 # Requirements:
 PostgreSQL db v. 9.2+ with an empty database set and md5 authentication data
 
