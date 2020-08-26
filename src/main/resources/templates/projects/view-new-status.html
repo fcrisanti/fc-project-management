@@ -183,7 +183,7 @@
                 </div>
             </form>
 
-            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${projectStatusReport.getQuarter().getValue()}, year=${projectStatusReport.year})}" type="button" class="btn btn-primary"
+            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${projectStatusReport.getQuarter().getValue()}, year=${projectStatusReport.year})}" type="button" class="btn btn-primary"
                style="width:250px">Edit PSR</a>
             <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
                style="width:250px">Edit Project</a>
@@ -514,7 +514,7 @@
                 <table id="dtBasicExample" class="table table-bordered table-striped">
                     <thead class="aqua-gradient" style="color: white">
                     <tr>
-                        <th> MONTH</th>
+                        <th> QUARTER</th>
                         <th> YEAR</th>
                         <th> EDIT</th>
                         <th> VIEW</th>
@@ -524,24 +524,24 @@
                     <tbody>
                     <tr th:each="psr : ${project.projectStatusReports}">
                         <td>
-                            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
                                th:text="${psr.getQuarter().getValue()}"></a></td>
                         <td>
-                            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
                                th:text="${psr.year}"></a></td>
                         <td>
-                            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
                                class="btn btn-red btn-sm m-0">EDIT</a></td>
                         <td>
-                            <a th:href="@{/psr/{id}/{year}/{month}/view(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                            <a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
                                class="btn btn-red btn-sm m-0">VIEW</a></td>
                         <!--                                    <td>-->
                         <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
-                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/pdf(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{quarter}/view/pdf(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
                         <!--                                        >PDF-->
                         <!--                                        </button>-->
                         <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
-                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/ppt(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{quarter}/view/ppt(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
                         <!--                                        >PPT-->
                         <!--                                        </button>-->
                         <!--                                    </td>-->

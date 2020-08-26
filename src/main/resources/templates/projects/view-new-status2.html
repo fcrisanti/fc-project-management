@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title th:text="${project?.name}">PROTON</title>
+    <link href="/css/sing/application.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+
+
+    <!-- DataTables CSS -->
+    <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
+    <!-- DataTables Select CSS -->
+    <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <!-- Material Design Bootstrap -->
+    <!--    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">-->
+
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+
+    <link rel="stylesheet"
+          href="/codebase/dhtmlxgantt.css"
+          type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet"
+          href="/css/style-gantt.css"
+          type="text/css" charset="utf-8">
+
+    <link rel="shortcut icon" href="/codebase/planet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PROTON">
+    <meta name="keywords"
+          content="proton ppm">
+    <meta name="author" content="Francesco Crisanti">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+        chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+        https://code.google.com/p/chromium/issues/detail?id=332189
+        */
+    </script>
+
+</head>
+<body class="nav-collapsed" style="overflow-x: unset;">
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
+
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo d-none d-md-block">
+            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
+                <b>PROTON</b></a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status d-md-none">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar float-right">
+                            <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                        </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                            13
+                        </span>
+                &nbsp;
+                Francesco <strong>Crisanti</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+        </div>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/projects">
+                            <span class="icon">
+                                <i class="fi flaticon-home"></i>
+                            </span>
+                    Project List
+                </a>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/psr">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/employees">
+                            <span class="icon">
+                                <i class="fi flaticon-users"></i>
+                            </span>
+                    PMO
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#">
+                            <span class="icon">
+                                <i class="fi flaticon-calculator"></i>
+                            </span>
+                    Budget
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-dashboard">
+
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header mr-md-3">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                        <i class="la la-bars"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
+
+                    <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                        <span class="square square-lg d-md-none"><i class="la la-bars"></i></span>
+                        <i class="la la-bars d-none d-md-block"></i>
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right d-md-none">
+                <li class="nav-item">
+                    <!-- toggles chat -->
+                    <a class="nav-link" href="#" data-toggle="chat-sidebar">
+                        <span class="square square-lg"><i class="la la-globe"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand d-md-none" href="/projects">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                sing
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
+        </div>
+
+        <!-- this part is hidden for xs screens -->
+        <div class="navbar-header mobile-hidden">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
+                               oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
+                </div>
+            </form>
+            <button type="submit" form="projectform" class="btn btn-primary" style="width:200px">Save Changes
+            </button>
+            <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
+               style="width:250px">Edit Project</a>
+            <button id="btnPrint">Generate PDF</button>
+            <!--Add External Libraries - JQuery and jspdf
+            check out url - https://scotch.io/@nagasaiaytha/generate-pdf-from-html-using-jquery-and-jspdf
+            -->
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
+
+            <ul class="nav navbar-nav float-right">
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle no-caret nav-link" data-toggle="dropdown">
+                        <i class="la la-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content-wrap" style="height: 31%;">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+
+    <main class="content" role="main">
+        <!-- Page content -->
+
+        <div id="content" class="flex-column col-lg-8 ">
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Project List</li>
+                <li class="breadcrumb-item active" th:text="P+${project.sapNo}"></li>
+            </ol>
+            <h2 class="page-title">Project Status Reports - <span class="fw-semi-bold" id="companyOrGenesis"
+                                                                  th:text="${project.name}">All</span></h2>
+
+            <i th:text="${project.modifiedBy!=null } ? ${ 'Last modified by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
+            <div class="row">
+
+
+                <div class="flex-column col-xl-4" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Team</span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <a>Project Manager</a>
+                            <br>
+                            <span th:text="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.projectManager}"></span>
+                            <br>
+                            <br>
+                            <a>PMO</a>
+                            <br>
+                            <span th:text="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.employees}"></span>
+                            <br>
+                            <br>
+                            <a>Project Analyst</a>
+                            <br>
+                            <span th:text="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.analyst}"></span>
+                            <br>
+                            <br>
+                            <a>Technical Manager</a>
+                            <br>
+                            <span th:text="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.techManager}"></span>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-8" style="flex-grow: 0; flex-shrink: 0; padding-left:0px;" id="toPrint">
+                    <section class="widget" style="height: 320px;">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Description</span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <span th:text="${project.descriptionEn}"></span>
+                        </div>
+                    </section>
+                </div>
+
+
+                <div class="flex-column col-xl-12" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">RAG</span>
+                            </h5>
+                        </header>
+                        <div class="widget-body" style="display:flex; justify-content:space-evenly;">
+
+                            <h5>
+                                SCHEDULE:
+
+                                <img th:src="'/codebase/trafficlight/'+${projectStatusReport.schedule.name()}+'.png'"
+                                     height="55" width="55" th:alt="${projectStatusReport.schedule.name()}"
+                                     style="margin-left: 15px;"></a>
+                            </h5>
+                            <h5>
+                                SCOPE:
+
+                                <img th:src="'/codebase/trafficlight/'+${projectStatusReport.scope.name()}+'.png'"
+                                     height="55" width="55" th:alt="${projectStatusReport.scope.name()}"
+                                     style="margin-left: 15px;"></a>
+                            </h5>
+                            <h5>
+                                BUDGET:
+
+                                <img th:src="'/codebase/trafficlight/'+${projectStatusReport.cost.name()}+'.png'"
+                                     height="55" width="55" th:alt="${projectStatusReport.cost.name()}"
+                                     style="margin-left: 15px;"></a>
+                            </h5>
+
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-12" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Costs</span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <h5>Costs split by Year</h5>
+                                    <div class="table-editable">
+
+                                        <table class="table table-bordered table-responsive-md table-striped text-center">
+                                            <thead class="young-passion-gradient white-text">
+                                            <tr>
+                                                <th class="text-center">Year</th>
+                                                <th class="text-center">Spent</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="year : ${costyear}" th:if="${year.getKey() != 0}">
+                                                <td class="pt-3-half" th:text="${year?.getKey()}"></td>
+                                                <td class="pt-3-half currencyInput" th:text="${year?.getValue()}"
+                                                    style="text-align: right;"></td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th class="text-center font-weight-bold">Total</th>
+                                                <th class="font-weight-bold currencyInput" th:text="${costyear?.get(0)}"
+                                                    style="text-align: right;">Spent
+                                                </th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Costs split by Type</h5>
+                                    <div class="table-editable">
+
+                                        <table class="table table-bordered table-responsive-md table-striped text-center">
+                                            <thead class="purple-gradient white-text">
+                                            <tr>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Spent</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="it : ${costit}"
+                                                th:if="${it.getKey() != 'total'}">
+                                                <td class="pt-3-half"
+                                                    th:text="${it.getKey()!='0'? it.getKey() : 'Other/Not set' }"></td>
+                                                <td class="pt-3-half currencyInput" th:text="${it?.getValue()}"
+                                                    style="text-align: right;"></td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th class="text-center font-weight-bold">Total</th>
+                                                <th class="font-weight-bold currencyInput"
+                                                    th:text="${costit?.get('total')}" style="text-align: right;">
+                                                    Spent
+                                                </th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-12" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Steps and Milestone</span>
+                                <span class="table-add"><a href="#!" class="text-success"><i
+                                        class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="table" class="table-editable">
+                                        <table id="table-ed"
+                                               class="table table-bordered table-responsive-md table-striped text-center">
+                                            <thead class="peach-gradient white-text">
+                                            <tr>
+                                                <th class="text-center">Achievement</th>
+                                                <th class="text-center">Milestone</th>
+                                                <th class="text-center">Due date</th>
+                                                <th class="text-center">Real date</th>
+                                                <th class="text-center">Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="pt-3-half" contenteditable="true">Ch*je, muje, dzikie węże
+                                                </td>
+                                                <td class="pt-3-half" contenteditable="true">No</td>
+                                                <td id="date1" class="pt-3-half">
+                                                    <input type="date" name="dueDate" id="dueDate"/>
+                                                </td>
+                                                <td id="date2" class="pt-3-half">
+                                                    <input type="date" name="realDate" id="realDate"/>
+                                                </td>
+                                                <td class="pt-3-half">
+                        <span class="table-remove"><button type="button"
+                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
+                                                </td>
+
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th class="text-center">Achievement</th>
+                                                <th class="text-center">Milestone</th>
+                                                <th class="text-center">Due date</th>
+                                                <th class="text-center">Real date</th>
+                                                <th class="text-center">Delete</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-12" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Issues, Risks and Mitigations</span>
+                                <span class="table-add"><a href="#!" class="text-success"><i
+                                        class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="risks" class="table-editable">
+                                        <table id="table-risks"
+                                               class="table table-bordered table-responsive-md table-striped text-center">
+                                            <thead class="peach-gradient white-text">
+                                            <tr>
+                                                <th class="text-center">Date of identification</th>
+                                                <th class="text-center">Description</th>
+                                                <th class="text-center">Way of prevention</th>
+                                                <th class="text-center">Materialized</th>
+                                                <th class="text-center">Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td id="date1" class="pt-3-half">
+                                                    <input type="date" name="dueDate" id="dueDate"/>
+                                                </td>
+                                                <td class="pt-3-half" contenteditable="true">Ch*je, muje, dzikie węże
+                                                </td>
+                                                <td class="pt-3-half" contenteditable="true">Ch*je, muje, dzikie węże
+                                                </td>
+                                                <td class="pt-3-half" contenteditable="true">No</td>
+                                                <td class="pt-3-half">
+                        <span class="table-remove"><button type="button"
+                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
+                                                </td>
+
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th class="text-center">Date of identification</th>
+                                                <th class="text-center">Description</th>
+                                                <th class="text-center">Way of prevention</th>
+                                                <th class="text-center">Materialized</th>
+                                                <th class="text-center">Delete</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-12" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Schedule</span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <div id="gantt_here" class="column">
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+            <footer th:replace="layouts :: footer"></footer>
+        </div>
+
+        <div class="flex-column col-lg-auto" style="flex-grow: 0; flex-shrink: 0; padding-left: 67%;">
+            <section class="widget">
+                <header>
+                    <h5>
+                        All <span class="fw-semi-bold">Status Reports</span>
+                    </h5>
+                </header>
+                <div class="widget-body">
+
+                    <div class="column">
+                        <table id="dtBasicExample" class="table table-bordered table-striped">
+                            <thead class="aqua-gradient" style="color: white">
+                            <tr>
+                                <th> MONTH</th>
+                                <th> YEAR</th>
+                                <th> EDIT</th>
+                                <th> VIEW</th>
+                                <!--                                    <th> DOWNLOAD</th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="psr : ${project.projectStatusReports}">
+                                <td>
+                                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                                       th:text="${psr.month.getValue()}"></a></td>
+                                <td>
+                                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                                       th:text="${psr.year}"></a></td>
+                                <td>
+                                    <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"
+                                       class="btn btn-red btn-sm m-0">EDIT</a></td>
+                                <td>
+                                    <button type="button" class="btn btn-indigo btn-sm m-0"
+                                            th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"
+                                    >VIEW
+                                    </button>
+                                </td>
+                                <!--                                    <td>-->
+                                <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
+                                <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/pdf(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"-->
+                                <!--                                        >PDF-->
+                                <!--                                        </button>-->
+                                <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
+                                <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/ppt(id=${project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}')|"-->
+                                <!--                                        >PPT-->
+                                <!--                                        </button>-->
+                                <!--                                    </td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+<div id="editor"></div>
+
+<!-- common libraries. required for every page-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/jquery-pjax/jquery.pjax.js"></script>
+<script src="/node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/node_modules/bootstrap/js/dist/util.js"></script>
+<script src="/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/node_modules/widgster/widgster.js"></script>
+<script src="/node_modules/pace.js/pace.js"
+        data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }'></script>
+<script src="/node_modules/hammerjs/hammer.js"></script>
+<script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
+
+<!-- DataTables JS -->
+<!--<script src="/js/addons/datatables.min.js" type="text/javascript"></script>-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+
+<!-- DataTables Select JS -->
+<script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+<!-- common app js -->
+<script src="/js/sing/settings.js"></script>
+<script src="/js/sing/app.js"></script>
+
+<!-- Page scripts -->
+<script src="/node_modules/jquery-sparkline/jquery.sparkline.js"></script>
+<!-- page specific js -->
+<script src="/js/sing/tables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+<!-- jsPDF library -->
+<script src="/js/jspdf.min.js"></script>
+<script src="/js/html2pdf.bundle.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<!-- Dhtmlxgantt library -->
+<script src="/codebase/dhtmlxgantt.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/dhtmlxgantt_marker.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/ext/dhtmlxgantt_fullscreen.js"
+        type="text/javascript" charset="utf-8"></script>
+<!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_critical_path.js"-->
+<!--                type="text/javascript" charset="utf-8"></script>-->
+<!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_auto_scheduling.js"-->
+<!--                type="text/javascript" charset="utf-8"></script>-->
+<script src="/codebase/dhtmlxgantt_tooltip.js"
+        type="text/javascript" charset="utf-8"></script>
+<!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_undo.js"-->
+<!--                type="text/javascript" charset="utf-8"></script>-->
+<script src="/codebase/api.js" async="true" type="text/javascript"
+        charset="utf-8"></script>
+
+<script src="/codebase/layout.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/zoom.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/zoom_to_fit.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/grid_struct.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/fit_task_text.js"
+        type="text/javascript" charset="utf-8"></script>
+
+
+<footer th:replace="layouts :: footer"></footer>
+<script type="text/javascript" th:inline="javascript">
+
+    $(document).ready(function () {
+
+        $('body').on('click', '#btnPrint', function () {
+
+            $("#content").addClass('content');
+            var HTML_Width = $("#content").width();
+            var HTML_Height = $("#content").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = HTML_Height + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+            html2canvas($("#content")[0]).then(function (canvas) {
+                var imgData = canvas.toDataURL("image/png", 1.0);
+                // var imgData = canvas.toDataURL({ pixelRatio: 5});
+
+                // var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+                pdf.save("PSR.pdf");
+                // $(".html-content").hide();
+                $("#content").removeClass('content');
+            });
+        });
+
+        gantt.config.readonly = true;
+
+        gantt.plugins({
+            // auto_scheduling: true,
+            click_drag: true,
+            // critical_path: true,
+            drag_timeline: true,
+            // fullscreen: true,
+            grouping: true,
+            keyboard_navigation: true,
+            marker: true,
+            // multiselect: true,
+            overlay: true,
+            quick_info: true,
+            tooltip: true,
+        });
+
+        gantt.config.autosize = "y";
+        gantt.init("gantt_here");
+
+        gantt.config.lightbox.sections = [
+            {name: "description", height: 58, map_to: "text", type: "textarea", focus: true},
+            {
+                name: "responsible",
+                height: 38,
+                map_to: "responsible",
+                type: "textarea",
+                default_value: [[${project.projectManager}]]
+            },
+            {name: "time", height: 72, type: "duration", map_to: "auto"}
+        ];
+
+        gantt.templates.tooltip_text = function (start, end, task) {
+            return "<b>Task:</b> " + task.text + "<br/><b>Start date:</b> " +
+                gantt.templates.tooltip_date_format(start) +
+                "<br/><b>End date:</b> " + gantt.templates.tooltip_date_format(end)
+                + "<br/><b>Responsible:</b> " + task.responsible;
+        };
+
+        gantt.config.auto_types = true;
+        gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
+        gantt.config.duration_unit = "day";
+
+        gantt.config.row_height = 23;
+        gantt.config.order_branch = "marker";
+        gantt.config.order_branch_free = true;
+        gantt.config.grid_resize = true;
+
+        gantt.config.auto_scheduling_strict = true;
+        ganttModules.zoom.setZoom("quarters");
+        // ganttModules.menu.setup();
+
+        // gantt.attachEvent("onTaskCreated", function(id, task){
+        //     gantt.getLightboxSection('responsible').setValue('abc');
+        //     return true;
+        // });
+
+        gantt.parse([[${project.jsonGantt}]]);
+
+
+        var dateToStr = gantt.date.date_to_str(gantt.config.task_date);
+
+        var id = gantt.addMarker({
+            start_date: new Date(),
+            css: "today",
+            title: dateToStr(new Date())
+        });
+        setInterval(function () {
+            var today = gantt.getMarker(id);
+            today.start_date = new Date();
+            today.title = date_to_str(today.start_date);
+            gantt.updateMarker(id);
+        }, 1000 * 60);
+
+        gantt.attachEvent("onLightbox", function (task_id) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        });
+
+        // gantt.ext.fullscreen.getFullscreenElement = function () {
+        //     return document.getElementById("fullscreen_view");
+        // };
+
+        function saveGantt() {
+            document.getElementById("jsonGantt").value = JSON.stringify(gantt.serialize());
+            // alert(JSON.stringify(gantt.serialize()));
+        }
+
+        function fullscreen() {
+            if (!gantt.getState().fullscreen) {
+                gantt.expand();
+                // fullscreenView();
+            } else {
+                gantt.collapse();
+            }
+        }
+
+        // function fullscreenView() {
+        //     var elem = document.getElementById("fullscreen_view");
+        //     if (elem.requestFullscreen) {
+        //         elem.requestFullscreen();
+        //     } else if (elem.mozRequestFullScreen) {
+        //         elem.mozRequestFullScreen();
+        //     } else if (elem.webkitRequestFullscreen) {
+        //         elem.webkitRequestFullscreen();
+        //     } else if (elem.msRequestFullscreen) {
+        //         elem.msRequestFullscreen();
+        //     }
+        // }
+
+        gantt.attachEvent("onTemplatesReady", function () {
+            var toggle = document.createElement("i");
+            toggle.className = "fa fa-expand gantt-fullscreen";
+            gantt.toggleIcon = toggle;
+            gantt.$container.appendChild(toggle);
+            toggle.onclick = function () {
+                if (!gantt.getState().fullscreen) {
+                    gantt.expand();
+                } else {
+                    gantt.collapse();
+                }
+            }
+        });
+
+
+    });
+
+
+    // $('body').on('click', '#btnPrint', function () {
+    //     var divContents = $("#content").html();
+    //     var printWindow = window.open('', '', 'height=400,width=950');
+    //     printWindow.document.write('<link href="/css/sing/application.min.css" rel="stylesheet">');
+    //     printWindow.document.write('<html><head><title>DIV Contents</title>');
+    //     printWindow.document.write('</head><body><div class="content-wrap"><main id="content" class="content" role="main">');
+    //     printWindow.document.write(divContents);
+    //     printWindow.document.write('</main></div></body></html>');
+    //     printWindow.document.close();
+    //     // printWindow.print();
+    //     printWindow.focus();
+    //     setTimeout(function () {
+    //         printWindow.print();
+    //         printWindow.close();
+    //     }, 1000);
+    //
+    // });
+
+    function resetPsrIdAndSave() {
+        document.getElementById("psrId").value = 0;
+    }
+
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable({
+            "searching": false,
+            "paging": false,
+        });
+    });
+
+
+    function view(url) {
+        url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + url;
+        $("#edit").html('<object data=' + url + ' style=\"width: 800px; height: 650px;\"/>');
+    }
+
+    $(document).ready(function () {
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 2,
+            digitGroupSeparator: " "
+        });
+
+        var buttonCommon = {
+            exportOptions: {
+                format: {
+                    body: function (data, row, column, node) {
+
+                        var retorno = "", tag, respuesta = "", reponer = [];
+                        tag = $(node).find('input:hidden');
+                        if (tag.length > 0) {
+                            for (i = 0; i < tag.length; i++) {
+                                reponer.push(tag[i]);
+                                $(tag[i]).remove();
+                            }
+                        }
+                        tag = $(node).find('input:radio');
+                        if (tag.length > 0) {
+                            retorno = retorno + ($(node).find(':checked').length > 0 ? $(node).find(':checked').val() : " ");
+                        }
+                        tag = $(node).find('input:checkbox');
+                        if (tag.length == 1) {
+                            retorno = retorno + ($(node).find(':checked').length > 0 ? "Si" : "No");
+                        } else if (tag.length > 1) {
+                            retorno = retorno + ($(node).find(':checked').length > 0 ? $(node).find(':checked').val() : " ");
+                        }
+                        tag = $(node).find('input,select,textarea').not(':radio,:checkbox,:hidden');
+                        if (tag.length > 0) {
+                            retorno = retorno + ($(tag).map(function () {
+                                return $(this).val();
+                            }).get().join(','));
+                        }
+
+                        respuesta = (retorno != "") ? retorno : $.trim($(node).text());
+                        for (i = 0; i < reponer.length; i++) {
+                            $(node).append(reponer[i]);
+                        }
+
+                        return respuesta;
+                    }
+                }
+            }
+        };
+
+
+        $.fn.dataTableExt.ofnSearch['html-input'] = function (value) {
+            return $(value).val();
+        };
+
+        $('#table-ed').DataTable({
+            "paging": false, // false to disable pagination (or any other option)
+            dom: 'Bfrtip',
+            stateSave: true,
+            // columnDefs: [
+            //     {
+            //         targets: 1,
+            //         className: 'noVis',
+            //         orderDataType: 'dom-select'
+            //     }
+            // ],
+            "columnDefs": [
+                {"type": "html-input", "targets": [1, 2, 6, 7, 8]},
+                {"orderDataType": "dom-text", "targets": [2]},
+                {"orderDataType": "dom-text", "type": "date-euro", "targets": [0]},
+                {"orderDataType": "dom-select", "targets": [1, 6, 7, 8, 12]}
+            ],
+
+            buttons: [
+                $.extend(true, {}, buttonCommon, {
+                    extend: 'copyHtml5'
+                }),
+                $.extend(true, {}, buttonCommon, {
+                    extend: 'excelHtml5',
+                    autoFilter: true,
+                    sheetName: 'Proton Projects Export',
+                }),
+                // 'csvHtml5',
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed two-column'
+                }
+            ],
+
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var search = $(`<input class="form-control form-control-sm" type="text" placeholder="Search">`)
+                        .appendTo($(column.footer()).empty())
+                        .on('change input', function () {
+                            var val = $(this).val()
+
+                            column
+                                .search(val ? val : '', true, false)
+                                .draw();
+                        });
+                });
+            }
+
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+
+    const $tableID = $('#table');
+    const $BTN = $('.export-btn');
+    const $EXPORT = $('#export');
+
+    const newTr = `
+<tr class="hide">
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td class="pt-3-half" contenteditable="true">Example</td>
+  <td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+  </td>
+</tr>`;
+
+    // <td class="pt-3-half">
+    //     <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
+    // <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
+    // </td>
+
+    // $('#invoiceDate').change(function() {
+    //     alert( "Handler for .change() called." );
+    //     $('#date').html($(this).val());
+    // });
+
+    $('.table-add').on('click', 'i', () => {
+
+        const $clone = $tableID.find('tbody tr').last().clone(true).removeClass('hide table-line');
+
+        $('.currencyInput').removeClass("currencyInput");
+
+        if ($tableID.find('tbody tr').length === 0) {
+
+            $('tbody').append(newTr);
+        }
+
+        $tableID.find('table').append($clone);
+
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 2,
+            digitGroupSeparator: " "
+        });
+    });
+
+    $tableID.on('click', '.table-remove', function () {
+        if ($tableID.find('tr:not(:hidden)').length > 3) {
+            $(this).parents('tr').detach();
+        } else {
+            alert("Nie można usunąć ostatniego kosztu. W projekcie musi pozostać co najmniej jedna pozycja. Jeżeli w projekcie nie poniesiono kosztów możesz wyzerować jej wartości.");
+        }
+    });
+
+    $tableID.on('click', '.table-up', function () {
+
+        const $row = $(this).parents('tr');
+
+        if ($row.index() === 0) {
+            return;
+        }
+
+        $row.prev().before($row.get(0));
+    });
+
+    $tableID.on('click', '.table-down', function () {
+
+        const $row = $(this).parents('tr');
+        $row.next().after($row.get(0));
+    });
+
+    // A few jQuery helpers for exporting only
+    jQuery.fn.pop = [].pop;
+    jQuery.fn.shift = [].shift;
+
+    $BTN.on('click', () => {
+
+        const $rows = $tableID.find('tr:not(:hidden)');
+        const headers = [];
+        const data = [];
+
+        // Get the headers (add special header logic here)
+        $($rows.shift()).find('th:not(:empty)').each(function () {
+
+            headers.push($(this).text().toLowerCase());
+        });
+
+        // Turn all existing rows into a loopable array
+        $rows.each(function () {
+            const $td = $(this).find('td');
+            const h = {};
+
+            // Use the headers from earlier to name our hash keys
+            headers.forEach((header, i) => {
+
+                if ($td.eq(i).find('input').length) {
+                    h[header] = $td.eq(i).find('input').val();
+                } else if ($td.eq(i).find('option').val()) {
+                    h[header] = $td.eq(i).find('option').filter(':selected').val();
+                } else {
+                    h[header] = $td.eq(i).text();
+                }
+                //    h[header] = $td.eq(i).find('input').val();
+            });
+
+            data.push(h);
+        });
+        data.pop(); //delete last footer td
+
+        var IDfromURL = new URLSearchParams(window.location.search).get('id');
+
+        // Output the result
+        $EXPORT.text(JSON.stringify(data));
+        // alert(JSON.stringify(data));
+        $.ajax({
+            type: "POST",
+            url: "/budget/" + IDfromURL + "/save",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            headers:
+                {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: window.location.href = "/projects/edit?id=" + IDfromURL
+        });
+    })
+    ;
+
+    // var doc = new jsPDF();
+    // var specialElementHandlers = {
+    //     '#editor': function (element, renderer) {
+    //         return true;
+    //     }
+    // };
+    //
+    // $('#cmd').click(function () {
+    //     doc.fromHTML($('#toPrint').html(), 15, 15, {
+    //         'width': 1000,
+    //         'elementHandlers': specialElementHandlers
+    //     });
+    //     doc.save('sample-file.pdf');
+    // });
+
+
+</script>
+</body>
+</html>
