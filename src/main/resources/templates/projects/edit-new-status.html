@@ -472,9 +472,9 @@
                                         <tr>
                                             <td class="pt-3-half">Project Kick-off
                                             </td>
-                                            <td id="date1" class="pt-3-half" th:text="${project?.kickOff}">
+                                            <td id="kickOff1" class="kickOff pt-3-half">
                                             </td>
-                                            <td id="date2" class="pt-3-half" th:text="${project?.kickOff}">
+                                            <td id="kickOff2" class="kickOff pt-3-half">
                                             </td>
                                             <td class="pt-3-half">
                                             </td>
@@ -482,9 +482,9 @@
                                         <tr>
                                             <td class="pt-3-half">Project Closure
                                             </td>
-                                            <td id="date1" class="pt-3-half" th:text="${project?.projectClosure}">
+                                            <td id="projectClosure1" class="pt-3-half">
                                             </td>
-                                            <td id="date2" class="pt-3-half">
+                                            <td id="projectClosure2" class="pt-3-half">
                                                 <input type="date" name="realDate" id="realDate" value=""/>
                                             </td>
                                             <td class="pt-3-half">
@@ -839,6 +839,8 @@
         $("select").on("change paste keyup", function() {
             $(this).children("option:selected").attr('selected',true);
         });
+        $('.kickOff').html( /*[[${project.kickOff}]]*/ 'Edit Project to set it');
+        $('#projectClosure1').html( /*[[${project.projectClosure}]]*/ 'Edit Project to set it');
     });
 
     const $tableID = $('#table');

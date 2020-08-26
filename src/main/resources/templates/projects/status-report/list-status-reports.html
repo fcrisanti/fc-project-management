@@ -250,7 +250,7 @@ font-size: x-small;"> Schedule</th>
                                 <th> Project Manager</th>
                                 <th> EDIT</th>
                                 <th> VIEW</th>
-                                <th> DOWNLOAD</th>
+<!--                                <th> DOWNLOAD</th>-->
                             </tr>
                             </thead>
                             <tbody>
@@ -269,7 +269,7 @@ font-size: x-small;"> Schedule</th>
 
                                 <td><a th:href="@{/psr/{id}/{year}/{quarter}(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" class="btn btn-red btn-sm m-0">EDIT</a></td>
                                 <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" class="btn btn-blue btn-sm m-0">VIEW</a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view/pdf(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PDF</a>
+
                                 </td>
                             </tr>
                             </tbody>
@@ -287,7 +287,7 @@ font-size: x-small;"> Schedule</th>
                                 <th> Project Manager</th>
                                 <th> EDIT</th>
                                 <th> VIEW</th>
-                                <th> DOWNLOAD</th>
+<!--                                <th> DOWNLOAD</th>-->
                             </tr>
                             </tfoot>
                         </table>
