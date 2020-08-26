@@ -732,6 +732,20 @@
                 { data : "probability", orderable: false }
             ]
         });
+
+        $("#table-ed td:contains(Project Closure)")
+        .parent().css('background-color', '#dee4ee');
+        $("#table-ed td:contains(Project Kick-off)")
+            .parent().css('background-color', '#dee4ee');
+        $("#table-risks td:contains(High)")
+            .parent().css('background-color', '#fff2ef');
+        $("#table-risks td:contains(Yes)")
+            .parent().css('background-color', '#fdf7e6');
+        $('#table-ed tr').each(function() {
+            if(new Date($(this).find("td:eq(1)").text()).getDate() < new Date($(this).find("td:eq(2)").text()).getDate()) {
+                $(this).css('color', 'red');
+            }
+        });
     });
 
 

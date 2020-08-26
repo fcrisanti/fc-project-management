@@ -97,7 +97,7 @@ class PSRController {
 //    }
 
     @GetMapping("/{id}/{year}/{quarter}")
-    public String editNewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes) {
+    public String editProjectStatusReportIfCurrentQuarter(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes) {
         LocalDate today = LocalDate.now();
         int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
         int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
@@ -108,6 +108,15 @@ class PSRController {
         }
         redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do 5 dni po jego zakończeniu.");
         return "redirect:/psr/"+id+"/"+year+"/"+quarter+"/view";
+    }
+
+    @GetMapping("/{id}/{year}/{quarter}/force")
+    public String forceEditProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes) {
+
+            findNewProjectAndAddPsrAttributes(id, quarter, year, model);
+            findAndAddPreviousPsrAttributes(id, model);
+            return "projects/edit-new-status";
+
     }
 
     @GetMapping("/{id}/{year}/{quarter}/view")
