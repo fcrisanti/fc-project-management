@@ -1,5 +1,6 @@
 package pl.fc.app.enities;
 
+import com.fasterxml.jackson.annotation.JsonRawValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.threeten.extra.Quarter;
 import pl.fc.app.enities.enums.ProjectState;
 
 import javax.persistence.Column;
@@ -40,6 +42,7 @@ public class ProjectStatusReport {
     private long psrId;
 
     private Month month;
+    private Quarter quarter;
     private Long year;
     private BigDecimal realizedBudget;
     private BigDecimal plannedBudget;
@@ -57,14 +60,35 @@ public class ProjectStatusReport {
     @Enumerated(EnumType.STRING)
     private ProjectState cost;
 
+    @Column(columnDefinition = "json")
+    @JsonRawValue
+    private String jsonMilestones;
+
+    @Column(columnDefinition = "TEXT")
+    private String htmlMilestones;
+
+    @Column(columnDefinition = "json")
+    @JsonRawValue
+    private String jsonRisks;
+
+    @Column(columnDefinition = "TEXT")
+    private String htmlRisks;
+
     private String projectManager;
-    private String completedWorks1;
-    private String completedWorks2;
-    private String nextSteps1;
-    private String nextSteps2;
-    private String risks1;
-    private String risks2;
+    private String completedWorks1; //obsolete, for backward-compatibility only
+    private String completedWorks2; //obsolete, for backward-compatibility only
+    private String nextSteps1; //obsolete, for backward-compatibility only
+    private String nextSteps2; //obsolete, for backward-compatibility only
+    private String risks1; //obsolete, for backward-compatibility only
+    private String risks2; //obsolete, for backward-compatibility only
+    @Column(columnDefinition = "TEXT")
     private String description;
+    private String techManager;
+    private String analyst;
+    private String employees;
+    private String modifiedSystems;
+    private String costAllocationKey;
+    private String comment;
 
     @Column(name = "created_date")
     @CreatedDate

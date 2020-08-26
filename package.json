@@ -1,0 +1,8 @@
+{
+  "name": "fc-project-management",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "jspdf": "^2.0.0"
+  }
+}

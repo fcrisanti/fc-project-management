@@ -174,11 +174,11 @@
                     </div>
                 </div>
             </form>
-            Month
-            <select name="month" id="month">
-                <option th:each="months : ${T(java.time.Month).values()}"
-                        th:text="${months.getValue()}"
-                        th:selected="${months.getValue() == month}"
+            Quarter
+            <select name="quarter" id="quarter">
+                <option th:each="quarters : ${T(org.threeten.extra.Quarter).values()}"
+                        th:text="${quarters.getValue()}"
+                        th:selected="${quarters.getValue() == quarter}"
                 >
                 </option>
             </select>
@@ -255,22 +255,21 @@ font-size: x-small;"> Schedule</th>
                             </thead>
                             <tbody>
                             <tr th:each="psr : ${projectStatusReports}">
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="P+${psr.project.sapNo}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.employees}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.name}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.scope.name()}+'.png'" height="55" width="55" th:alt="${psr.scope.name()}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.schedule.name()}+'.png'" height="55" width="55" th:alt="${psr.schedule.name()}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.cost.name()}+'.png'" height="55" width="55" th:alt="${psr.cost.name()}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.status}" th:class="${psr.project.status} == 'TO_BE_OPENED' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${psr.project.status}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${#strings.substring(psr.project.companies, 1, #strings.length(psr.project.companies)-1)}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:class="${psr.project.genesis} == 'NOT_GENESIS' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${psr.project.genesis}"
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" th:text="P+${psr.project.sapNo}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" th:text="${psr.project.employees}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" th:text="${psr.project.name}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.scope.name()}+'.png'" height="55" width="55" th:alt="${psr.scope.name()}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.schedule.name()}+'.png'" height="55" width="55" th:alt="${psr.schedule.name()}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}"><img th:src="'/codebase/trafficlight/'+${psr.cost.name()}+'.png'" height="55" width="55" th:alt="${psr.cost.name()}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" th:text="${psr.project.status}" th:class="${psr.project.status} == 'TO_BE_OPENED' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${psr.project.status}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" th:text="${#strings.substring(psr.project.companies, 1, #strings.length(psr.project.companies)-1)}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" th:class="${psr.project.genesis} == 'NOT_GENESIS' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${psr.project.genesis}"
                                                                                                                                                                    th:text="${psr.project.genesis}"></a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" th:text="${psr.project.projectManager}"></a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" th:text="${psr.project.projectManager}"></a></td>
 
-                                <td><a th:href="@{/psr/{id}/{year}/{month}(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-red btn-sm m-0">EDIT</a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-blue btn-sm m-0">VIEW</a></td>
-                                <td><a th:href="@{/psr/{id}/{year}/{month}/view/pdf(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PDF</a>
-                                    <a th:href="@{/psr/{id}/{year}/{month}/view/ppt(id=${psr.project.projectId}, month=${psr.month.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PPT</a>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" class="btn btn-red btn-sm m-0">EDIT</a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" class="btn btn-blue btn-sm m-0">VIEW</a></td>
+                                <td><a th:href="@{/psr/{id}/{year}/{quarter}/view/pdf(id=${psr.project.projectId}, quarter=${psr.quarter.getValue()}, year=${psr.year})}" class="btn btn-amber btn-sm m-0">PDF</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -522,7 +521,7 @@ font-size: x-small;"> Schedule</th>
     });
 
     function getPeriod() {
-        var action_src = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/psr/' + document.getElementsByName("year")[0].value +'/'+ document.getElementsByName("month")[0].value ;
+        var action_src = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/psr/' + document.getElementsByName("year")[0].value +'/'+ document.getElementsByName("quarter")[0].value ;
         var period = document.getElementById('period');
         window.location.href = action_src;
     }

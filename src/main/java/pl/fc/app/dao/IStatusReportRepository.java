@@ -1,6 +1,7 @@
 package pl.fc.app.dao;
 
 import org.springframework.data.repository.CrudRepository;
+import org.threeten.extra.Quarter;
 import pl.fc.app.enities.ProjectStatusReport;
 
 import java.time.Month;
@@ -15,7 +16,10 @@ public interface IStatusReportRepository extends CrudRepository<ProjectStatusRep
     Optional<ProjectStatusReport> findByMonthAndYearAndProjectProjectId(Month month, Long year, Long projectId);
     ProjectStatusReport getByMonthAndYearAndProjectProjectId(Month month, Long year, Long projectId);
     List<ProjectStatusReport> getByMonthAndYear(Month month, Long year);
+    List<ProjectStatusReport> getByQuarterAndYear(Quarter quarter, Long year);
     void deleteByMonthAndYearAndProjectProjectId(Month month, Long year, Long projectId);
 
     Optional<ProjectStatusReport> findByPsrId(Long psrId);
+
+    Optional<ProjectStatusReport> findByQuarterAndYearAndProjectProjectId(Quarter quarter, Long year, Long projectId);
 }

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title th:text="${project?.name}">PROTON</title>
+    <link href="/css/sing/application.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+
+
+
+    <!-- DataTables CSS -->
+    <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
+    <!-- DataTables Select CSS -->
+    <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <!-- Bootstrap core CSS -->
+    <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+    <!-- Material Design Bootstrap -->
+    <!--    <link href="/css/mdb.min.css" rel="stylesheet" type="text/css">-->
+
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+
+    <link rel="stylesheet"
+          href="/codebase/dhtmlxgantt.css"
+          type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet"
+          href="/css/style-gantt.css"
+          type="text/css" charset="utf-8">
+
+    <link rel="shortcut icon" href="/codebase/planet.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="PROTON">
+    <meta name="keywords"
+          content="proton ppm">
+    <meta name="author" content="Francesco Crisanti">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script>
+        /* yeah we need this empty stylesheet here. It's cool chrome & chromium fix
+        chrome fix https://code.google.com/p/chromium/issues/detail?id=167083
+        https://code.google.com/p/chromium/issues/detail?id=332189
+        */
+    </script>
+
+</head>
+<body class="nav-collapsed" style="overflow-x: unset;">
+<!--
+  Main sidebar seen on the left. may be static or collapsing depending on selected state.
+
+    * Collapsing - navigation automatically collapse when mouse leaves it and expand when enters.
+    * Static - stays always open.
+-->
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo d-none d-md-block">
+            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
+                <b>PROTON</b></a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status d-md-none">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar float-right">
+                            <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
+                        </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                            13
+                        </span>
+                &nbsp;
+                Francesco <strong>Crisanti</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+        </div>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/projects">
+                            <span class="icon">
+                                <i class="fi flaticon-home"></i>
+                            </span>
+                    Project List
+                </a>
+            </li>
+        </ul>
+        <!-- every .sidebar-nav may have a title -->
+        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+        <ul class="sidebar-nav">
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/psr">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="/employees">
+                            <span class="icon">
+                                <i class="fi flaticon-users"></i>
+                            </span>
+                    PMO
+                </a>
+            </li>
+            <li class="">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#">
+                            <span class="icon">
+                                <i class="fi flaticon-calculator"></i>
+                            </span>
+                    Budget
+                </a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
+<nav class="page-controls navbar navbar-dashboard">
+
+    <div class="container-fluid">
+        <!-- .navbar-header contains links seen on xs & sm screens -->
+        <div class="navbar-header mr-md-3">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <!-- whether to automatically collapse sidebar on mouseleave. If activated acts more like usual admin templates -->
+                    <a class="d-none d-lg-block nav-link" id="nav-state-toggle" href="#">
+                        <i class="la la-bars"></i>
+                    </a>
+                    <!-- shown on xs & sm screen. collapses and expands navigation -->
+
+                    <a class="d-lg-none nav-link" id="nav-collapse-toggle" href="#">
+                        <span class="square square-lg d-md-none"><i class="la la-bars"></i></span>
+                        <i class="la la-bars d-none d-md-block"></i>
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right d-md-none">
+                <li class="nav-item">
+                    <!-- toggles chat -->
+                    <a class="nav-link" href="#" data-toggle="chat-sidebar">
+                        <span class="square square-lg"><i class="la la-globe"></i></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- xs & sm screen logo -->
+            <a class="navbar-brand d-md-none" href="/projects">
+                <i class="fa fa-circle text-gray mr-n-sm"></i>
+                <i class="fa fa-circle text-warning"></i>
+                &nbsp;
+                sing
+                &nbsp;
+                <i class="fa fa-circle text-warning mr-n-sm"></i>
+                <i class="fa fa-circle text-gray"></i>
+            </a>
+        </div>
+
+        <!-- this part is hidden for xs screens -->
+        <div class="navbar-header mobile-hidden">
+            <!-- search form! link it to your search server -->
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
+                               oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
+                </div>
+            </form>
+
+            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${projectStatusReport.getQuarter().getValue()}, year=${projectStatusReport.year})}" type="button" class="btn btn-primary"
+               style="width:250px">Edit PSR</a>
+            <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
+               style="width:250px">Edit Project</a>
+            <button class="btn btn-dark" id="btnPrint">Generate PDF</button>
+            <!--Add External Libraries - JQuery and jspdf
+            check out url - https://scotch.io/@nagasaiaytha/generate-pdf-from-html-using-jquery-and-jspdf
+            -->
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
+
+            <ul class="nav navbar-nav float-right">
+
+                <li class="dropdown nav-item">
+                    <a href="#" class="dropdown-toggle no-caret nav-link" data-toggle="dropdown">
+                        <i class="la la-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content-wrap" style="height: 31%;">
+    <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
+
+    <main class="content" role="main">
+        <!-- Page content -->
+
+        <div id="content" class="flex-column col-lg-8" style="min-width: 926px; max-width: 926px;">
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Project Status Report</li>
+                <li class="breadcrumb-item active" th:text="P+${project.sapNo}"></li>
+            </ol>
+            <h2 class="page-title"><span th:text="${projectStatusReport.getYear() + ' ' + projectStatusReport.getQuarter()}">2020 Q3</span> - <span class="fw-semi-bold" id="companyOrGenesis"
+                                                                  th:text="${project.name}">All</span></h2>
+
+            <i th:text="${project.modifiedBy!=null } ? ${ 'Last modified by '+project.modifiedBy+' on '+project.lastModifiedDate}"></i>
+            <p id="errorMessage" style="color: red" th:text="${errorMessage}"></p>
+            <div class="row">
+
+                <div class="flex-column col-xl-3" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Team</span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <a>Project Manager</a>
+                            <br>
+                            <span th:text="${projectStatusReport.projectManager != null} ? ${projectStatusReport.projectManager} : ${project.projectManager}"></span>
+                            <br>
+                            <br>
+                            <a>PMO</a>
+                            <br>
+                            <span th:text="${projectStatusReport.employees != null} ? ${projectStatusReport.employees} : ${project.employees}"></span>
+                            <br>
+                            <br>
+                            <a>Project Analyst</a>
+                            <br>
+                            <span th:text="${projectStatusReport.analyst != null} ? ${projectStatusReport.analyst} : ${project.analyst}"></span>
+                            <br>
+                            <br>
+                            <a>Technical Manager</a>
+                            <br>
+                            <span th:text="${projectStatusReport.techManager != null} ? ${projectStatusReport.techManager} : ${project.techManager}"></span>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-9"
+                     style="flex-grow: 0; flex-shrink: 0; padding-left:0px; padding-bottom:0px;">
+                    <section class="widget" style="height: 200px; margin-bottom: 20px;">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Description</span>
+                            </h5>
+                            (Project Aim, Product etc.)
+                        </header>
+                        <div class="widget-body">
+                            <span th:text="${projectStatusReport.description != null ? projectStatusReport.description : project.descriptionEn}"></span>
+                        </div>
+                    </section>
+
+                    <section class="widget" style="height: 100px;">
+                        <header>
+                            <h5>
+                                Key <span class="fw-semi-bold">Modified Systems</span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <span th:text="${projectStatusReport.modifiedSystems}"></span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="pb-xlg">
+                        <section class="widget mb-0">
+                            <header>
+                                <h5>Project <span class="fw-semi-bold">Budget</span></h5>
+                            </header>
+                            <div class="widget-body justify-content-center">
+                                <div class="d-flex justify-content-between align-items-center mb-lg">
+                                    <h4 data-toggle="tooltip" data-placement="right" title=""
+                                        th:text="${projectStatusReport.plannedBudget}" class="currencyInput"></h4>
+                                    <b>PLN</b>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="pb-xlg">
+                        <section class="widget mb-0">
+                            <header>
+                                <h5>Realized <span class="fw-semi-bold">Costs</span></h5>
+                            </header>
+                            <div class="widget-body justify-content-center">
+                                <div class="d-flex justify-content-between align-items-center mb-lg">
+                                    <h4 data-toggle="tooltip" data-placement="right" title=""
+                                        th:text="${projectStatusReport.realizedBudget}" class="currencyInput"></h4>
+                                    <b>PLN</b>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="pb-xlg">
+                        <section class="widget mb-0">
+                            <header>
+                                <h5>Cost <span class="fw-semi-bold">Forecast</span></h5>
+                            </header>
+                            <div class="widget-body justify-content-center">
+                                <div class="d-flex justify-content-between align-items-center mb-lg">
+                                    <h4 data-toggle="tooltip" data-placement="right" title=""
+                                        th:text="${projectStatusReport.forecastBudget}" class="currencyInput"></h4>
+                                    <b>PLN</b>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6">
+                    <div class="pb-xlg">
+                        <section class="widget mb-0">
+                            <header>
+                                <h6>Cost <span class="fw-semi-bold">Allocation Key</span></h6>
+                            </header>
+                            <div class="widget-body">
+                                <div class=""
+                                     id="flot-donut-legend">
+                                    <table style="font-size:smaller;color:#545454">
+                                        <tbody>
+                                        <tr th:text="${projectStatusReport.costAllocationKey}">
+<!--                                            <td class="legendLabel"></td>-->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 20px;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Project <span class="fw-semi-bold">Rating</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body" style="display:flex; justify-content:space-evenly;">
+                        <h5>
+                            SCOPE:
+
+                            <img th:src="'/codebase/trafficlight/'+${projectStatusReport.scope.name()}+'.png'"
+                                 height="55" width="55" th:alt="${projectStatusReport.scope.name()}"
+                                 style="margin-left: 15px;"></a>
+                        </h5>
+                        <h5>
+                            BUDGET:
+
+                            <img th:src="'/codebase/trafficlight/'+${projectStatusReport.cost.name()}+'.png'"
+                                 height="55" width="55" th:alt="${projectStatusReport.cost.name()}"
+                                 style="margin-left: 15px;"></a>
+                        </h5>
+                        <h5>
+                            SCHEDULE:
+
+                            <img th:src="'/codebase/trafficlight/'+${projectStatusReport.schedule.name()}+'.png'"
+                                 height="55" width="55" th:alt="${projectStatusReport.schedule.name()}"
+                                 style="margin-left: 15px;"></a>
+                        </h5>
+
+
+                    </div>
+                </section>
+            </div>
+
+            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Project <span class="fw-semi-bold">Milestones</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="table" class="table-editable">
+                                    <table id="table-ed"
+                                           class="table table-bordered table-responsive-md table-striped text-center display">
+                                        <thead class="peach-gradient white-text">
+                                        <tr>
+                                            <th class="text-center">Task Description</th>
+                                            <th class="text-center small">Last accepted due date</th>
+                                            <th class="text-center">Execution date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="pt-3-half" contenteditable="true">test test test
+                                            </td>
+                                            <td id="date1" class="pt-3-half">
+                                                <input type="date" name="dueDate" id="dueDate"/>
+                                            </td>
+                                            <td id="date2" class="pt-3-half">
+                                                <input type="date" name="realDate" id="realDate"/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Project <span class="fw-semi-bold">Risks</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="risks" class="table-editable">
+                                    <table id="table-risks"
+                                           class="table table-bordered table-responsive-md table-striped text-center">
+                                        <thead class="peach-gradient white-text">
+                                        <tr>
+                                            <th class="text-center">Date of identification</th>
+                                            <th class="text-center">Description</th>
+                                            <th class="text-center">Way of prevention</th>
+                                            <th class="text-center">Materialized</th>
+                                            <th class="text-center">Impact</th>
+                                            <th class="text-center">Probability</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td id="date1" class="pt-3-half">
+                                                <input type="date" name="dueDate" id="dueDate"/>
+                                            </td>
+                                            <td class="pt-3-half" contenteditable="true">test test test
+                                            </td>
+                                            <td class="pt-3-half" contenteditable="true">test test test
+                                            </td>
+                                            <td class="pt-3-half" contenteditable="true">No</td>
+                                            <td class="pt-3-half" contenteditable="true">Low</td>
+                                            <td class="pt-3-half" contenteditable="true">Medium</td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;" th:if="${projectStatusReport.comment!=''}">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Project Manager <span class="fw-semi-bold">Comments</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <a th:text="${projectStatusReport.comment}"></a>
+                    </div>
+                </section>
+            </div>
+
+        <footer th:replace="layouts :: footer"></footer>
+</div>
+
+<div class="flex-column col-lg-auto" style="flex-grow: 0; flex-shrink: 0; margin-left: 71%;">
+    <section class="widget">
+        <header>
+            <h5>
+                All <span class="fw-semi-bold">Status Reports</span>
+            </h5>
+        </header>
+        <div class="widget-body">
+
+            <div class="column">
+                <table id="dtBasicExample" class="table table-bordered table-striped">
+                    <thead class="aqua-gradient" style="color: white">
+                    <tr>
+                        <th> MONTH</th>
+                        <th> YEAR</th>
+                        <th> EDIT</th>
+                        <th> VIEW</th>
+                        <!--                                    <th> DOWNLOAD</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="psr : ${project.projectStatusReports}">
+                        <td>
+                            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                               th:text="${psr.getQuarter().getValue()}"></a></td>
+                        <td>
+                            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                               th:text="${psr.year}"></a></td>
+                        <td>
+                            <a th:href="@{/psr/{id}/{year}/{month}(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                               class="btn btn-red btn-sm m-0">EDIT</a></td>
+                        <td>
+                            <a th:href="@{/psr/{id}/{year}/{month}/view(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                               class="btn btn-red btn-sm m-0">VIEW</a></td>
+                        <!--                                    <td>-->
+                        <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
+                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/pdf(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                        <!--                                        >PDF-->
+                        <!--                                        </button>-->
+                        <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
+                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{month}/view/ppt(id=${project.projectId}, month=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                        <!--                                        >PPT-->
+                        <!--                                        </button>-->
+                        <!--                                    </td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+</main>
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+<div id="editor"></div>
+
+<!-- common libraries. required for every page-->
+<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/jquery-pjax/jquery.pjax.js"></script>
+<script src="/node_modules/popper.js/dist/umd/popper.js"></script>
+<script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/node_modules/bootstrap/js/dist/util.js"></script>
+<script src="/node_modules/jquery-slimscroll/jquery.slimscroll.js"></script>
+<script src="/node_modules/widgster/widgster.js"></script>
+<script src="/node_modules/pace.js/pace.js"
+        data-pace-options='{ "target": ".content-wrap", "ghostTime": 1000 }'></script>
+<script src="/node_modules/hammerjs/hammer.js"></script>
+<script src="/node_modules/jquery-hammerjs/jquery.hammer.js"></script>
+
+<!-- DataTables JS -->
+<!--<script src="/js/addons/datatables.min.js" type="text/javascript"></script>-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+
+<!-- DataTables Select JS -->
+<script src="/js/addons/datatables-select.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"></script>
+
+<!-- common app js -->
+<script src="/js/sing/settings.js"></script>
+<script src="/js/sing/app.js"></script>
+
+<!-- Page scripts -->
+<script src="/node_modules/jquery-sparkline/jquery.sparkline.js"></script>
+<!-- page specific js -->
+<script src="/js/sing/tables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
+<!-- jsPDF library -->
+<script src="/js/jspdf.min.js"></script>
+<script src="/js/html2pdf.bundle.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<!-- Dhtmlxgantt library -->
+<script src="/codebase/dhtmlxgantt.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/dhtmlxgantt_marker.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/ext/dhtmlxgantt_fullscreen.js"
+        type="text/javascript" charset="utf-8"></script>
+<!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_critical_path.js"-->
+<!--                type="text/javascript" charset="utf-8"></script>-->
+<!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_auto_scheduling.js"-->
+<!--                type="text/javascript" charset="utf-8"></script>-->
+<script src="/codebase/dhtmlxgantt_tooltip.js"
+        type="text/javascript" charset="utf-8"></script>
+<!--        <script src="https://dhtmlx.com/docs/products/dhtmlxGantt/demo/lib/dhtmlxGantt/ext/dhtmlxgantt_undo.js"-->
+<!--                type="text/javascript" charset="utf-8"></script>-->
+<script src="/codebase/api.js" async="true" type="text/javascript"
+        charset="utf-8"></script>
+
+<script src="/codebase/layout.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/zoom.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/zoom_to_fit.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/grid_struct.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="/codebase/fit_task_text.js"
+        type="text/javascript" charset="utf-8"></script>
+
+
+<footer th:replace="layouts :: footer"></footer>
+<script type="text/javascript" th:inline="javascript">
+
+    $(document).ready(function () {
+
+        $('body').on('click', '#btnPrint', function () {
+
+            $("#content").addClass('content');
+            $('#errorMessage').remove();
+            $('#table-ed').css("width","770px");
+            $('#table-risks').css("width","770px");
+            $('.widget').addClass('border border-primary');
+            var HTML_Width = $("#content").width();
+            var HTML_Height = $("#content").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = HTML_Height + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+            html2canvas($("#content")[0],{scale:1.7}).then(function (canvas) {
+                var imgData = canvas.toDataURL("image/png", 1.0);
+                // var imgData = canvas.toDataURL({ devicePixelRatio: 5});
+
+                // var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                for (var i = 1; i <= totalPDFPages; i++) {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+                pdf.save("PSR.pdf");
+                // $(".html-content").hide();
+                $("#content").removeClass('content');
+                $('.widget').removeClass('border border-primary');
+            });
+        });
+
+    });
+
+
+    function resetPsrIdAndSave() {
+        document.getElementById("psrId").value = 0;
+    }
+
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable({
+            "searching": false,
+            "paging": false,
+        });
+    });
+
+
+    function view(url) {
+        url = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + url;
+        $("#edit").html('<object data=' + url + ' style=\"width: 800px; height: 650px;\"/>');
+    }
+
+    $(document).ready(function () {
+
+        new AutoNumeric.multiple('.currencyInput', {
+            decimalPlaces: 0,
+            digitGroupSeparator: " "
+        });
+
+        $('#table-ed').DataTable({
+            "paging": false, // false to disable pagination (or any other option)
+            "searching": false,
+            'sDom': 't',
+            stateSave: true,
+            data: [(${projectStatusReport.jsonMilestones})],
+            order: [ 1, 'asc' ],
+            columns : [
+                { data : "task description", orderable: false },
+                { data : "last accepted due date", orderable: false  },
+                { data : "execution date", orderable: false  }
+            ]
+        });
+
+        $('#table-risks').DataTable({
+            "paging": false, // false to disable pagination (or any other option)
+            "searching": false,
+            'sDom': 't',
+            stateSave: true,
+            data: [(${projectStatusReport.jsonRisks})],
+            order: [ 0, 'asc' ],
+            columns : [
+                { data : "date of identification", orderable: false },
+                { data : "description", orderable: false },
+                { data : "way of prevention", orderable: false },
+                { data : "materialized", orderable: false },
+                { data : "impact", orderable: false },
+                { data : "probability", orderable: false }
+            ]
+        });
+    });
+
+
+</script>
+</body>
+</html>

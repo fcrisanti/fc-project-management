@@ -66,7 +66,7 @@ public class ProjectService {
         projectRepository.delete(project);
     }
 
-    public List<Project> getAllNonHavingPsr(int month, Long year) {
+    public List<Project> getAllNonHavingPsrByMonthAndYear(int month, Long year) {
         List<Project> nonPsr = projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
                 .stream()
                 .filter(project -> project.getProjectStatusReports().isEmpty()).collect(Collectors.toList());
@@ -77,6 +77,22 @@ public class ProjectService {
                 .filter(project -> project.getProjectStatusReports()
                         .stream()
                         .noneMatch(projectStatusReport -> projectStatusReport.getYear().equals(year) && projectStatusReport.getMonth().getValue() == month))
+                .collect(Collectors.toList()));
+
+        return nonPsr;
+    }
+
+    public List<Project> getAllNonHavingPsrByQuarterAndYear(int quarter, Long year) {
+        List<Project> nonPsr = projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
+                .stream()
+                .filter(project -> project.getProjectStatusReports().isEmpty()).collect(Collectors.toList());
+
+        nonPsr.addAll(projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
+                .stream()
+                .filter(project -> !project.getProjectStatusReports().isEmpty())
+                .filter(project -> project.getProjectStatusReports()
+                        .stream()
+                        .noneMatch(projectStatusReport -> projectStatusReport.getYear().equals(year) && projectStatusReport.getQuarter().getValue() == quarter))
                 .collect(Collectors.toList()));
 
         return nonPsr;
