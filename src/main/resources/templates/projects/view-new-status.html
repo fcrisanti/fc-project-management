@@ -533,15 +533,15 @@
                             <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
                                class="btn btn-red btn-sm m-0">EDIT</a></td>
                         <td>
-                            <a th:href="@{/psr/{id}/{year}/{quarter}/view(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                            <a th:href="@{/psr/view/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
                                class="btn btn-red btn-sm m-0">VIEW</a></td>
                         <!--                                    <td>-->
                         <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
-                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{quarter}/view/pdf(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                        <!--                                                th:attr="onclick=|view('@{/psr/view/{id}/{year}/{month}/pdf(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
                         <!--                                        >PDF-->
                         <!--                                        </button>-->
                         <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
-                        <!--                                                th:attr="onclick=|view('@{/psr/{id}/{year}/{quarter}/view/ppt(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                        <!--                                                th:attr="onclick=|view('@{/psr/view/{id}/{year}/{month}/ppt(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
                         <!--                                        >PPT-->
                         <!--                                        </button>-->
                         <!--                                    </td>-->

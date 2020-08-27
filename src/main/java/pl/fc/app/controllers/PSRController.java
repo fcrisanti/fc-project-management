@@ -107,7 +107,7 @@ class PSRController {
             return "projects/edit-new-status";
         }
         redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do 5 dni po jego zakończeniu.");
-        return "redirect:/psr/"+id+"/"+year+"/"+quarter+"/view";
+        return "redirect:/psr/view/"+id+"/"+year+"/"+quarter;
     }
 
     @GetMapping("/{id}/{year}/{quarter}/force")
@@ -119,7 +119,7 @@ class PSRController {
 
     }
 
-    @GetMapping("/{id}/{year}/{quarter}/view")
+    @GetMapping("/view/{id}/{year}/{quarter}")
     public String viewNewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model) {
 
         findNewProjectAndAddPsrAttributes(id, quarter, year, model);
@@ -132,23 +132,23 @@ class PSRController {
 //        return "projects/status-report/psr";
 //    }
 
-    @GetMapping("{id}/{year}/{month}/delete")
-    public String deleteProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-        deleteProjectByAddPsrAttributes(id, month, year, model);
-        return "projects/edit-status-report";
-    }
+//    @GetMapping("{id}/{year}/{month}/delete")
+//    public String deleteProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+//        deleteProjectByAddPsrAttributes(id, month, year, model);
+//        return "projects/edit-status-report";
+//    }
 
-    @GetMapping("{id}/{year}/{month}/view/pdf")
-    public String downloadPDFProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-        findProjectAndAddPsrAttributes(id, month, year, model);
-        return "projects/status-report/psr-pdf";
-    }
-
-    @GetMapping("{id}/{year}/{month}/view/ppt")
-    public String downloadPPTProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-        findProjectAndAddPsrAttributes(id, month, year, model);
-        return "projects/status-report/psr-ppt";
-    }
+//    @GetMapping("{id}/{year}/{month}/view/pdf")
+//    public String downloadPDFProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+//        findProjectAndAddPsrAttributes(id, month, year, model);
+//        return "projects/status-report/psr-pdf";
+//    }
+//
+//    @GetMapping("{id}/{year}/{month}/view/ppt")
+//    public String downloadPPTProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
+//        findProjectAndAddPsrAttributes(id, month, year, model);
+//        return "projects/status-report/psr-ppt";
+//    }
 
     private void findProjectAndAddPsrAttributes(Long id, int month, Long year, Model model) {
         Project project = projectService.getByID(id);
@@ -230,7 +230,7 @@ class PSRController {
         projectStatusReport.setProject(project);
         project.addPSR(projectStatusReport);
         statusReportService.save(projectStatusReport);
-        return "redirect:/psr/" + id + "/" + projectStatusReport.getYear() + "/" + projectStatusReport.getQuarter().getValue() + "/view";
+        return "redirect:/psr/view/" + id + "/" + projectStatusReport.getYear() + "/" + projectStatusReport.getQuarter().getValue();
     }
 
 }
