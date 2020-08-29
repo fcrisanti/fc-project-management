@@ -225,14 +225,14 @@
                 </header>
                 <div class="widget-body">
                     <div class="row">
-                        <div class="flex-column" style="margin-left:20px;">
+                        <div class="flex-column" style="margin-left:20px; width: 32%">
 
                             <!--            <h4 th:text="${project.name}"> Current Project</h4>-->
                             <input type="hidden" th:field="${project.projectId}">
                             <input type="hidden" th:field="${project.jsonGantt}" id="jsonGantt" value="jsonGantt">
 
                             <table id="dtBasicExample" class="table table-bordered table-striped"
-                                   style="width:450px; height: 610px;">
+                                   style="height: 610px;">
 
                                 <tbody>
                                 <tr>
@@ -256,6 +256,13 @@
                                     <td>
                                         <input type="text" th:field="${project.projectManager}"
                                                placeholder="PM projektu">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> PM Alias</th>
+                                    <td>
+                                        <input type="text" th:field="${project.pmAlias}"
+                                               placeholder="Login do Windows (Active Directory)">
                                     </td>
                                 </tr>
                                 <tr>
@@ -328,9 +335,9 @@
                         </div>
 
 
-                        <div class="flex-column">
+                        <div class="flex-column" style="width: 32%">
                             <table id="dtBasicExample2" class="table table-bordered table-striped"
-                                   style="width:450px; height: 610px;">
+                                   style="height: 610px;">
 
                                 <tbody>
                                 <tr>
@@ -374,13 +381,20 @@
                               height="48"></textarea>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th> Folder path</th>
+                                    <td>
+                    <textarea th:field="${project.folderPath}" placeholder="Skopiuj adres folderu projektu"
+                              height="48"></textarea>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <div class="flex-column">
+                        <div class="flex-column" style="width: 32%">
                             <table id="dtBasicExample3" class="table table-bordered table-striped"
-                                   style="width:450px; height: 610px;">
+                                   style="height: 610px;">
 
                                 <tbody>
                                 <tr>

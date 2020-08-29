@@ -14,10 +14,12 @@ import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.ProjectStatusReport;
+import pl.fc.app.security.PermissionManager;
 import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
 import pl.fc.app.services.StatusReportService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
@@ -40,6 +42,8 @@ class PSRController {
     IGenesisRepository genesisRepository;
     @Autowired
     StatusReportService statusReportService;
+    @Autowired
+    PermissionManager permissionManager;
 
     @GetMapping
     public String displayAllPSR(Model model) {
@@ -97,7 +101,8 @@ class PSRController {
 //    }
 
     @GetMapping("/{id}/{year}/{quarter}")
-    public String editProjectStatusReportIfCurrentQuarter(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes) {
+    public String editProjectStatusReportIfCurrentQuarter(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
+        if(permissionManager.userAllowed("psr-edit")) {
         LocalDate today = LocalDate.now();
         int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
         int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
@@ -108,20 +113,26 @@ class PSRController {
         }
         redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do 5 dni po jego zakończeniu.");
         return "redirect:/psr/view/"+id+"/"+year+"/"+quarter;
+        } else {
+            response.setStatus(403);
+            return "errorpages/error-403";
+        }
     }
 
     @GetMapping("/{id}/{year}/{quarter}/force")
-    public String forceEditProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes) {
-
+    public String forceEditProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
+        if(permissionManager.userAllowed("psr-any-edit")) {
             findNewProjectAndAddPsrAttributes(id, quarter, year, model);
             findAndAddPreviousPsrAttributes(id, model);
             return "projects/edit-new-status";
-
+        } else {
+            response.setStatus(403);
+            return "errorpages/error-403";
+        }
     }
 
     @GetMapping("/view/{id}/{year}/{quarter}")
     public String viewNewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model) {
-
         findNewProjectAndAddPsrAttributes(id, quarter, year, model);
         return "projects/view-new-status";
     }

@@ -76,18 +76,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         LOGGER.info("Active Directory is set-up. Domain: " + DOMAIN);
         LOGGER.info("AD URL: " + URL);
 
-
-        //Adding certificate from Resources (cacerts.jks) with password "changeit"
-//        File jks = File.createTempFile("cacerts", "jks");
-//        jks.deleteOnExit();
-//
-//        try (InputStream fromJks = SecurityConfig.class.getResource("/cacerts.jks").openStream()) {
-//            FileCopyUtils.copy(FileCopyUtils.copyToByteArray(fromJks), jks);
-//        }
-//
-//        System.setProperty("javax.net.ssl.trustStore", jks.getPath());
-//        System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
-
         ActiveDirectoryLdapAuthenticationProvider provider = new ActiveDirectoryLdapAuthenticationProvider(DOMAIN, URL);
         provider.setConvertSubErrorCodesToExceptions(true);
         provider.setUseAuthenticationRequestCredentials(true);

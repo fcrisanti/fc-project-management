@@ -5,11 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,6 +28,9 @@ public class UserAccount {
     @Column(name = "username")
     private String userName;
 
+    private String name;
+    private String surname;
+
     private String email;
 
     private String password;
@@ -33,4 +38,7 @@ public class UserAccount {
     private String role = "ROLE_USER";
 
     private boolean enabled = true;
+
+    @ElementCollection
+    private List<String> areas;
 }

@@ -63,6 +63,12 @@ public class Project {
     private String status;
     private String externalProviders;
     private String MPK;
+
+    private String pmAlias;
+
+    @Column(columnDefinition = "TEXT")
+    private String folderPath;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate inaugurationDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -16,10 +16,12 @@ import pl.fc.app.enities.Project;
 import pl.fc.app.enities.variables.Company;
 import pl.fc.app.enities.variables.Genesis;
 import pl.fc.app.enities.variables.Status;
+import pl.fc.app.security.PermissionManager;
 import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
 import pl.fc.app.services.StatusReportService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -44,6 +46,9 @@ class ProjectController {
     @Autowired
     StatusReportService statusReportService;
 
+    @Autowired
+    PermissionManager permissionManager;
+
 
     @GetMapping
     public String displayAllProjects(Model model) {
@@ -53,9 +58,14 @@ class ProjectController {
     }
 
     @GetMapping("/edit")
-    public String editProject(@RequestParam Long id, Model model) {
-        Project project = projectService.getByID(id);
-        return modelAttributesLoader(model, project);
+    public String editProject(@RequestParam Long id, Model model, HttpServletResponse response) {
+        if(permissionManager.userAllowed("project-edit")) {
+            Project project = projectService.getByID(id);
+            return modelAttributesLoader(model, project);
+        } else {
+            response.setStatus(403);
+            return "errorpages/error-403";
+        }
     }
 
     @GetMapping("/new")
@@ -102,8 +112,13 @@ class ProjectController {
     }
 
     @GetMapping("/delete")
-    public String deleteProject(@RequestParam Long id, Model model) {
+    public String deleteProject(@RequestParam Long id, Model model, HttpServletResponse response) {
+        if(permissionManager.userAllowed("admin-dash")) {
         projectService.deleteByID(id);
         return "redirect:/projects";
+        } else {
+            response.setStatus(403);
+            return "errorpages/error-403";
+        }
     }
 }

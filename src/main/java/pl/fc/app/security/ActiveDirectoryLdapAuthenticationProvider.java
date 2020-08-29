@@ -37,6 +37,7 @@ import org.springframework.security.ldap.SpringSecurityLdapTemplate;
 import org.springframework.security.ldap.authentication.AbstractLdapAuthenticationProvider;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import pl.fc.app.security.activedirectory.PersonDAO;
 
 import javax.naming.AuthenticationException;
 import javax.naming.Context;

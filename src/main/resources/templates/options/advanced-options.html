@@ -163,10 +163,19 @@
             <!-- search form! link it to your search server -->
             <form class="navbar-form" role="search">
                 <div class="form-group">
-
+                    <div class="input-group input-group-no-border ml-4">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()">
+                        <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search"></i>
+                                        </span>
+                                    </span>
+                    </div>
                 </div>
             </form>
 
+            <!--            spacing for future logged in button-->
+            <div style="width: 120px"></div>
 
             <ul class="nav navbar-nav float-right">
 
@@ -189,21 +198,202 @@
     <main id="content" class="content" role="main">
         <!-- Page content -->
 
-        <h2 class="page-title">Access <span class="fw-semi-bold">Denied</span></h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">DASHBOARD</li>
+            <li class="breadcrumb-item active">Advanced Options</li>
+        </ol>
+        <h2 class="page-title">SuperUser - <span class="fw-semi-bold">Dashboard</span></h2>
 
         <div class="row">
             <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
                 <section class="widget">
                     <header>
                         <h5>
-                            You don't have access to <span class="fw-semi-bold">this page</span>
+                            User <span class="fw-semi-bold">Roles</span>
                         </h5>
                     </header>
-                    <div class="widget-body">
-                        <h6>
-                            If you feel you should be able to access it please contact the PROTON PPM administrator
-                            <a href="mailto: francesco.crisanti@compensazycie.com.pl">francesco.crisanti@compensazycie.com.pl</a>
-                        </h6>
+                    <div class="row">
+                        <div class="column" style="margin-left:20px; margin-right:20px;">
+                            <div>
+                                <h4> Add/Modify user</h4>
+                                <form id="userform" th:action="@{/options/user}" th:object="${userAccount}" method="POST">
+                                    <label>
+                                        Alias
+                                        <input type="text" th:field="${userAccount.userName}">
+                                    </label>
+                                    <label>
+                                        Name
+                                        <input type="text" th:field="${userAccount.name}">
+                                    </label>
+                                    <label>
+                                        Surname
+                                        <input type="text" th:field="${userAccount.surname}">
+                                    </label>
+                                    <th:block th:each="area : ${areas}">
+                                        <input type="checkbox" name="areas" id="areas" th:value="${area}"/>
+                                        <label th:text="${area}"></label>
+                                    </th:block>
+                                    <button type="submit" class="btn-primary">Add/Modify User</button>
+                                </form>
+
+                                <h4> Delete user</h4>
+                                <form id="userdeleteform" th:action="@{/options/deleteuser}" th:object="${userAccount}" method="POST">
+                                    <label>
+                                        Alias
+                                        <input type="text" th:field="${userAccount.userName}">
+                                    </label>
+                                    <button type="submit" class="btn-primary">Delete User</button>
+                                </form>
+
+
+                                <h4> Users</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Alias</th>
+                                        <th> Name</th>
+                                        <th> Surname</th>
+                                        <th> Access Area</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="user : ${users}">
+                                        <td th:text="${user.userName}">
+                                        <td th:text="${user.name}">
+                                        <td th:text="${user.surname}">
+                                        <td th:text="${user.areas}">
+                                    </tr>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Advanced <span class="fw-semi-bold">Options</span>
+                        </h5>
+                    </header>
+                    <div class="row">
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:30%">
+                            <div>
+                                <h4> Companies</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Company Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="company : ${companies}">
+                                        <td th:text="${company}">
+                                    </tr>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                <h4> Streams</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Stream Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="stream : ${genesis}">
+                                        <td th:text="${stream}">
+                                    </tr>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:30%">
+                            <div>
+                                <h4> Statuses</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Status Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="status : ${statuses}">
+                                        <td th:text="${status}">
+                                    </tr>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="column" style="margin-top: 37px">
+                            <form th:action="@{/options/addcompany}" th:object="${company}" method="POST" style="margin-bottom:1em">
+                                <input type="text" placeholder="Company Name" th:field="${company.company}">
+                                <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Company</button>
+                            </form>
+
+
+                            <form th:action="@{/options/addstatus}" th:object="${status}" method="POST" style="margin-bottom:1em">
+                                <input type="text" placeholder="Status Name" th:field="${status.name}" required>
+                                <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Status</button>
+                            </form>
+
+                            <form th:action="@{/options/addgenesis}" th:object="${genesisType}" method="POST" style="margin-bottom:1em">
+                                <input type="text" placeholder="Stream Name" th:field="${genesisType.name}" required>
+                                <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Stream</button>
+                            </form>
+
+                            <form th:action="@{/options/removecompany}" th:object="${company}" method="POST" style="margin-bottom:1em">
+                                <input type="text" placeholder="Company Name" th:field="${company.company}" required>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Company</button>
+                            </form>
+
+                            <form th:action="@{/options/removestatus}" th:object="${status}" method="POST" style="margin-bottom:1em">
+                                <input type="text" placeholder="Status Name" th:field="${status.name}" required>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Status</button>
+                            </form>
+
+                            <form th:action="@{/options/removegenesis}" th:object="${genesisType}" method="POST" style="margin-bottom:1em">
+                                <input type="text" placeholder="Stream Name" th:field="${genesisType.name}" required>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Stream</button>
+                            </form>
+                            <div style="margin:20px; align-content: center">
+                                <img src="/codebase/imgs/warning.png" width="171" height="171">
+                            </div>
+                            <form action="#" th:action="@{'/options/removeproject/'}" method="GET"
+                                  onsubmit="return confirm('Czy na pewno chcesz usunąć projekt P'+id.value+'? \nNie będzie można cofnąć tej operacji. Upewnij się, czy numer projektu jest prawidłowy.');"
+                                  style="margin-bottom:1em">
+                                <input type="number" placeholder="Sam numer (bez P)" name="id" id="id" required>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Project</button>
+                            </form>
+
+                            <form action="#" th:action="@{'/options/removepmo/'}" method="GET"
+                                  onsubmit="return confirm('Czy na pewno chcesz usunąć PMO '+firstName.value+' '+lastName.value+'? Nie będzie można cofnąć tej operacji.\n ' +
+               'PMO uda się usunąć WYŁĄCZNIE, gdy nie ma przypisanych żadnych projektów. W przeciwnym razie operacja nie zostanie wykonana. \n' +
+                'Jeżeli istnieją przypisane projekty zmień wcześniej ich przypisanie np. na brak decyzji');"
+                                  style="margin-bottom:1em">
+
+                                <input type="text" placeholder="Imię PMO" name="firstName" id="firstName">
+
+
+                                <input type="text" placeholder="Nazwisko PMO" name="lastName" id="lastName">
+
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE PMO</button>
+                            </form>
+
+                        </div>
+
                     </div>
                 </section>
             </div>
