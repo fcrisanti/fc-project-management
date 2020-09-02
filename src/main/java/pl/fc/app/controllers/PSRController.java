@@ -170,7 +170,10 @@ class PSRController {
     }
 
     private void findNewProjectAndAddPsrAttributes(Long id, int quarter, Long year, Model model) {
-        Optional<ProjectStatusReport> maybeStatusReport = statusReportService.findByProjectIdQuarterYear(id, quarter, year);
+        Optional<ProjectStatusReport> maybeStatusReport = Optional.empty();
+        if(statusRepository.count()>0) {
+            maybeStatusReport = statusReportService.findByProjectIdQuarterYear(id, quarter, year);
+        } 
         Project project = projectService.getByID(id);
         ProjectStatusReport projectStatusReport = new ProjectStatusReport();
         if (maybeStatusReport.isPresent()) {
