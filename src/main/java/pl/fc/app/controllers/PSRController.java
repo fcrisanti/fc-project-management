@@ -102,7 +102,7 @@ class PSRController {
 
     @GetMapping("/{id}/{year}/{quarter}")
     public String editProjectStatusReportIfCurrentQuarter(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
-        if(permissionManager.userAllowed("psr-edit")) {
+        if(permissionManager.userAllowed("psr-edit") || permissionManager.userAllowed(id)) {
         LocalDate today = LocalDate.now();
         int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
         int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();

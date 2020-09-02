@@ -54,12 +54,13 @@ class ProjectController {
     public String displayAllProjects(Model model) {
         List<Project> projects = projectService.getAll();
         model.addAttribute("projects", projects);
+        model.addAttribute("advanced",permissionManager.userAllowed("advanced-view"));
         return "projects/list-projects";
     }
 
     @GetMapping("/edit")
     public String editProject(@RequestParam Long id, Model model, HttpServletResponse response) {
-        if(permissionManager.userAllowed("project-edit")) {
+        if(permissionManager.userAllowed("project-edit") || permissionManager.userAllowed(id)) {
             Project project = projectService.getByID(id);
             return modelAttributesLoader(model, project);
         } else {
