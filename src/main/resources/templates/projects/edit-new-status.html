@@ -242,28 +242,28 @@
                         <div class="widget-body">
                             <a>Project Manager</a>
                             <br>
-                            <input size="15"
+                            <input size="11"
                                    th:value="${projectStatusReport.projectManager != null ? projectStatusReport.projectManager : project.projectManager}"
                                    id="projectManager" name="projectManager">
                             <br>
                             <br>
                             <a>PMO</a>
                             <br>
-                            <input size="15"
+                            <input size="11"
                                    th:value="${projectStatusReport.employees != null ? projectStatusReport.employees : project.employees}"
                                    id="employees" name="employees">
                             <br>
                             <br>
                             <a>Project Analyst</a>
                             <br>
-                            <input size="15"
+                            <input size="11"
                                    th:value="${projectStatusReport.analyst != null ? projectStatusReport.analyst : project.analyst}"
                                    id="analyst" name="analyst">
                             <br>
                             <br>
                             <a>Technical Manager</a>
                             <br>
-                            <input size="15"
+                            <input size="11"
                                    th:value="${projectStatusReport.techManager != null ? projectStatusReport.techManager : project.techManager}"
                                    id="techManager" name="techManager">
                         </div>
@@ -274,13 +274,17 @@
                      style="flex-grow: 0; flex-shrink: 0; padding-left:0px; padding-bottom:0px;">
                     <section class="widget" style="height: 200px; margin-bottom: 20px;">
                         <header>
+
                             <h5>
                                 Project <span class="fw-semi-bold">Description</span>
+                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Description')}">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </button>
                             </h5>
                             (Project Aim, Product etc.)
                         </header>
                         <div class="widget-body">
-                            <textarea cols="67" rows="4"
+                            <textarea cols="56" rows="3"
                                       th:text="${projectStatusReport.description != null ? projectStatusReport.description : project.descriptionEn}"
                                       id="description" name="description"></textarea>
                         </div>
@@ -290,10 +294,13 @@
                         <header>
                             <h5>
                                 Key <span class="fw-semi-bold">Modified Systems</span>
+                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Key Modified Systems')}">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </button>
                             </h5>
                         </header>
                         <div class="widget-body">
-                            <input size="69" id="modifiedSystems" name="modifiedSystems" th:value="${projectStatusReport.modifiedSystems != null ? projectStatusReport.modifiedSystems : previousProjectStatusReport?.modifiedSystems}">
+                            <input size="56" id="modifiedSystems" name="modifiedSystems" th:value="${projectStatusReport.modifiedSystems != null ? projectStatusReport.modifiedSystems : previousProjectStatusReport?.modifiedSystems}">
                         </div>
                     </section>
                 </div>
@@ -305,64 +312,80 @@
                     <div class="pb-xlg">
                         <section class="widget mb-0">
                             <header>
-                                <h5>Project <span class="fw-semi-bold">Budget</span></h5>
+                                <h6>Project <span class="fw-semi-bold">Budget</span>
+                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Budget')}">
+                                        <i class="glyphicon glyphicon-info-sign"></i>
+                                    </button>
+                                </h6>
                             </header>
                             <div class="widget-body justify-content-center">
                                 <div class="d-flex justify-content-between align-items-center mb-lg">
                                     <h4 data-toggle="tooltip" data-placement="right" title="">
-                                        <input size="7" th:value="${projectStatusReport.plannedBudget != null ? projectStatusReport.plannedBudget : previousProjectStatusReport?.plannedBudget}"
+                                        <input size="6" th:value="${projectStatusReport.plannedBudget != null ? projectStatusReport.plannedBudget : previousProjectStatusReport?.plannedBudget}"
                                                id="plannedBudget" name="plannedBudget" class="currencyInput">
                                     </h4>
-                                    <b>PLN</b>
+                                    
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-3 col-md-6" style="padding-left:0px;">
                     <div class="pb-xlg">
                         <section class="widget mb-0">
                             <header>
-                                <h5>Realized <span class="fw-semi-bold">Costs</span></h5>
+                                <h6>Realized <span class="fw-semi-bold">Costs</span>
+                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Realized Costs')}">
+                                        <i class="glyphicon glyphicon-info-sign"></i>
+                                    </button>
+                                </h6>
                             </header>
                             <div class="widget-body justify-content-center">
                                 <div class="d-flex justify-content-between align-items-center mb-lg">
                                     <h4 data-toggle="tooltip" data-placement="right" title="">
-                                        <input size="7" th:value="${projectStatusReport.realizedBudget != null ? projectStatusReport.realizedBudget : previousProjectStatusReport?.realizedBudget}"
+                                        <input size="6" th:value="${projectStatusReport.realizedBudget != null ? projectStatusReport.realizedBudget : previousProjectStatusReport?.realizedBudget}"
                                                id="realizedBudget" name="realizedBudget" class="currencyInput">
                                     </h4>
-                                    <b>PLN</b>
                                 </div>
+                                
                             </div>
                         </section>
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-3 col-md-6" style="padding-left:0px;">
                     <div class="pb-xlg">
                         <section class="widget mb-0">
                             <header>
-                                <h5>Cost <span class="fw-semi-bold">Forecast</span></h5>
+                                <h6>Cost <span class="fw-semi-bold">Forecast</span>
+                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Cost Forecast')}">
+                                        <i class="glyphicon glyphicon-info-sign"></i>
+                                    </button>
+                                </h6>
                             </header>
                             <div class="widget-body justify-content-center">
                                 <div class="d-flex justify-content-between align-items-center mb-lg">
                                     <h4 data-toggle="tooltip" data-placement="right" title="">
-                                        <input size="7" th:value="${projectStatusReport.forecastBudget != null ? projectStatusReport.forecastBudget : previousProjectStatusReport?.forecastBudget}"
+                                        <input size="6" th:value="${projectStatusReport.forecastBudget != null ? projectStatusReport.forecastBudget : previousProjectStatusReport?.forecastBudget}"
                                               id="forecastBudget" name="forecastBudget" class="currencyInput">
                                     </h4>
-                                    <b>PLN</b>
+                                    
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6">
+                <div class="col-xl-3 col-md-6" style="padding-left:0px;">
                     <div class="pb-xlg">
                         <section class="widget mb-0">
                             <header>
-                                <h6>Cost <span class="fw-semi-bold">Allocation Key</span></h6>
+                                <h6>Cost <span class="fw-semi-bold">Allocation Key</span>
+                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Cost Allocation Key')}">
+                                        <i class="glyphicon glyphicon-info-sign"></i>
+                                    </button>
+                                </h6>
                             </header>
                             <div class="widget-body">
                                 <div class=""
@@ -371,7 +394,7 @@
                                         <tbody>
                                         <tr>
                                             <td class="legendLabel">
-                                                <textarea cols="15" rows="2"
+                                                <textarea cols="13" rows="2"
                                                           th:text="${projectStatusReport.costAllocationKey != null ? projectStatusReport.costAllocationKey : project.costAllocationKey}"
                                                           id="costAllocationKey" name="costAllocationKey"></textarea>
                                             </td>
@@ -392,6 +415,9 @@
                     <header>
                         <h5>
                             Project <span class="fw-semi-bold">Rating</span>
+                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Rating')}">
+                                <i class="glyphicon glyphicon-info-sign"></i>
+                            </button>
                         </h5>
                     </header>
                     <div class="widget-body" style="display:flex; justify-content:space-evenly;">
@@ -436,6 +462,10 @@
                     <header>
                         <h5>
                             Project <span class="fw-semi-bold">Milestones</span>
+                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Milestones')}">
+                                <i class="glyphicon glyphicon-info-sign"></i>
+                            </button>
+
                             <span class="table-add"><a href="#!" class="text-success"><i
                                     class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
                         </h5>
@@ -505,6 +535,9 @@
                     <header>
                         <h5>
                             Project <span class="fw-semi-bold">Risks</span>
+                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Risks')}">
+                                <i class="glyphicon glyphicon-info-sign"></i>
+                            </button>
                             <span class="table-risks"><a href="#!" class="text-success"><i
                                     class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
                         </h5>
@@ -575,10 +608,13 @@
                     <header>
                         <h5>
                             Project Manager <span class="fw-semi-bold">Comments</span>
+                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Comments')}">
+                                <i class="glyphicon glyphicon-info-sign"></i>
+                            </button>
                         </h5>
                     </header>
                     <div class="widget-body">
-                        <textarea cols="80" rows="7" th:text="${projectStatusReport.comment}" id="comment" name="comment"></textarea>
+                        <textarea cols="74" rows="7" th:text="${projectStatusReport.comment}" id="comment" name="comment"></textarea>
                     </div>
                 </section>
             </div>

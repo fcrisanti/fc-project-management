@@ -343,7 +343,7 @@
                             </div>
                         </div>
 
-                        <div class="column" style="margin-top: 37px">
+                        <div class="column" style="margin-top: 37px; width:30%">
                             <form th:action="@{/options/addcompany}" th:object="${company}" method="POST" style="margin-bottom:1em">
                                 <input type="text" placeholder="Company Name" th:field="${company.company}">
                                 <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Company</button>
@@ -400,6 +400,49 @@
 
                         </div>
 
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Tooltips <span class="fw-semi-bold">Definition</span>
+                        </h5>
+                    </header>
+                    <div class="row">
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:30%">
+                            <form th:object="${tooltipsForm}" th:action="@{/options/tooltips}" method="post">
+                                <fieldset>
+                            <div>
+                                <h4> Project Status Report Tooltips</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Field Name</th>
+                                        <th> Tooltip Text</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="tooltip, itemStat : ${tooltipsForm.tooltips}">
+                                        <td th:text="${tooltip.fieldName}">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" th:value="${tooltip.fieldName}" th:name="|tooltips[${itemStat.index}].fieldName|">
+                                        <textarea th:name="|tooltips[${itemStat.index}].fieldDescription|" th:text="${tooltip.fieldDescription}" cols="110" rows="2"></textarea>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
                 </section>
             </div>

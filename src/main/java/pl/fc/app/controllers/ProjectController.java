@@ -60,7 +60,7 @@ class ProjectController {
 
     @GetMapping("/edit")
     public String editProject(@RequestParam Long id, Model model, HttpServletResponse response) {
-        if(permissionManager.userAllowed("project-edit") || permissionManager.userAllowed(id)) {
+        if(permissionManager.userAllowed("project-edit")) {
             Project project = projectService.getByID(id);
             return modelAttributesLoader(model, project);
         } else {

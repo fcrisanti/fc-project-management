@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,11 +12,15 @@ import pl.fc.app.dao.IUserRepository;
 import pl.fc.app.dao.variables.ICompanyRepository;
 import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
+import pl.fc.app.dao.variables.ITooltipRepository;
 import pl.fc.app.enities.UserAccount;
 import pl.fc.app.enities.variables.Company;
 import pl.fc.app.enities.variables.Genesis;
 import pl.fc.app.enities.variables.Status;
+import pl.fc.app.enities.variables.Tooltip;
+import pl.fc.app.enities.variables.TooltipsDTO;
 import pl.fc.app.security.PermissionManager;
+import pl.fc.app.services.AdvancedOptionsService;
 import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
 
@@ -50,6 +55,9 @@ class AdvancedOptionsController {
 
     @Autowired
     PermissionManager permissionManager;
+
+    @Autowired
+    AdvancedOptionsService advancedOptionsService;
 
     @PostMapping("/addcompany")
     public String addCompany(Company company, Model model) {
@@ -128,6 +136,9 @@ class AdvancedOptionsController {
             List<String> areas = new ArrayList<>(Arrays.asList("advanced-view", "project-edit", "psr-edit", "psr-any-edit", "admin"));
             model.addAttribute("areas", areas);
 
+//            model.addAttribute("tooltips",advancedOptionsService.setAndGet());
+            model.addAttribute("tooltipsForm", new TooltipsDTO(advancedOptionsService.setAndGet()));
+
             return "options/advanced-options";
         } else {
             response.setStatus(403);
@@ -147,6 +158,13 @@ class AdvancedOptionsController {
           } else {
               userRepository.save(userAccount);
           }
+        return "redirect:/options";
+    }
+
+    @PostMapping("/tooltips")
+    public String saveTooltips(@ModelAttribute TooltipsDTO tooltips) {
+            advancedOptionsService.saveAll(tooltips.getTooltips());
+            System.out.println(advancedOptionsService.getAll());
         return "redirect:/options";
     }
 

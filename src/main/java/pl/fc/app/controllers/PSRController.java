@@ -14,7 +14,9 @@ import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.ProjectStatusReport;
+import pl.fc.app.enities.variables.TooltipsDTO;
 import pl.fc.app.security.PermissionManager;
+import pl.fc.app.services.AdvancedOptionsService;
 import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
 import pl.fc.app.services.StatusReportService;
@@ -44,6 +46,8 @@ class PSRController {
     StatusReportService statusReportService;
     @Autowired
     PermissionManager permissionManager;
+    @Autowired
+    AdvancedOptionsService advancedOptionsService;
 
     @GetMapping
     public String displayAllPSR(Model model) {
@@ -109,6 +113,7 @@ class PSRController {
         if(currentQuarterMinusOffset == quarter && currentYearMinusOffset == year) {
             findNewProjectAndAddPsrAttributes(id, quarter, year, model);
             findAndAddPreviousPsrAttributes(id, model);
+            model.addAttribute("tooltips",new TooltipsDTO(advancedOptionsService.getAll()));
             return "projects/edit-new-status";
         }
         redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do 5 dni po jego zakończeniu.");
@@ -173,7 +178,7 @@ class PSRController {
         Optional<ProjectStatusReport> maybeStatusReport = Optional.empty();
         if(statusRepository.count()>0) {
             maybeStatusReport = statusReportService.findByProjectIdQuarterYear(id, quarter, year);
-        } 
+        }
         Project project = projectService.getByID(id);
         ProjectStatusReport projectStatusReport = new ProjectStatusReport();
         if (maybeStatusReport.isPresent()) {
