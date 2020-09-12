@@ -325,13 +325,13 @@ font-size: x-small;"> Schedule</th>
                         </thead>
                         <tbody>
                         <tr th:each="project : ${projects}">
-                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="P+${project.sapNo}"></a></td>
-                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.employees}"></a></td>
-                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.name}"></a></td>
-                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.status}"></a></td>
-                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.companies}"></a></td>
-                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.genesis}"></a></td>
-                            <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.projectManager}"></a></td>
+                            <td><a th:href="@{/psr/{id}/(id=${project.projectId})}" th:text="P+${project.sapNo}"></a></td>
+                            <td><a th:href="@{/psr/{id}/(id=${project.projectId})}" th:text="${project.employees}"></a></td>
+                            <td><a th:href="@{/psr/{id}/(id=${project.projectId})}" th:text="${project.name}"></a></td>
+                            <td><a th:href="@{/psr/{id}/(id=${project.projectId})}" th:text="${project.status}" th:class="${project.status} == 'TO_BE_OPENED' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${project.status}"></a></td>
+                            <td><a th:href="@{/psr/{id}/(id=${project.projectId})}" th:text="${#strings.substring(project.companies, 1, #strings.length(project.companies)-1)}">></a></td>
+                            <td><a th:href="@{/psr/{id}/(id=${project.projectId})}" th:text="${project.genesis}" th:class="${project.genesis} == 'NOT_GENESIS' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${project.genesis}"></a></td>
+                            <td><a th:href="@{/psr/{id}/(id=${project.projectId})}" th:text="${project.projectManager}"></a></td>
                         </tr>
                         </tbody>
                         <tfoot>
