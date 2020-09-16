@@ -49,12 +49,12 @@ class PSRController {
     @Autowired
     AdvancedOptionsService advancedOptionsService;
 
-    @GetMapping
+    @GetMapping("/view")
     public String displayAllPSR(Model model) {
         LocalDate today = LocalDate.now();
         int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
         int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
-        return "redirect:psr/" + currentYearMinusOffset + "/" + currentQuarterMinusOffset;
+        return "redirect:view/list/" + currentYearMinusOffset + "/" + currentQuarterMinusOffset;
     }
 
 //    @GetMapping("/{year}/{month}")
@@ -68,7 +68,7 @@ class PSRController {
 //        return "projects/status-report/list-status-reports";
 //    }
 
-    @GetMapping("/{year}/{quarter}")
+    @GetMapping("/view/list/{year}/{quarter}")
     public String displayPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year) {
         List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByQuarterAndYear(quarter, year);
         List<Project> projects = projectService.getAllNonHavingPsrByQuarterAndYear(quarter, year);
@@ -77,6 +77,15 @@ class PSRController {
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
         return "projects/status-report/list-status-reports";
+    }
+
+    @GetMapping("/view/open/{year}/{quarter}")
+    public String displayFullPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year) {
+        List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByQuarterAndYear(quarter, year);
+        model.addAttribute("projectStatusReports", projectStatusReports);
+        model.addAttribute("quarter", quarter);
+        model.addAttribute("year", year);
+        return "projects/status-report/all-status-reports";
     }
 
     @GetMapping("{id}")

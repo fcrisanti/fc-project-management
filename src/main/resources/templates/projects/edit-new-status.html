@@ -88,7 +88,7 @@
         <ul class="sidebar-nav">
             <li class="">
                 <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="/psr">
+                <a href="/psr/view">
                             <span class="icon">
                                 <i class="fi flaticon-document"></i>
                             </span>
@@ -271,7 +271,7 @@
                 </div>
 
                 <div class="flex-column col-lg-9"
-                     style="flex-grow: 0; flex-shrink: 0; padding-right:0px; padding-bottom:0px;">
+                     style="flex-grow: 0; flex-shrink: 0; padding-bottom:0px;">
                     <section class="widget" style="height: 200px; margin-bottom: 20px;">
                         <header>
 
@@ -284,7 +284,7 @@
                             (Project Aim, Product etc.)
                         </header>
                         <div class="widget-body">
-                            <textarea cols="56" rows="3"
+                            <textarea cols="54" rows="3"
                                       th:text="${projectStatusReport.description != null ? projectStatusReport.description : project.descriptionEn}"
                                       id="description" name="description"></textarea>
                         </div>
@@ -300,7 +300,7 @@
                             </h5>
                         </header>
                         <div class="widget-body">
-                            <input size="56" id="modifiedSystems" name="modifiedSystems" th:value="${projectStatusReport.modifiedSystems != null ? projectStatusReport.modifiedSystems : previousProjectStatusReport?.modifiedSystems}">
+                            <input size="54" id="modifiedSystems" name="modifiedSystems" th:value="${projectStatusReport.modifiedSystems != null ? projectStatusReport.modifiedSystems : previousProjectStatusReport?.modifiedSystems}">
                         </div>
                     </section>
                 </div>
@@ -324,7 +324,7 @@
                                         <input size="6" th:value="${projectStatusReport.plannedBudget != null ? projectStatusReport.plannedBudget : previousProjectStatusReport?.plannedBudget}"
                                                id="plannedBudget" name="plannedBudget" class="currencyInput">
                                     </h4>
-                                    
+
                                 </div>
                             </div>
                         </section>
@@ -348,7 +348,7 @@
                                                id="realizedBudget" name="realizedBudget" class="currencyInput">
                                     </h4>
                                 </div>
-                                
+
                             </div>
                         </section>
                     </div>
@@ -370,7 +370,7 @@
                                         <input size="6" th:value="${projectStatusReport.forecastBudget != null ? projectStatusReport.forecastBudget : previousProjectStatusReport?.forecastBudget}"
                                               id="forecastBudget" name="forecastBudget" class="currencyInput">
                                     </h4>
-                                    
+
                                 </div>
                             </div>
                         </section>
@@ -628,7 +628,7 @@
         </div>
 
         <div class="flex-column col-lg-auto"
-             style="flex-grow: 0; flex-shrink: 0; margin-left: 67%;">
+             style="flex-grow: 0; flex-shrink: 0; margin-left: 67%; position: fixed;">
             <section class="widget">
                 <header>
                     <h5>

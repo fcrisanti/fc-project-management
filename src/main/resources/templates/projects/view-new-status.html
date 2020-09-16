@@ -96,7 +96,7 @@
         <ul class="sidebar-nav">
             <li class="">
                 <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="/psr">
+                <a href="/psr/view">
                             <span class="icon">
                                 <i class="fi flaticon-document"></i>
                             </span>
@@ -187,7 +187,7 @@
                style="width:250px">Edit PSR</a>
             <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
                style="width:250px">Edit Project</a>
-            <button class="btn btn-dark" id="btnPrint">Generate PDF</button>
+            <button class="btn btn-dark" id="btnPrint">Download PDF</button>
             <!--Add External Libraries - JQuery and jspdf
             check out url - https://scotch.io/@nagasaiaytha/generate-pdf-from-html-using-jquery-and-jspdf
             -->
@@ -502,7 +502,7 @@
         <footer th:replace="layouts :: footer"></footer>
 </div>
 
-<div class="flex-column col-lg-auto" style="flex-grow: 0; flex-shrink: 0; margin-left: 71%;">
+<div class="flex-column col-lg-auto" style="flex-grow: 0; flex-shrink: 0; margin-left: 78%; position: fixed;">
     <section class="widget">
         <header>
             <h5>
@@ -512,10 +512,10 @@
         <div class="widget-body">
 
             <div class="column">
-                <table id="dtBasicExample" class="table table-bordered table-striped">
+                <table id="dtBasicExample" class="table-bordered table-striped">
                     <thead class="aqua-gradient" style="color: white">
                     <tr>
-                        <th> QUARTER</th>
+                        <th> Q.</th>
                         <th> YEAR</th>
                         <th> EDIT</th>
                         <th> VIEW</th>
