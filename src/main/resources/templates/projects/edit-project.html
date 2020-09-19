@@ -371,10 +371,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th> Cost Allocation Key</th>
+                                        <th> Priority [1-5]</th>
                                         <td>
-                    <textarea th:field="${project.costAllocationKey}" placeholder="Klucz podziału kosztów między spółki"
-                              height="48"></textarea>
+                                            <input type="number" th:field="${project.priority}" min="1" max="5">
                                         </td>
                                     </tr>
                                     <tr>
@@ -458,12 +457,6 @@
                                         <th> Depreciation Start Date</th>
                                         <td>
                                             <input type="date" th:field="${project.depreciationStartDate}">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th> Priority [1-5]</th>
-                                        <td>
-                                            <input type="number" th:field="${project.priority}" min="1" max="5">
                                         </td>
                                     </tr>
                                     <tr>
