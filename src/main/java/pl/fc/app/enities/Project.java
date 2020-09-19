@@ -57,8 +57,13 @@ public class Project {
     private String steeringComMeetings;
     private String projectSponsor;
     private String costAllocationKey;
+
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> companies;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Map<String,Double> costAllocation;
+
     private String genesis;
     private String status;
     private String externalProviders;

@@ -14,6 +14,7 @@ import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.enities.Employee;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.variables.Company;
+import pl.fc.app.enities.variables.CompanysDTO;
 import pl.fc.app.enities.variables.Genesis;
 import pl.fc.app.enities.variables.Status;
 import pl.fc.app.security.PermissionManager;
@@ -78,7 +79,7 @@ class ProjectController {
     private String modelAttributesLoader(Model model, Project project) {
         List<Employee> employees = employeeService.getAll();
 
-        List<Company> allCompanies = companyRepository.findAll();
+        CompanysDTO allCompanies = new CompanysDTO(companyRepository.findAll());
         List<Status> allStatuses = statusRepository.findAll();
         List<Genesis> allGenesis = genesisRepository.findAll();
 
@@ -107,6 +108,7 @@ class ProjectController {
             }
         } else {
             project.setPMCostCategory(projectService.findByID(project.getProjectId()).get().getPMCostCategory());
+            project.setCostAllocation(projectService.convertCompaniesToCostAllocation(project.getCompanies(),project.getCostAllocation()));
         }
         projectService.save(project);
         return "redirect:/projects";

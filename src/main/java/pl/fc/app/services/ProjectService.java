@@ -8,10 +8,12 @@ import pl.fc.app.dao.IProjectRepository;
 import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,9 +38,25 @@ public class ProjectService {
         Map<Long, String> allProjectIdsWithNames = new LinkedHashMap<>();
         List<Project> allProjects = getAll();
         for (Project project : allProjects) {
-            allProjectIdsWithNames.put(project.getProjectId(),"P"+project.getSapNo()+" - "+project.getName());
+            allProjectIdsWithNames.put(project.getProjectId(), "P" + project.getSapNo() + " - " + project.getName());
         }
         return allProjectIdsWithNames;
+    }
+
+    public Map<String, Double> convertCompaniesToCostAllocation(List<String> companies, Map<String, Double> costAllocation) {
+        if (costAllocation == null) {
+            costAllocation = new TreeMap<>();
+        }
+
+        for (String company : companies) {
+            costAllocation.putIfAbsent(company, 0.0);
+        }
+
+        List<String> companiesToDelete = new ArrayList<>(costAllocation.keySet());
+        companiesToDelete.removeAll(companies);
+        costAllocation.keySet().removeAll(companiesToDelete);
+
+        return costAllocation;
     }
 
     public List<IProjectStatus> projectStatus() {

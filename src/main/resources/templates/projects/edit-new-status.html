@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
 
-
     <!-- DataTables CSS -->
     <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
     <!-- DataTables Select CSS -->
@@ -175,13 +174,13 @@
                 </div>
             </form>
 
-                <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px" onclick="saveTables()">
-                    Save Changes
-                </button>
-                <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
-                   style="width:250px">Edit Project</a>
-                <!--            spacing for future logged in button-->
-                <div style="width: 30px"></div>
+            <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px" onclick="saveTables()">
+                Save Changes
+            </button>
+            <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
+               style="width:250px">Edit Project</a>
+            <!--            spacing for future logged in button-->
+            <div style="width: 30px"></div>
 
             <ul class="nav navbar-nav float-right">
 
@@ -191,7 +190,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
-                        <li><a class="dropdown-item" href="/options"><i class="la la-lock"></i> &nbsp; Advanced options</a></li>
+                        <li><a class="dropdown-item" href="/options"><i class="la la-lock"></i> &nbsp; Advanced options</a>
+                        </li>
                         </li>
                     </ul>
                 </li>
@@ -212,463 +212,472 @@
                 <div th:text="${errorMessage}" class="red-text"></div>
             </div>
             <input type="hidden" th:field="${projectStatusReport.jsonRisks}" id="jsonRisks" value="jsonRisks">
-            <input type="hidden" th:field="${projectStatusReport.jsonMilestones}" id="jsonMilestones" value="jsonMilestones">
+            <input type="hidden" th:field="${projectStatusReport.jsonMilestones}" id="jsonMilestones"
+                   value="jsonMilestones">
             <input type="hidden" th:field="${projectStatusReport.htmlRisks}" id="htmlRisks" value="htmlRisks">
-            <input type="hidden" th:field="${projectStatusReport.htmlMilestones}" id="htmlMilestones" value="htmlMilestones">
+            <input type="hidden" th:field="${projectStatusReport.htmlMilestones}" id="htmlMilestones"
+                   value="htmlMilestones">
             <input type="hidden" th:field="${projectStatusReport.quarter}">
             <input type="hidden" th:field="${projectStatusReport.year}">
             <input type="hidden" th:field="${projectStatusReport.quarter}">
             <input type="hidden" th:value="${projectStatusReport.psrId}" name="psrId" id="psrId">
 
-        <div id="content" class="flex-column col-lg-8" style="width: 926px;">
+            <div id="content" class="flex-column col-lg-8" style="width: 926px;">
 
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">Project Status Report</li>
-                <li class="breadcrumb-item active" th:text="P+${project.sapNo}"></li>
-            </ol>
-            <h2 class="page-title"><span th:text="${projectStatusReport.getYear() + ' ' + projectStatusReport.getQuarter()}">2020 Q3</span> - <span class="fw-semi-bold" id="companyOrGenesis"
-                                                                                                                                                    th:text="${project.name}">All</span></h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Project Status Report</li>
+                    <li class="breadcrumb-item active" th:text="P+${project.sapNo}"></li>
+                </ol>
+                <h2 class="page-title"><span
+                        th:text="${projectStatusReport.getYear() + ' ' + projectStatusReport.getQuarter()}">2020 Q3</span>
+                    - <span class="fw-semi-bold" id="companyOrGenesis"
+                            th:text="${project.name}">All</span></h2>
 
-            <i th:text="${projectStatusReport.modifiedBy!=null } ? ${ 'Last modified by '+projectStatusReport.modifiedBy+' on '+projectStatusReport.lastModifiedDate}"></i>
-            <div class="row">
+                <i th:text="${projectStatusReport.modifiedBy!=null } ? ${ 'Last modified by '+projectStatusReport.modifiedBy+' on '+projectStatusReport.lastModifiedDate}"></i>
+                <div class="row">
 
-                <div class="flex-column col-xl-3" style="flex-grow: 0; flex-shrink: 0;">
-                    <section class="widget">
-                        <header>
-                            <h5>
-                                Project <span class="fw-semi-bold">Team</span>
-                            </h5>
-                        </header>
-                        <div class="widget-body">
-                            <a>Project Manager</a>
-                            <br>
-                            <input size="11"
-                                   th:value="${projectStatusReport.projectManager != null ? projectStatusReport.projectManager : project.projectManager}"
-                                   id="projectManager" name="projectManager">
-                            <br>
-                            <br>
-                            <a>PMO</a>
-                            <br>
-                            <input size="11"
-                                   th:value="${projectStatusReport.employees != null ? projectStatusReport.employees : project.employees}"
-                                   id="employees" name="employees">
-                            <br>
-                            <br>
-                            <a>Project Analyst</a>
-                            <br>
-                            <input size="11"
-                                   th:value="${projectStatusReport.analyst != null ? projectStatusReport.analyst : project.analyst}"
-                                   id="analyst" name="analyst">
-                            <br>
-                            <br>
-                            <a>Technical Manager</a>
-                            <br>
-                            <input size="11"
-                                   th:value="${projectStatusReport.techManager != null ? projectStatusReport.techManager : project.techManager}"
-                                   id="techManager" name="techManager">
-                        </div>
-                    </section>
-                </div>
+                    <div class="flex-column col-xl-3" style="flex-grow: 0; flex-shrink: 0;">
+                        <section class="widget">
+                            <header>
+                                <h5>
+                                    Project <span class="fw-semi-bold">Team</span>
+                                </h5>
+                            </header>
+                            <div class="widget-body">
+                                <a>Project Manager</a>
+                                <br>
+                                <input size="11"
+                                       th:value="${projectStatusReport.projectManager != null ? projectStatusReport.projectManager : project.projectManager}"
+                                       id="projectManager" name="projectManager">
+                                <br>
+                                <br>
+                                <a>PMO</a>
+                                <br>
+                                <input size="11"
+                                       th:value="${projectStatusReport.employees != null ? projectStatusReport.employees : project.employees}"
+                                       id="employees" name="employees">
+                                <br>
+                                <br>
+                                <a>Project Analyst</a>
+                                <br>
+                                <input size="11"
+                                       th:value="${projectStatusReport.analyst != null ? projectStatusReport.analyst : project.analyst}"
+                                       id="analyst" name="analyst">
+                                <br>
+                                <br>
+                                <a>Technical Manager</a>
+                                <br>
+                                <input size="11"
+                                       th:value="${projectStatusReport.techManager != null ? projectStatusReport.techManager : project.techManager}"
+                                       id="techManager" name="techManager">
+                            </div>
+                        </section>
+                    </div>
 
-                <div class="flex-column col-lg-9"
-                     style="flex-grow: 0; flex-shrink: 0; padding-bottom:0px;">
-                    <section class="widget" style="height: 200px; margin-bottom: 20px;">
-                        <header>
+                    <div class="flex-column col-lg-9"
+                         style="flex-grow: 0; flex-shrink: 0; padding-bottom:0px;">
+                        <section class="widget" style="height: 200px; margin-bottom: 20px;">
+                            <header>
 
-                            <h5>
-                                Project <span class="fw-semi-bold">Description</span>
-                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Description')}">
-                                    <i class="glyphicon glyphicon-info-sign"></i>
-                                </button>
-                            </h5>
-                            (Project Aim, Product etc.)
-                        </header>
-                        <div class="widget-body">
+                                <h5>
+                                    Project <span class="fw-semi-bold">Description</span>
+                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                            data-placement="top" title=""
+                                            th:data-original-title="${tooltips.getByFieldName('Project Description')}">
+                                        <i class="glyphicon glyphicon-info-sign"></i>
+                                    </button>
+                                </h5>
+                                (Project Aim, Product etc.)
+                            </header>
+                            <div class="widget-body">
                             <textarea cols="54" rows="3"
                                       th:text="${projectStatusReport.description != null ? projectStatusReport.description : project.descriptionEn}"
                                       id="description" name="description"></textarea>
-                        </div>
-                    </section>
+                            </div>
+                        </section>
 
-                    <section class="widget" style="height: 120px;">
+                        <section class="widget" style="height: 120px;">
+                            <header>
+                                <h5>
+                                    Key <span class="fw-semi-bold">Modified Systems</span>
+                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                            data-placement="top" title=""
+                                            th:data-original-title="${tooltips.getByFieldName('Key Modified Systems')}">
+                                        <i class="glyphicon glyphicon-info-sign"></i>
+                                    </button>
+                                </h5>
+                            </header>
+                            <div class="widget-body">
+                                <input size="54" id="modifiedSystems" name="modifiedSystems"
+                                       th:value="${projectStatusReport.modifiedSystems != null ? projectStatusReport.modifiedSystems : previousProjectStatusReport?.modifiedSystems}">
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-auto" style="padding-right:0px;">
+                        <div class="pb-xlg">
+                            <section class="widget mb-0">
+                                <header>
+                                    <small>Project <span class="fw-semi-bold">Budget</span>
+                                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                                data-placement="top" title=""
+                                                th:data-original-title="${tooltips.getByFieldName('Project Budget')}">
+                                            <i class="glyphicon glyphicon-info-sign"></i>
+                                        </button>
+                                    </small>
+                                </header>
+                                <div class="widget-body justify-content-center">
+                                    <div class="d-flex justify-content-between align-items-center mb-lg">
+                                        <h4 data-toggle="tooltip" data-placement="right" title="">
+                                            <input size="6"
+                                                   th:value="${projectStatusReport.plannedBudget != null ? projectStatusReport.plannedBudget : previousProjectStatusReport?.plannedBudget}"
+                                                   id="plannedBudget" name="plannedBudget" class="currencyInput">
+                                        </h4>
+
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-auto" style="padding-right:0px;">
+                        <div class="pb-xlg">
+                            <section class="widget mb-0">
+                                <header>
+                                    <small>Realized <span class="fw-semi-bold">Costs</span>
+                                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                                data-placement="top" title=""
+                                                th:data-original-title="${tooltips.getByFieldName('Realized Costs')}">
+                                            <i class="glyphicon glyphicon-info-sign"></i>
+                                        </button>
+                                    </small>
+                                </header>
+                                <div class="widget-body justify-content-center">
+                                    <div class="d-flex justify-content-between align-items-center mb-lg">
+                                        <h4 data-toggle="tooltip" data-placement="right" title="">
+                                            <input size="6"
+                                                   th:value="${projectStatusReport.realizedBudget != null ? projectStatusReport.realizedBudget : previousProjectStatusReport?.realizedBudget}"
+                                                   id="realizedBudget" name="realizedBudget" class="currencyInput">
+                                        </h4>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-auto" style="padding-right:0px;">
+                        <div class="pb-xlg">
+                            <section class="widget mb-0">
+                                <header>
+                                    <small>Cost <span class="fw-semi-bold">Forecast</span>
+                                        <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                                data-placement="top" title=""
+                                                th:data-original-title="${tooltips.getByFieldName('Cost Forecast')}">
+                                            <i class="glyphicon glyphicon-info-sign"></i>
+                                        </button>
+                                    </small>
+                                </header>
+                                <div class="widget-body justify-content-center">
+                                    <div class="d-flex justify-content-between align-items-center mb-lg">
+                                        <h4 data-toggle="tooltip" data-placement="right" title="">
+                                            <input size="6"
+                                                   th:value="${projectStatusReport.forecastBudget != null ? projectStatusReport.forecastBudget : previousProjectStatusReport?.forecastBudget}"
+                                                   id="forecastBudget" name="forecastBudget" class="currencyInput">
+                                        </h4>
+
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <section>
+                            <div th:each="property : ${projectStatusReport?.project?.costAllocation?.entrySet()}"
+                                 style="display: none;">
+                                <div class="form-group">
+                                    <label th:for="*{project.costAllocation['__${property.key}__']}"
+                                           th:text="${property.key}">Property</label>
+                                    <input type="number" class="form-control company"
+                                           th:alt="${property.key}" min="0"
+                                           max="100"
+                                           th:field="*{project.costAllocation['__${property.key}__']}"
+                                           th:data="${allCompanies.getCompanyColor(property.key)}"
+                                           style="width: max-content"/>%
+                                </div>
+                            </div>
+
+                            <canvas id="doughnutChart" style="width: 100%; height: 100%"></canvas>
+
+                        </section>
+                    </div>
+                    <div style="margin-top:17px">
+                        <button type="button" class="btn btn-outline-info btn-sm"
+                                data-toggle="tooltip" data-placement="top" title=""
+                                th:data-original-title="${tooltips.getByFieldName('Cost Allocation Key')}">
+                            <i class="glyphicon glyphicon-info-sign"></i></button>
+                    </div>
+                </div>
+
+                <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 20px;">
+                    <section class="widget">
                         <header>
                             <h5>
-                                Key <span class="fw-semi-bold">Modified Systems</span>
-                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Key Modified Systems')}">
+                                Project <span class="fw-semi-bold">Rating</span>
+                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                        data-placement="top" title=""
+                                        th:data-original-title="${tooltips.getByFieldName('Project Rating')}">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </button>
+                            </h5>
+                        </header>
+                        <div class="widget-body" style="display:flex; justify-content:space-evenly;">
+                            <h5>
+                                SCOPE:
+
+                                <select th:field="${projectStatusReport.scope}">
+                                    <option th:each="scope : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
+                                            th:value="${scope}"
+                                            th:text="${scope}">
+                                    </option>
+                                </select>
+                            </h5>
+                            <h5>
+                                BUDGET:
+
+                                <select th:field="${projectStatusReport.cost}">
+                                    <option th:each="cost : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
+                                            th:value="${cost}"
+                                            th:text="${cost}">
+                                    </option>
+                                </select>
+                            </h5>
+                            <h5>
+                                SCHEDULE:
+
+                                <select th:field="${projectStatusReport.schedule}">
+                                    <option th:each="schedule : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
+                                            th:value="${schedule}"
+                                            th:text="${schedule}">
+                                    </option>
+                                </select>
+                            </h5>
+
+
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Milestones</span>
+                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                        data-placement="top" title=""
+                                        th:data-original-title="${tooltips.getByFieldName('Project Milestones')}">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </button>
+
+                                <span class="table-add"><a href="#!" class="text-success"><i
+                                        class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="table" class="table-editable">
+                                        <table id="table-ed"
+                                               class="table table-bordered table-responsive-md table-striped text-center">
+                                            <thead class="peach-gradient white-text">
+                                            <tr>
+                                                <th class="text-center">Task Description</th>
+                                                <th class="text-center small">Last accepted due date</th>
+                                                <th class="text-center">Execution date</th>
+                                                <th class="text-center">Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="milestones-tbody">
+                                            <tr>
+                                                <td class="pt-3-half">Project Kick-off
+                                                </td>
+                                                <td id="kickOff1" class="kickOff pt-3-half">
+                                                </td>
+                                                <td id="kickOff2" class="kickOff pt-3-half">
+                                                </td>
+                                                <td class="pt-3-half">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pt-3-half">Project Closure
+                                                </td>
+                                                <td id="projectClosure1" class="pt-3-half">
+                                                </td>
+                                                <td id="projectClosure2" class="pt-3-half">
+                                                    <input type="date" name="realDate" id="realDate" value=""/>
+                                                </td>
+                                                <td class="pt-3-half">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project <span class="fw-semi-bold">Risks</span>
+                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                        data-placement="top" title=""
+                                        th:data-original-title="${tooltips.getByFieldName('Project Risks')}">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </button>
+                                <span class="table-risks"><a href="#!" class="text-success"><i
+                                        class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
+                            </h5>
+                        </header>
+                        <div class="widget-body">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="risks" class="table-editable">
+                                        <table id="table-risks"
+                                               class="table-bordered table-responsive-md table-striped text-center">
+                                            <thead class="peach-gradient white-text">
+                                            <tr>
+                                                <th class="text-center">Date of identification</th>
+                                                <th class="text-center">Description</th>
+                                                <th class="text-center">Way of prevention</th>
+                                                <th class="text-center">Materialized</th>
+                                                <th class="text-center">Impact</th>
+                                                <th class="text-center">Probability</th>
+                                                <th class="text-center">Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="risks-tbody">
+                                            <tr>
+                                                <td id="date1" class="pt-3-half">
+                                                    <input type="date" name="dueDate" id="dueDate" value=""/>
+                                                </td>
+                                                <td class="pt-3-half" contenteditable="true">Type the description here
+                                                </td>
+                                                <td class="pt-3-half" contenteditable="true">Type the way of prevention
+                                                    here
+                                                </td>
+                                                <td class="pt-3-half">
+                                                    <select>
+                                                        <option value="No">No</option>
+                                                        <option value="Yes">Yes</option>
+                                                    </select>
+                                                </td>
+                                                <td class="pt-3-half">
+                                                    <select>
+                                                        <option value="Low">Low</option>
+                                                        <option value="Medium">Medium</option>
+                                                        <option value="High">High</option>
+                                                    </select>
+                                                </td>
+                                                <td class="pt-3-half">
+                                                    <select>
+                                                        <option value="Low">Low</option>
+                                                        <option value="Medium">Medium</option>
+                                                        <option value="High">High</option>
+                                                    </select>
+                                                </td>
+                                                <td class="pt-3-half">
+                        <span class="table-remove"><button type="button"
+                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0; padding-right:0px">
+                    <section class="widget">
+                        <header>
+                            <h5>
+                                Project Manager <span class="fw-semi-bold">Comments</span>
+                                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip"
+                                        data-placement="top" title=""
+                                        th:data-original-title="${tooltips.getByFieldName('Comments')}">
                                     <i class="glyphicon glyphicon-info-sign"></i>
                                 </button>
                             </h5>
                         </header>
                         <div class="widget-body">
-                            <input size="54" id="modifiedSystems" name="modifiedSystems" th:value="${projectStatusReport.modifiedSystems != null ? projectStatusReport.modifiedSystems : previousProjectStatusReport?.modifiedSystems}">
+                            <textarea cols="74" rows="7" th:text="${projectStatusReport.comment}" id="comment"
+                                      name="comment"></textarea>
                         </div>
                     </section>
                 </div>
+
+                <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px" onclick="saveTables()">
+                    Save Changes
+                </button>
+
+
+                <footer th:replace="layouts :: footer"></footer>
             </div>
 
-            <div class="row">
-
-                <div class="col-xl-3 col-md-6" style="padding-right:0px;">
-                    <div class="pb-xlg">
-                        <section class="widget mb-0">
-                            <header>
-                                <small>Project <span class="fw-semi-bold">Budget</span>
-                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Budget')}">
-                                        <i class="glyphicon glyphicon-info-sign"></i>
-                                    </button>
-                                </small>
-                            </header>
-                            <div class="widget-body justify-content-center">
-                                <div class="d-flex justify-content-between align-items-center mb-lg">
-                                    <h4 data-toggle="tooltip" data-placement="right" title="">
-                                        <input size="6" th:value="${projectStatusReport.plannedBudget != null ? projectStatusReport.plannedBudget : previousProjectStatusReport?.plannedBudget}"
-                                               id="plannedBudget" name="plannedBudget" class="currencyInput">
-                                    </h4>
-
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6" style="padding-right:0px;">
-                    <div class="pb-xlg">
-                        <section class="widget mb-0">
-                            <header>
-                                <small>Realized <span class="fw-semi-bold">Costs</span>
-                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Realized Costs')}">
-                                        <i class="glyphicon glyphicon-info-sign"></i>
-                                    </button>
-                                </small>
-                            </header>
-                            <div class="widget-body justify-content-center">
-                                <div class="d-flex justify-content-between align-items-center mb-lg">
-                                    <h4 data-toggle="tooltip" data-placement="right" title="">
-                                        <input size="6" th:value="${projectStatusReport.realizedBudget != null ? projectStatusReport.realizedBudget : previousProjectStatusReport?.realizedBudget}"
-                                               id="realizedBudget" name="realizedBudget" class="currencyInput">
-                                    </h4>
-                                </div>
-
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6" style="padding-right:0px;">
-                    <div class="pb-xlg">
-                        <section class="widget mb-0">
-                            <header>
-                                <small>Cost <span class="fw-semi-bold">Forecast</span>
-                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Cost Forecast')}">
-                                        <i class="glyphicon glyphicon-info-sign"></i>
-                                    </button>
-                                </small>
-                            </header>
-                            <div class="widget-body justify-content-center">
-                                <div class="d-flex justify-content-between align-items-center mb-lg">
-                                    <h4 data-toggle="tooltip" data-placement="right" title="">
-                                        <input size="6" th:value="${projectStatusReport.forecastBudget != null ? projectStatusReport.forecastBudget : previousProjectStatusReport?.forecastBudget}"
-                                              id="forecastBudget" name="forecastBudget" class="currencyInput">
-                                    </h4>
-
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6">
-                    <div class="pb-xlg">
-                        <section class="widget mb-0">
-                            <header>
-                                <small>Cost <span class="fw-semi-bold">Allocation Key</span>
-                                    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Cost Allocation Key')}">
-                                        <i class="glyphicon glyphicon-info-sign"></i>
-                                    </button>
-                                </small>
-                            </header>
-                            <div class="widget-body">
-                                <div class=""
-                                     id="flot-donut-legend">
-                                    <table style="font-size:smaller;color:#545454">
-                                        <tbody>
-                                        <tr>
-                                            <td class="legendLabel">
-                                                <textarea cols="13" rows="2"
-                                                          th:text="${projectStatusReport.costAllocationKey != null ? projectStatusReport.costAllocationKey : project.costAllocationKey}"
-                                                          id="costAllocationKey" name="costAllocationKey"></textarea>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 20px;">
+            <div class="flex-column col-lg-auto"
+                 style="flex-grow: 0; flex-shrink: 0; margin-left: 67%; position: fixed;">
                 <section class="widget">
                     <header>
                         <h5>
-                            Project <span class="fw-semi-bold">Rating</span>
-                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Rating')}">
-                                <i class="glyphicon glyphicon-info-sign"></i>
-                            </button>
-                        </h5>
-                    </header>
-                    <div class="widget-body" style="display:flex; justify-content:space-evenly;">
-                        <h5>
-                            SCOPE:
-
-                            <select th:field="${projectStatusReport.scope}">
-                                <option th:each="scope : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
-                                        th:value="${scope}"
-                                        th:text="${scope}">
-                                </option>
-                            </select>
-                        </h5>
-                        <h5>
-                            BUDGET:
-
-                            <select th:field="${projectStatusReport.cost}">
-                                <option th:each="cost : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
-                                        th:value="${cost}"
-                                        th:text="${cost}">
-                                </option>
-                            </select>
-                        </h5>
-                        <h5>
-                            SCHEDULE:
-
-                            <select th:field="${projectStatusReport.schedule}">
-                                <option th:each="schedule : ${T(pl.fc.app.enities.enums.ProjectState).values()}"
-                                        th:value="${schedule}"
-                                        th:text="${schedule}">
-                                </option>
-                            </select>
-                        </h5>
-
-
-                    </div>
-                </section>
-            </div>
-
-            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;">
-                <section class="widget">
-                    <header>
-                        <h5>
-                            Project <span class="fw-semi-bold">Milestones</span>
-                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Milestones')}">
-                                <i class="glyphicon glyphicon-info-sign"></i>
-                            </button>
-
-                            <span class="table-add"><a href="#!" class="text-success"><i
-                                    class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
+                            All <span class="fw-semi-bold">Status Reports</span>
                         </h5>
                     </header>
                     <div class="widget-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <div id="table" class="table-editable">
-                                    <table id="table-ed"
-                                           class="table table-bordered table-responsive-md table-striped text-center">
-                                        <thead class="peach-gradient white-text">
-                                        <tr>
-                                            <th class="text-center">Task Description</th>
-                                            <th class="text-center small">Last accepted due date</th>
-                                            <th class="text-center">Execution date</th>
-                                            <th class="text-center">Delete</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="milestones-tbody">
-                                        <tr>
-                                            <td class="pt-3-half" contenteditable="true">Type the task description here
-                                            </td>
-                                            <td id="date1" class="pt-3-half">
-                                                <input type="date" name="dueDate" id="dueDate" value=""/>
-                                            </td>
-                                            <td id="date2" class="pt-3-half">
-                                                <input type="date" name="realDate" id="realDate" value=""/>
-                                            </td>
-                                            <td class="pt-3-half">
-                        <span class="table-remove"><button type="button"
-                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-3-half">Project Kick-off
-                                            </td>
-                                            <td id="kickOff1" class="kickOff pt-3-half">
-                                            </td>
-                                            <td id="kickOff2" class="kickOff pt-3-half">
-                                            </td>
-                                            <td class="pt-3-half">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pt-3-half">Project Closure
-                                            </td>
-                                            <td id="projectClosure1" class="pt-3-half">
-                                            </td>
-                                            <td id="projectClosure2" class="pt-3-half">
-                                                <input type="date" name="realDate" id="realDate" value=""/>
-                                            </td>
-                                            <td class="pt-3-half">
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+
+                        <div class="column">
+                            <table id="dtBasicExample" class="table table-bordered table-striped">
+                                <thead class="aqua-gradient" style="color: white">
+                                <tr>
+                                    <th> QUARTER</th>
+                                    <th> YEAR</th>
+                                    <th> EDIT</th>
+                                    <th> VIEW</th>
+                                    <!--                                    <th> DOWNLOAD</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="psr : ${project.projectStatusReports}">
+                                    <td>
+                                        <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                           th:text="${psr.getQuarter().getValue()}"></a></td>
+                                    <td>
+                                        <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                           th:text="${psr.year}"></a></td>
+                                    <td>
+                                        <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                           class="btn btn-red btn-sm m-0">EDIT</a></td>
+                                    <td>
+                                        <a th:href="@{/psr/view/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                           class="btn btn-red btn-sm m-0">VIEW</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-
                     </div>
                 </section>
             </div>
-
-            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;">
-                <section class="widget">
-                    <header>
-                        <h5>
-                            Project <span class="fw-semi-bold">Risks</span>
-                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Project Risks')}">
-                                <i class="glyphicon glyphicon-info-sign"></i>
-                            </button>
-                            <span class="table-risks"><a href="#!" class="text-success"><i
-                                    class="btn btn-primary" aria-hidden="true">Add+</i></a></span>
-                        </h5>
-                    </header>
-                    <div class="widget-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <div id="risks" class="table-editable">
-                                    <table id="table-risks"
-                                           class="table-bordered table-responsive-md table-striped text-center">
-                                        <thead class="peach-gradient white-text">
-                                        <tr>
-                                            <th class="text-center">Date of identification</th>
-                                            <th class="text-center">Description</th>
-                                            <th class="text-center">Way of prevention</th>
-                                            <th class="text-center">Materialized</th>
-                                            <th class="text-center">Impact</th>
-                                            <th class="text-center">Probability</th>
-                                            <th class="text-center">Delete</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="risks-tbody">
-                                        <tr>
-                                            <td id="date1" class="pt-3-half">
-                                                <input type="date" name="dueDate" id="dueDate" value=""/>
-                                            </td>
-                                            <td class="pt-3-half" contenteditable="true">Type the description here
-                                            </td>
-                                            <td class="pt-3-half" contenteditable="true">Type the way of prevention here
-                                            </td>
-                                            <td class="pt-3-half">
-                                                <select>
-                                                    <option value="No">No</option>
-                                                    <option value="Yes">Yes</option>
-                                                </select>
-                                            </td>
-                                            <td class="pt-3-half">
-                                                <select>
-                                                    <option value="Low">Low</option>
-                                                    <option value="Medium">Medium</option>
-                                                    <option value="High">High</option>
-                                                </select>
-                                            </td>
-                                            <td class="pt-3-half">
-                                                <select>
-                                                    <option value="Low">Low</option>
-                                                    <option value="Medium">Medium</option>
-                                                    <option value="High">High</option>
-                                                </select>
-                                            </td>
-                                            <td class="pt-3-half">
-                        <span class="table-remove"><button type="button"
-                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-            </div>
-
-            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0; padding-right:0px">
-                <section class="widget">
-                    <header>
-                        <h5>
-                            Project Manager <span class="fw-semi-bold">Comments</span>
-                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="" th:data-original-title="${tooltips.getByFieldName('Comments')}">
-                                <i class="glyphicon glyphicon-info-sign"></i>
-                            </button>
-                        </h5>
-                    </header>
-                    <div class="widget-body">
-                        <textarea cols="74" rows="7" th:text="${projectStatusReport.comment}" id="comment" name="comment"></textarea>
-                    </div>
-                </section>
-            </div>
-
-            <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px" onclick="saveTables()">
-                Save Changes
-            </button>
-
-
-            <footer th:replace="layouts :: footer"></footer>
-        </div>
-
-        <div class="flex-column col-lg-auto"
-             style="flex-grow: 0; flex-shrink: 0; margin-left: 67%; position: fixed;">
-            <section class="widget">
-                <header>
-                    <h5>
-                        All <span class="fw-semi-bold">Status Reports</span>
-                    </h5>
-                </header>
-                <div class="widget-body">
-
-                    <div class="column">
-                        <table id="dtBasicExample" class="table table-bordered table-striped">
-                            <thead class="aqua-gradient" style="color: white">
-                            <tr>
-                                <th> QUARTER</th>
-                                <th> YEAR</th>
-                                <th> EDIT</th>
-                                <th> VIEW</th>
-                                <!--                                    <th> DOWNLOAD</th>-->
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="psr : ${project.projectStatusReports}">
-                                <td>
-                                    <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                                       th:text="${psr.getQuarter().getValue()}"></a></td>
-                                <td>
-                                    <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                                       th:text="${psr.year}"></a></td>
-                                <td>
-                                    <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                                       class="btn btn-red btn-sm m-0">EDIT</a></td>
-                                <td>
-                                    <a th:href="@{/psr/view/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                                       class="btn btn-red btn-sm m-0">VIEW</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-        </div>
         </form>
 
     </main>
@@ -715,7 +724,9 @@
 <!-- page specific js -->
 <script src="/js/sing/tables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.5.4"></script>
-
+<!-- Chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 
 <footer th:replace="layouts :: footer"></footer>
 <script th:inline="javascript">
@@ -739,6 +750,72 @@
     }
 
     $(document).ready(function () {
+        let chartValues = [];
+        let chartLabels = [];
+        let chartColors = [];
+        let chartBrightColors = [];
+        $(".company").each(function () {
+            chartValues.push($(this).val());
+            chartLabels.push($(this).attr("alt"));
+            chartColors.push($(this).attr("data"));
+        });
+
+        chartColors.forEach(lighten_chart_colors);
+
+        function lighten_chart_colors(color) {
+            chartBrightColors.push(increase_brightness(color, 50));
+        }
+
+        function increase_brightness(hex, percent) {
+            // strip the leading # if it's there
+            hex = hex.replace(/^\s*#|\s*$/g, '');
+
+            // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+            if (hex.length == 3) {
+                hex = hex.replace(/(.)/g, '$1$1');
+            }
+
+            var r = parseInt(hex.substr(0, 2), 16),
+                g = parseInt(hex.substr(2, 2), 16),
+                b = parseInt(hex.substr(4, 2), 16);
+
+            return '#' +
+                ((0 | (1 << 8) + r + (256 - r) * percent / 100).toString(16)).substr(1) +
+                ((0 | (1 << 8) + g + (256 - g) * percent / 100).toString(16)).substr(1) +
+                ((0 | (1 << 8) + b + (256 - b) * percent / 100).toString(16)).substr(1);
+        }
+
+        //doughnut
+        var ctxD = document.getElementById("doughnutChart").getContext('2d');
+        var myLineChart = new Chart(ctxD, {
+            type: 'doughnut',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    data: chartValues,
+                    backgroundColor: chartColors,
+                    hoverBackgroundColor: chartBrightColors
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false,
+                },
+                plugins: {
+                    labels: [
+                        {
+                            render: 'label',
+                            position: 'outside'
+                        },
+                        {
+                            render: 'percentage'
+                        }
+                    ]
+                }
+            }
+        });
+
         new AutoNumeric.multiple('.currencyInput', {
             decimalPlaces: 0,
             digitGroupSeparator: " "
@@ -852,18 +929,18 @@
 
         var htmlMilestones = /*[[${projectStatusReport.htmlMilestones != null ? projectStatusReport.htmlMilestones : previousProjectStatusReport?.htmlMilestones}]]*/ null;
         var htmlRisks = /*[[${projectStatusReport.htmlRisks != null ? projectStatusReport.htmlRisks : previousProjectStatusReport?.htmlRisks}]]*/ null;
-        if(htmlMilestones) {
+        if (htmlMilestones) {
             $("#table-ed").replaceWith(htmlMilestones);
         }
-        if(htmlRisks) {
+        if (htmlRisks) {
             $("#risks-tbody").replaceWith(htmlRisks);
         }
 
-        $(":input:not(select)").on("change paste keyup", function() {
-            $(this).attr('value',$(this).val());
+        $(":input:not(select)").on("change paste keyup", function () {
+            $(this).attr('value', $(this).val());
         });
-        $("select").on("change paste keyup", function() {
-            $(this).children("option:selected").attr('selected',true);
+        $("select").on("change paste keyup", function () {
+            $(this).children("option:selected").attr('selected', true);
         });
         $('.kickOff').html( /*[[${project.kickOff}]]*/ 'Edit Project to set it');
         $('#projectClosure1').html( /*[[${project.projectClosure}]]*/ 'Edit Project to set it');
@@ -941,7 +1018,7 @@
 
         // if ($tableID.find('tbody tr').length === 0) {
 
-            $tableID.find('tbody').append(newTr);
+        $tableID.find('tbody').append(newTr);
         // }
         //
         // $tableID.find('table').append($clone);
@@ -950,8 +1027,8 @@
         //     decimalPlaces: 2,
         //     digitGroupSeparator: " "
         // });
-        $(":input:not(select)").on("change paste keyup", function() {
-            $(this).attr('value',$(this).val());
+        $(":input:not(select)").on("change paste keyup", function () {
+            $(this).attr('value', $(this).val());
         });
         // $("select").on("change paste keyup", function() {
         //     $(this).children("option:selected").attr('selected',true);
@@ -982,7 +1059,7 @@
     });
 
     $tableID2.on('click', '.table-remove', function () {
-            $(this).parents('tr').detach();
+        $(this).parents('tr').detach();
     });
 
     $tableID.on('click', '.table-up', function () {

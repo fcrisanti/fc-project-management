@@ -14,6 +14,7 @@ import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.ProjectStatusReport;
+import pl.fc.app.enities.variables.CompanysDTO;
 import pl.fc.app.enities.variables.TooltipsDTO;
 import pl.fc.app.security.PermissionManager;
 import pl.fc.app.services.AdvancedOptionsService;
@@ -85,6 +86,7 @@ class PSRController {
         model.addAttribute("projectStatusReports", projectStatusReports);
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
+        model.addAttribute("allCompanies", new CompanysDTO(companyRepository.findAll()));
         return "projects/status-report/all-status-reports";
     }
 
@@ -151,38 +153,6 @@ class PSRController {
         return "projects/view-new-status";
     }
 
-//    @GetMapping("{id}/{year}/{month}/view")
-//    public String viewProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        findProjectAndAddPsrAttributes(id, month, year, model);
-//        return "projects/status-report/psr";
-//    }
-
-//    @GetMapping("{id}/{year}/{month}/delete")
-//    public String deleteProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        deleteProjectByAddPsrAttributes(id, month, year, model);
-//        return "projects/edit-status-report";
-//    }
-
-//    @GetMapping("{id}/{year}/{month}/view/pdf")
-//    public String downloadPDFProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        findProjectAndAddPsrAttributes(id, month, year, model);
-//        return "projects/status-report/psr-pdf";
-//    }
-//
-//    @GetMapping("{id}/{year}/{month}/view/ppt")
-//    public String downloadPPTProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        findProjectAndAddPsrAttributes(id, month, year, model);
-//        return "projects/status-report/psr-ppt";
-//    }
-
-    private void findProjectAndAddPsrAttributes(Long id, int month, Long year, Model model) {
-        Project project = projectService.getByID(id);
-        ProjectStatusReport projectStatusReport = statusReportService.getByProjectIdMonthYear(id, month, year);
-
-        model.addAttribute("project", project);
-        model.addAttribute("projectStatusReport", projectStatusReport);
-    }
-
     private void findNewProjectAndAddPsrAttributes(Long id, int quarter, Long year, Model model) {
         Optional<ProjectStatusReport> maybeStatusReport = Optional.empty();
         if(statusRepository.count()>0) {
@@ -199,6 +169,7 @@ class PSRController {
         }
         model.addAttribute("project", project);
         model.addAttribute("projectStatusReport", projectStatusReport);
+        model.addAttribute("allCompanies", new CompanysDTO(companyRepository.findAll()));
     }
 
     private void findAndAddPreviousPsrAttributes(Long id, Model model) {

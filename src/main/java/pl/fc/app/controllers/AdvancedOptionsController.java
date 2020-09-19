@@ -15,6 +15,7 @@ import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.dao.variables.ITooltipRepository;
 import pl.fc.app.enities.UserAccount;
 import pl.fc.app.enities.variables.Company;
+import pl.fc.app.enities.variables.CompanysDTO;
 import pl.fc.app.enities.variables.Genesis;
 import pl.fc.app.enities.variables.Status;
 import pl.fc.app.enities.variables.Tooltip;
@@ -65,6 +66,12 @@ class AdvancedOptionsController {
         return "redirect:/options";
     }
 
+    @PostMapping("/addcompanies")
+    public String addCompanies(@ModelAttribute CompanysDTO companies, Model model) {
+        companyRepository.saveAll(companies.getCompanies());
+        return "redirect:/options";
+    }
+
     @PostMapping("/addstatus")
     public String addStatus(Status status, Model model) {
         statusRepository.save(status);
@@ -112,7 +119,7 @@ class AdvancedOptionsController {
     @GetMapping
     public String displayAll(Model model, HttpServletResponse response) {
         if(permissionManager.userAllowed("admin")) {
-            List<Company> companies = companyRepository.findAll();
+            CompanysDTO companies = new CompanysDTO(companyRepository.findAll());
             List<Status> statuses = statusRepository.findAll();
             List<Genesis> genesis = genesisRepository.findAll();
 
@@ -164,7 +171,6 @@ class AdvancedOptionsController {
     @PostMapping("/tooltips")
     public String saveTooltips(@ModelAttribute TooltipsDTO tooltips) {
             advancedOptionsService.saveAll(tooltips.getTooltips());
-            System.out.println(advancedOptionsService.getAll());
         return "redirect:/options";
     }
 

@@ -12,4 +12,6 @@ public interface ICompanyRepository extends CrudRepository<Company, String> {
 
     void deleteCompanyByCompany(String name);
 
+    Company getByCompany(String name);
+
 }

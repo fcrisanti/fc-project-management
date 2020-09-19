@@ -300,7 +300,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="company : ${companies}">
+                                    <tr th:each="company : ${companies.getCompanies()}">
                                         <td th:text="${company}">
                                     </tr>
                                     </tbody>
@@ -401,6 +401,28 @@
                         </div>
 
                     </div>
+                    <form th:object="${companies}" th:action="@{'/options/addcompanies'}" method="POST">
+                        <h4> Companies Colors</h4>
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th> Company Name</th>
+                                <th> Color</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="company, itemStat2 : ${companies.companies}">
+                                <td th:text="${company}">
+                                </td>
+                                <td>
+                                    <input type="hidden" th:value="${company.company}" th:name="|companies[${itemStat2.index}].company|">
+                                    <input type="color" th:name="|companies[${itemStat2.index}].color|" th:value="${company.color}">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
                 </section>
             </div>
         </div>
@@ -432,7 +454,7 @@
                                         </td>
                                         <td>
                                             <input type="hidden" th:value="${tooltip.fieldName}" th:name="|tooltips[${itemStat.index}].fieldName|">
-                                        <textarea th:name="|tooltips[${itemStat.index}].fieldDescription|" th:text="${tooltip.fieldDescription}" cols="110" rows="2"></textarea>
+                                            <textarea th:name="|tooltips[${itemStat.index}].fieldDescription|" th:text="${tooltip.fieldDescription}" cols="110" rows="2"></textarea>
                                         </td>
                                     </tr>
                                     </tbody>
