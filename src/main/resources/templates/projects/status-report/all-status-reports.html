@@ -181,6 +181,7 @@
             <!--               style="width:250px">Edit PSR</a>-->
             <!--            <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"-->
             <!--               style="width:250px">Edit Project</a>-->
+            <a th:href="@{/psr/view/list/{year}/{quarter}(year=${year},quarter=${quarter})}" class="btn btn-primary">Show All PSR as List</a>
             <button class="btn btn-dark" id="btnPrint">Download PDF</button>
             <!--Add External Libraries - JQuery and jspdf
             check out url - https://scotch.io/@nagasaiaytha/generate-pdf-from-html-using-jquery-and-jspdf
@@ -336,30 +337,24 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-3 col-md-6">
-                        <div class="pb-xlg">
-                            <section class="widget mb-0">
-                                <header>
-                                    <h6>Cost <span class="fw-semi-bold">Allocation Key</span></h6>
-                                </header>
-                                <div class="widget-body">
-                                    <div class=""
-                                         id="flot-donut-legend">
-                                        <table style="font-size:smaller;color:#545454">
-                                            <tbody>
-                                            <tr th:text="${projectStatusReport.costAllocationKey}">
-                                                <!--                                            <td class="legendLabel"></td>-->
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </section>
+                    <div class="col-sm-3" th:if="${projectStatusReport.project.costAllocation!=null}">
+                        <div th:each="property : ${projectStatusReport?.project?.costAllocation?.entrySet()}" style="display: none;">
+                            <div class="form-group">
+                                <label th:for="*{projectStatusReport.project.costAllocation['__${property.key}__']}"
+                                       th:text="${property.key}">Property</label>
+                                <input type="number" class="form-control" th:classappend="${projectStatusReport.psrId+'company'}"
+                                       th:alt="${property.key}" min="0"
+                                       max="100"
+                                       th:value="*{projectStatusReport.project.costAllocation['__${property.key}__']}"
+                                       th:data="${allCompanies.getCompanyColor(property.key)}"
+                                       style="width: max-content"/>%
+                            </div>
                         </div>
+                        <canvas th:id="${projectStatusReport.psrId+'doughnut'}" style="width: 120%; height: 120%;"></canvas>
                     </div>
                 </div>
 
-                <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 20px;">
+                <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 12px;">
                     <section class="widget">
                         <header>
                             <h5>
@@ -609,11 +604,88 @@
 <script src="/codebase/fit_task_text.js"
         type="text/javascript" charset="utf-8"></script>
 
+<!-- Chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 
 <footer th:replace="layouts :: footer"></footer>
 <script type="text/javascript" th:inline="javascript">
 
     $(document).ready(function () {
+        let chartValues = [];
+        let chartLabels = [];
+        let chartColors = [];
+        let chartBrightColors = [];
+        /*[# th:each="projectStatusReport : ${projectStatusReports}"]*/
+        chartValues = [];
+        chartLabels = [];
+        chartColors = [];
+        chartBrightColors = [];
+        $(".[(${projectStatusReport.psrId+'company'})]").each(function () {
+            chartValues.push($(this).val());
+            chartLabels.push($(this).attr("alt"));
+            chartColors.push($(this).attr("data"));
+        });
+
+        chartColors.forEach(lighten_chart_colors);
+
+        function lighten_chart_colors(color) {
+            chartBrightColors.push(increase_brightness(color, 50));
+        }
+
+        function increase_brightness(hex, percent) {
+            // strip the leading # if it's there
+            hex = hex.replace(/^\s*#|\s*$/g, '');
+
+            // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+            if (hex.length == 3) {
+                hex = hex.replace(/(.)/g, '$1$1');
+            }
+
+            var r = parseInt(hex.substr(0, 2), 16),
+                g = parseInt(hex.substr(2, 2), 16),
+                b = parseInt(hex.substr(4, 2), 16);
+
+            return '#' +
+                ((0 | (1 << 8) + r + (256 - r) * percent / 100).toString(16)).substr(1) +
+                ((0 | (1 << 8) + g + (256 - g) * percent / 100).toString(16)).substr(1) +
+                ((0 | (1 << 8) + b + (256 - b) * percent / 100).toString(16)).substr(1);
+        }
+
+        //doughnut
+        var ctxD = document.getElementById("[(${projectStatusReport.psrId+'doughnut'})]").getContext('2d');
+        var myLineChart = new Chart(ctxD, {
+            type: 'doughnut',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    data: chartValues,
+                    backgroundColor: chartColors,
+                    hoverBackgroundColor: chartBrightColors
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false,
+                },
+                plugins: {
+                    labels: [
+                        {
+                            render: 'label',
+                            position: 'outside',
+                            fontStyle: 'bold',
+                        },
+                        {
+                            render: 'percentage',
+                            fontColor: '#f9fcff',
+                            fontStyle: 'bold',
+                        }
+                    ]
+                }
+            }
+        });
+        /*[/]*/
 
         $('body').on('click', '#btnPrint', function () {
 
@@ -652,20 +724,10 @@
                 }
                 pdf.addImage(imgData, 'PNG', 0, -(PDF_totalHeight), canvas_image_width, canvas_image_height);
                 PDF_totalHeight = PDF_totalHeight + $("#[(${projectStatusReport.psrId+'psr'})]").height() + 40;
-                // alert(PDF_Height);
-                // alert(PDF_totalHeight);
-
-                // pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin * 4, canvas_image_width, canvas_image_height);
 
                 /*[/]*/
 
-                // for (var i = 1; i <= totalPDFPages; i++) {
-                //     pdf.addPage(PDF_Width, PDF_Height);
-                //     pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
-                // }
                 pdf.save("PSR.pdf");
-                // $(".html-content").hide();
-                // $("#content").removeClass('content');
                 $('.widget').removeClass('border border-primary');
             });
         });

@@ -354,10 +354,10 @@
                                        style="width: max-content"/>%
                             </div>
                         </div>
-                        <canvas id="doughnutChart" style="width: 100%; height: 89%;"></canvas>
+                        <canvas id="doughnutChart" style="width: 120%; height: 120%;"></canvas>
                 </div>
             </div>
-            <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 35px;">
+            <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 12px;">
                 <section class="widget">
                     <header>
                         <h5>
@@ -691,10 +691,13 @@
                     labels: [
                         {
                             render: 'label',
-                            position: 'outside'
+                            position: 'outside',
+                            fontStyle: 'bold',
                         },
                         {
-                            render: 'percentage'
+                            render: 'percentage',
+                            fontColor: '#f9fcff',
+                            fontStyle: 'bold',
                         }
                     ]
                 }
