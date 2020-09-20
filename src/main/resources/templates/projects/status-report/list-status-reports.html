@@ -232,6 +232,8 @@
                             Status Reports <span class="fw-semi-bold">List</span>
                         </h5>
                         <a th:href="@{/psr/view/open/{year}/{quarter}(year=${year},quarter=${quarter})}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-amber btn-rounded btn-default">Open All Status Report</a>
+                        <button class="btn btn-sm btn-rounded btn-outline-gray" onclick="less()">Hide Columns</button>
+                        <button class="btn btn-sm btn-rounded btn-outline-gray" onclick="more()">Show All Columns</button>
                     </header>
                     <div class="widget-body">
                         <table id="dtPsr" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
@@ -438,12 +440,22 @@ font-size: x-small;"> Schedule</th>
         document.getElementById("companyOrGenesis").innerHTML = "Genesis";
     }
 
+    function less() {
+        $('#dtPsr').DataTable()
+            .columns([1, 6, 8, 11, 12]).visible(false, false)
+            .columns.adjust().draw(false);
+    }
+
+    function more() {
+        $('#dtPsr').DataTable()
+            .columns([1, 6, 8, 11, 12]).visible(true)
+            .columns.adjust().draw();
+    }
 
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
             "paging": false, // false to disable pagination (or any other option)
             dom: 'Bfrtip',
-            stateSave: true,
             columnDefs: [
                 {
                     targets: 1,
@@ -485,7 +497,6 @@ font-size: x-small;"> Schedule</th>
         $('#dtPsr').DataTable({
             "paging": false, // false to disable pagination (or any other option)
             dom: 'Bfrtip',
-            stateSave: true,
             columnDefs: [
                 {
                     targets: 1,
