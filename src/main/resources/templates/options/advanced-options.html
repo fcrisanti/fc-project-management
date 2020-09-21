@@ -416,7 +416,7 @@
                                 </td>
                                 <td>
                                     <input type="hidden" th:value="${company.company}" th:name="|companies[${itemStat2.index}].company|">
-                                    <input type="color" th:name="|companies[${itemStat2.index}].color|" th:value="${company.color}">
+                                    <input type="color" th:name="|companies[${itemStat2.index}]?.color|" th:value="${company?.color}">
                                 </td>
                             </tr>
                             </tbody>
@@ -564,7 +564,6 @@
         $('#dtBasicExample').DataTable({
             "paging": false, // false to disable pagination (or any other option)
             dom: 'Bfrtip',
-            stateSave: true,
             columnDefs: [
                 {
                     targets: 1,

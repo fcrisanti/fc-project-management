@@ -211,17 +211,17 @@
         <div th:if="${projectSaved}" id="toast-delay" class="toast toast-flatlogic fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000">
             <div class="toast-header">
                 <i class="toast-icon fa fa-square text-primary"></i>
-                <strong class="mr-auto">PROTON</strong>
+                <strong class="mr-auto">PROTON Info</strong>
             </div>
             <div class="toast-body">
-                Changes have been saved.
+                Changes successfully saved.
             </div>
         </div>
 
         <div th:if="${errorMessage}" id="toast-delay" class="toast toast-flatlogic fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000">
             <div class="toast-header">
                 <i class="toast-icon fa fa-square text-primary"></i>
-                <strong class="mr-auto">PROTON</strong>
+                <strong class="mr-auto">PROTON Info</strong>
             </div>
             <div class="toast-body red-text" th:text="${errorMessage}">
                 Nie można zapisać projektu.

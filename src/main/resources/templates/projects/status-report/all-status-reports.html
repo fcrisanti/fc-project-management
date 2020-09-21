@@ -207,7 +207,7 @@
     </div>
 </nav>
 
-<div class="content-wrap" style="height: 31%;">
+<div class="content-wrap" style="height: 11%;">
     <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
 
     <main class="content" role="main">
@@ -502,7 +502,7 @@
                 </header>
                 <div class="widget-body">
 
-                    <div class="column">
+                    <div class="column" style="overflow-y: scroll; max-height:500px">
                         <table id="dtBasicExample" class="table-striped">
                             <thead class="aqua-gradient" style="color: white">
                             <tr>
@@ -704,7 +704,7 @@
 
             // var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-            html2canvas($("#content")[0], {scale: 1.4}).then(function (canvas) {
+            html2canvas($("#content")[0], {scale: 1.3}).then(function (canvas) {
                 var imgData = canvas.toDataURL("image/png", 1.0);
                 // var imgData = canvas.toDataURL({ devicePixelRatio: 5});
 
@@ -765,7 +765,6 @@
             "paging": false, // false to disable pagination (or any other option)
             "searching": false,
             'sDom': 't',
-            stateSave: true,
             data: [(${projectStatusReport.jsonMilestones})],
             order: [1, 'asc'],
             columns: [
@@ -779,7 +778,6 @@
             "paging": false, // false to disable pagination (or any other option)
             "searching": false,
             'sDom': 't',
-            stateSave: true,
             data: [(${projectStatusReport.jsonRisks})],
             order: [0, 'asc'],
             columns: [
