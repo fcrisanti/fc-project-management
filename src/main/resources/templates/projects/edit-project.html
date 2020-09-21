@@ -207,6 +207,27 @@
     <!-- main page content. the place to put widgets in. usually consists of .row > .col-lg-* > .widget.  -->
 
     <main id="content" class="content" role="main">
+
+        <div th:if="${projectSaved}" id="toast-delay" class="toast toast-flatlogic fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000">
+            <div class="toast-header">
+                <i class="toast-icon fa fa-square text-primary"></i>
+                <strong class="mr-auto">PROTON</strong>
+            </div>
+            <div class="toast-body">
+                Changes have been saved.
+            </div>
+        </div>
+
+        <div th:if="${errorMessage}" id="toast-delay" class="toast toast-flatlogic fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000">
+            <div class="toast-header">
+                <i class="toast-icon fa fa-square text-primary"></i>
+                <strong class="mr-auto">PROTON</strong>
+            </div>
+            <div class="toast-body red-text" th:text="${errorMessage}">
+                Nie można zapisać projektu.
+            </div>
+        </div>
+
         <!-- Page content -->
 
         <ol class="breadcrumb">
@@ -246,9 +267,6 @@
                                         </td>
                                     <tr>
                                         <th> Project ID</th>
-                                        <div th:if="${errorMessage}">
-                                            <div th:text="${errorMessage}" class="red-text"></div>
-                                        </div>
                                         <td>P
                                             <input type="number" th:field="${project.sapNo}" placeholder="XXXX"
                                                    required>
@@ -955,7 +973,7 @@
 <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 
 <script type="text/javascript" th:inline="javascript">
-
+    //company shares % evaluation
     $(function () {
         $( ".company" ).change(function() {
             var totalPercent = 0;
@@ -970,6 +988,30 @@
     });
 
     $(document).ready(function () {
+        //bootstrap toasts
+        $('.widget').widgster();
+        $('.toast').toast();
+        const $toast = $('#toast-delay');
+        if ($toast.length > 0 ){
+            $toast.toast('show');
+        }
+
+        // $(function(){
+        //     function pageLoad(){
+        //         $('.widget').widgster();
+        //         $('.toast').toast();
+        //         $('[data-toggle-toast]').on('click', function () {
+        //             const $toast = $('#'+$(this).attr('data-toggle-toast'));
+        //             if ($toast.length > 0 ){
+        //                 $toast.toast('show');
+        //             }
+        //         })
+        //     }
+        //     pageLoad();
+        //     SingApp.onPageLoad(pageLoad);
+        // });
+
+        //chart code
         let chartValues = [];
         let chartLabels = [];
         let chartColors = [];
@@ -1039,6 +1081,7 @@
             }
         });
 
+        //decimal places reduction
         new AutoNumeric.multiple('.currencyInput', {
             decimalPlaces: 0,
             digitGroupSeparator: " "
@@ -1052,6 +1095,7 @@
         });
     });
 
+    //gantt setup
     gantt.plugins({
         // auto_scheduling: true,
         click_drag: true,
@@ -1103,14 +1147,9 @@
     ganttModules.zoom.setZoom("months");
     ganttModules.menu.setup();
 
-    // gantt.attachEvent("onTaskCreated", function(id, task){
-    //     gantt.getLightboxSection('responsible').setValue('abc');
-    //     return true;
-    // });
-
     gantt.parse([[${project.jsonGantt}]]);
 
-
+    //editable tables
     var dateToStr = gantt.date.date_to_str(gantt.config.task_date);
 
     var id = gantt.addMarker({

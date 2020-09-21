@@ -111,7 +111,8 @@ class ProjectController {
             project.setCostAllocation(projectService.convertCompaniesToCostAllocation(project.getCompanies(),project.getCostAllocation()));
         }
         projectService.save(project);
-        return "redirect:/projects";
+        redirectAttributes.addFlashAttribute("projectSaved", Boolean.TRUE);
+        return "redirect:/projects/edit?id="+project.getProjectId();
     }
 
     @GetMapping("/delete")
