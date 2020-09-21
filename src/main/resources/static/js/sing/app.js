@@ -69,7 +69,10 @@ $(function(){
                 .bind('swiperight', $.proxy(this._contentSwipeRight, this));
         }
 
-        this.checkNavigationState();
+        //FC mod
+        this.collapsingNavigationState();
+        // this.checkNavigationState();
+        // this.collapseNavigation();
 
         if (this.pjaxEnabled){
             /**
@@ -209,7 +212,7 @@ $(function(){
 
     SingAppView.prototype.collapseNavigation = function(){
         //this method only makes sense for non-static navigation state
-        if (this.isNavigationStatic() && (Sing.isScreen('lg') || Sing.isScreen('xl'))) return;
+        // if (this.isNavigationStatic() && (Sing.isScreen('lg') || Sing.isScreen('xl'))) return;
 
         $('body').addClass('nav-collapsed');
         this.$sidebar.find('.collapse.show').collapse('hide')

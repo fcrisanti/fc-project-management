@@ -48,7 +48,9 @@
 -->
 <nav id="sidebar" class="sidebar" role="navigation">
     <!-- need this .js class to initiate slimscroll -->
-    <div class="js-sidebar-content">
+
+    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100vh;">
+    <div class="js-sidebar-content" style="overflow: hidden; width: auto; height: 100vh;">
         <header class="logo d-none d-md-block">
             <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
                                            style="border: 5px solid transparent; opacity: 0.7;"></span>
@@ -117,6 +119,11 @@
             </li>
         </ul>
 
+    </div>
+        <div class="slimScrollBar"
+             style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 95.5453px;"></div>
+        <div class="slimScrollRail"
+             style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.2; z-index: 90; right: 1px;"></div>
     </div>
 </nav>
 <!-- This is the white navigation bar seen on the top. A bit enhanced BS navbar. See .page-controls in _base.scss. -->
@@ -475,12 +482,18 @@
 
 <script th:inline="javascript">
 
+    // $(document).ready(function () {
+    //     jQuery(window).load(function () {
+    //         $("body").removeClass("nav-static").addClass("nav-collapsed");
+    //     });
+    // });
+
     function copyFolder(copyText) {
         if (copyText == null) {
             alert('Nie zdefiniowano ścieżki folderu projektowego. Otwórz folder, skopiuj jego ścieżkę i wklej w polu Folder Path w Edycji Projektu')
         } else {
             alert('Skopiowano do schowka ścieżkę folderu: ' + copyText +
-            '\n aby otworzyć folder otwórz Eksplorator Plików (Windows + E) i wklej ścieżkę (CTRL + V).')
+                '\n aby otworzyć folder otwórz Eksplorator Plików (Windows + E) i wklej ścieżkę (CTRL + V).')
         }
         // var copyText = $(this).attr('data-text');
         const textarea = document.createElement("textarea");
