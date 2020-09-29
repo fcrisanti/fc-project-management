@@ -196,6 +196,8 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
                         </li>
+                        <li><a class="dropdown-item" href="/options"><i class="la la-lock"></i> &nbsp; Advanced options</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -641,7 +643,7 @@
                                                 <label th:for="*{costAllocation['__${property.key}__']}"
                                                        th:text="${property.key}">Property</label>
                                                 <input type="number" class="form-control company" th:alt="${property.key}" min="0"
-                                                       max="100" th:field="*{costAllocation['__${property.key}__']}" th:data="${allCompanies?.getCompanyColor(property.key)}"
+                                                       max="100" step="0.01" th:field="*{costAllocation['__${property.key}__']}" th:data="${allCompanies?.getCompanyColor(property.key)}"
                                                        style="width: max-content"/>%
                                             </div>
                                         </div>
@@ -976,13 +978,13 @@
     //company shares % evaluation
     $(function () {
         $( ".company" ).change(function() {
-            var totalPercent = 0;
+            var totalPercent = 0.00;
             $(".company").each(function(){
-                totalPercent = totalPercent + parseInt($(this).val());
+                totalPercent = totalPercent + parseFloat($(this).val());
             });
             $(".company").each(function(){
-                $(this).attr({'max' : parseInt($(this).val())+100-totalPercent});
-                $(this).attr({'min' : parseInt($(this).val())+100-totalPercent});
+                $(this).attr({'max' : Math.round((parseFloat($(this).val())+100.00-totalPercent) * 100) / 100});
+                $(this).attr({'min' : Math.round((parseFloat($(this).val())+100.00-totalPercent) * 100) / 100});
             });
         });
     });

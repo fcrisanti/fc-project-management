@@ -190,8 +190,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
-                        <li><a class="dropdown-item" href="/options"><i class="la la-lock"></i> &nbsp; Advanced options</a>
                         </li>
+                        <li><a class="dropdown-item" href="/options"><i class="la la-lock"></i> &nbsp; Advanced options</a>
                         </li>
                     </ul>
                 </li>
@@ -290,7 +290,7 @@
                                 (Project Aim, Product etc.)
                             </header>
                             <div class="widget-body">
-                            <textarea cols="54" rows="3"
+                            <textarea cols="52" rows="3"
                                       th:text="${projectStatusReport.description != null ? projectStatusReport.description : project.descriptionEn}"
                                       id="description" name="description"></textarea>
                             </div>

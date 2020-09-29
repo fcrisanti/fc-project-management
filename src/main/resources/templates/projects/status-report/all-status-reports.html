@@ -704,7 +704,7 @@
 
             // var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-            html2canvas($("#content")[0], {scale: 1.3}).then(function (canvas) {
+            html2canvas($("#content")[0], {scale: 0.9}).then(function (canvas) {
                 var imgData = canvas.toDataURL("image/png", 1.0);
                 // var imgData = canvas.toDataURL({ devicePixelRatio: 5});
 

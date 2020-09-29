@@ -12,7 +12,8 @@
     <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
     <!-- DataTables Select CSS -->
     <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
     <!-- Bootstrap core CSS -->
     <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
     <!-- Material Design Bootstrap -->
@@ -163,7 +164,8 @@
             <form class="navbar-form" role="search">
                 <div class="form-group">
                     <div class="input-group input-group-no-border ml-4">
-                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
+                               oninput="doSearch()">
                         <span class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="la la-search"></i>
@@ -172,8 +174,7 @@
                     </div>
                 </div>
             </form>
-            <span class="table-add"><a href="#!" class="text-success"><i
-                    class="btn btn-primary" aria-hidden="true">Add Category</i></a></span>
+
             <button id="export-btn1" NAME="export-btn" class="export-btn btn btn-primary">
                 Save Changes
             </button>
@@ -193,7 +194,8 @@
                         <i class="la la-cog"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -211,7 +213,8 @@
             <li class="breadcrumb-item">Project</li>
             <li class="breadcrumb-item active">Edit Cost Categories</li>
         </ol>
-        <h2 class="page-title">PM Cost Categories Editor - <span class="fw-semi-bold" th:text="${project.name}">PM Cost Categories</span></h2>
+        <h2 class="page-title">PM Cost Categories Editor - <span class="fw-semi-bold" th:text="${project.name}">PM Cost Categories</span>
+        </h2>
 
         <div class="row">
             <div style="flex: 0 0 100%; flex-grow: 0; flex-shrink: 0; flex-basis: 100%;">
@@ -222,11 +225,14 @@
                         </h5>
                     </header>
                     <div class="widget-body">
+                        <span class="table-add"><a href="#!" class="text-success">
+                            <i class="btn btn-primary" aria-hidden="true">Add Category</i></a></span>
                         <!-- Editable table -->
                         <div class="card">
                             <div class="card-body">
                                 <div id="table" class="table-editable">
-                                    <table id="table-ed" class="table table-bordered table-responsive-md table-striped text-center">
+                                    <table id="table-ed"
+                                           class="table table-bordered table-responsive-md table-striped text-center">
                                         <thead class="peach-gradient white-text">
                                         <tr>
                                             <th class="text-center">Category name</th>
@@ -238,7 +244,8 @@
                                         <tr th:each="cat : ${costcat}">
                                             <td class="pt-3-half" contenteditable="true" th:text="${cat.getKey()}"></td>
                                             <td class="pt-3-half">
-                                                <input type="text" name="catBudget" id="catBudget" class="currencyInput" style="text-align:right;"
+                                                <input type="text" name="catBudget" id="catBudget" class="currencyInput"
+                                                       style="text-align:right;"
                                                        th:value="${cat.getValue() > 0} ? ${cat.getValue()} : '0'"/>
                                             </td>
                                             <td class="pt-3-half">
@@ -256,7 +263,8 @@
                                         </tfoot>
                                     </table>
 
-                                    <button id="export-btn2" NAME="export-btn" class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
+                                    <button id="export-btn2" NAME="export-btn"
+                                            class="export-btn btn btn-primary btn-sm mb-3" style="width:200px">
                                         Save Changes
                                     </button>
                                 </div>
@@ -353,7 +361,7 @@
             //     }
             // ],
             "columnDefs": [
-                { "type": "html-input", "targets": [1 ] },
+                {"type": "html-input", "targets": [1]},
             ],
 
             buttons: [
