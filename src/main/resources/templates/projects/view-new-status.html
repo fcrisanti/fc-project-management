@@ -275,7 +275,7 @@
                         </div>
                     </section>
 
-                    <section class="widget" style="height: 100px;">
+                    <section class="widget" style="height: 27.5%;">
                         <header>
                             <h5>
                                 Key <span class="fw-semi-bold">Modified Systems</span>
@@ -349,7 +349,7 @@
                                        th:text="${property.key}">Property</label>
                                 <input type="number" class="form-control company"
                                        th:alt="${property.key}" min="0"
-                                       max="100"
+                                       max="100" step="any"
                                        th:field="*{project.costAllocation['__${property.key}__']}"
                                        th:data="${allCompanies.getCompanyColor(property.key)}"
                                        style="width: max-content"/>%
@@ -807,7 +807,7 @@
         $("#table-risks td:contains(Yes)")
             .parent().css('background-color', '#fdf7e6');
         $('#table-ed tr').each(function() {
-            if(new Date($(this).find("td:eq(1)").text()).getDate() < new Date($(this).find("td:eq(2)").text()).getDate()) {
+            if(new Date($(this).find("td:eq(1)").text()) < new Date($(this).find("td:eq(2)").text())) {
                 $(this).css('color', 'red');
             }
         });

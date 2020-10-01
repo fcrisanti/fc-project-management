@@ -140,6 +140,7 @@ class PSRController {
         if(permissionManager.userAllowed("psr-any-edit")) {
             findNewProjectAndAddPsrAttributes(id, quarter, year, model);
             findAndAddPreviousPsrAttributes(id, model);
+            model.addAttribute("tooltips",new TooltipsDTO(advancedOptionsService.getAll()));
             return "projects/edit-new-status";
         } else {
             response.setStatus(403);

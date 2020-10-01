@@ -271,7 +271,7 @@
                             </div>
                         </section>
 
-                        <section class="widget" style="height: 100px;">
+                        <section class="widget" style="height: 27.5%;">
                             <header>
                                 <h5>
                                     Key <span class="fw-semi-bold">Modified Systems</span>
@@ -344,7 +344,7 @@
                                        th:text="${property.key}">Property</label>
                                 <input type="number" class="form-control" th:classappend="${projectStatusReport.psrId+'company'}"
                                        th:alt="${property.key}" min="0"
-                                       max="100"
+                                       max="100" step="any"
                                        th:value="*{projectStatusReport.project.costAllocation['__${property.key}__']}"
                                        th:data="${allCompanies.getCompanyColor(property.key)}"
                                        style="width: max-content"/>%

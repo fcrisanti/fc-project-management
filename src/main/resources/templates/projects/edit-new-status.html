@@ -290,7 +290,7 @@
                                 (Project Aim, Product etc.)
                             </header>
                             <div class="widget-body">
-                            <textarea cols="52" rows="3"
+                            <textarea cols="54" rows="3"
                                       th:text="${projectStatusReport.description != null ? projectStatusReport.description : project.descriptionEn}"
                                       id="description" name="description"></textarea>
                             </div>
@@ -404,7 +404,7 @@
                                            th:text="${property.key}">Property</label>
                                     <input type="number" class="form-control company"
                                            th:alt="${property.key}" min="0"
-                                           max="100"
+                                           max="100" step="any"
                                            th:field="*{project.costAllocation['__${property.key}__']}"
                                            th:data="${allCompanies.getCompanyColor(property.key)}"
                                            style="width: max-content"/>%
