@@ -32,7 +32,7 @@ import java.util.Optional;
 @RequestMapping("/psr")
 class PSRController {
 
-    final int OFFSET_IN_DAYS = 5;
+    final int OFFSET_IN_DAYS = 6;
     @Autowired
     ProjectService projectService;
     @Autowired

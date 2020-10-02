@@ -268,7 +268,6 @@
                             <h5>
                                 Project <span class="fw-semi-bold">Description</span>
                             </h5>
-                            (Project Aim, Product etc.)
                         </header>
                         <div class="widget-body">
                             <span th:text="${projectStatusReport.description != null ? projectStatusReport.description : project.descriptionEn}"></span>
@@ -798,13 +797,15 @@
             ]
         });
 
-        $("#table-ed td:contains(Project Closure)")
+        $("#table-ed tr td:nth-of-type(1):contains(Project Closure)")
         .parent().css('background-color', '#dee4ee');
-        $("#table-ed td:contains(Project Kick-off)")
+        $("#table-ed tr td:nth-of-type(1):contains(Project Kick-off)")
             .parent().css('background-color', '#dee4ee');
-        $("#table-risks td:contains(High)")
+        $("#table-risks tr td:nth-of-type(5):contains(High)")
             .parent().css('background-color', '#fff2ef');
-        $("#table-risks td:contains(Yes)")
+        $("#table-risks tr td:nth-of-type(6):contains(High)")
+            .parent().css('background-color', '#fff2ef');
+        $("#table-risks tr td:nth-of-type(4):contains(Yes)")
             .parent().css('background-color', '#fdf7e6');
         $('#table-ed tr').each(function() {
             if(new Date($(this).find("td:eq(1)").text()) < new Date($(this).find("td:eq(2)").text())) {

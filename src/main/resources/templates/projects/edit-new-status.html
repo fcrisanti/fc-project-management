@@ -941,7 +941,21 @@
             $(this).attr('value', $(this).val());
         });
         $("select").on("change paste keyup", function () {
-            $(this).children("option:selected").attr('selected', true);
+            $(this).children("option:selected").attr('data', true);
+
+            $(this).find("option").each(function () {
+                $(this).removeAttr('selected');
+            });
+
+            $(this).find(`[data=true]`).attr('selected', true);
+            $(this).find(`[data=true]`).prop('selected', true);
+
+            $(this).find(`[data=true]`).each(function () {
+                $(this).removeAttr('data');
+            });
+            // alert($(this).parent().find("option:selected").val());
+
+            // $(this).children("option:selected").attr('selected', true);
         });
         $('.kickOff').html( /*[[${project.kickOff}]]*/ 'Edit Project to set it');
         $('#projectClosure1').html( /*[[${project.projectClosure}]]*/ 'Edit Project to set it');
