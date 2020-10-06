@@ -542,7 +542,7 @@ font-size: x-small;"> Schedule</th>
     });
 
     function getPeriod() {
-        var action_src = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/psr/' + document.getElementsByName("year")[0].value +'/'+ document.getElementsByName("quarter")[0].value ;
+        var action_src = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/psr/view/list/' + document.getElementsByName("year")[0].value +'/'+ document.getElementsByName("quarter")[0].value ;
         var period = document.getElementById('period');
         window.location.href = action_src;
     }
