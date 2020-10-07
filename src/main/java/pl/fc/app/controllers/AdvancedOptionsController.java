@@ -12,20 +12,18 @@ import pl.fc.app.dao.IUserRepository;
 import pl.fc.app.dao.variables.ICompanyRepository;
 import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
-import pl.fc.app.dao.variables.ITooltipRepository;
 import pl.fc.app.enities.UserAccount;
 import pl.fc.app.enities.variables.Company;
 import pl.fc.app.enities.variables.CompanysDTO;
 import pl.fc.app.enities.variables.Genesis;
 import pl.fc.app.enities.variables.Status;
-import pl.fc.app.enities.variables.Tooltip;
 import pl.fc.app.enities.variables.TooltipsDTO;
 import pl.fc.app.security.PermissionManager;
 import pl.fc.app.services.AdvancedOptionsService;
 import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
+import pl.fc.app.services.StatusReportService;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -60,8 +58,12 @@ class AdvancedOptionsController {
     @Autowired
     AdvancedOptionsService advancedOptionsService;
 
+    @Autowired
+    StatusReportService statusReportService;
+
     @PostMapping("/addcompany")
     public String addCompany(Company company, Model model) {
+        company.setColor("#000000");
         companyRepository.save(company);
         return "redirect:/options";
     }
@@ -113,6 +115,13 @@ class AdvancedOptionsController {
     @GetMapping("/removepmo")
     public String removeEmployee(@RequestParam String firstName, String lastName) {
         employeeService.removeEmployeeByFirstNameAndSecondName(firstName, lastName);
+        return "redirect:/options";
+    }
+
+    @Transactional
+    @GetMapping("/removepsr")
+    public String removeEmployee(@RequestParam Long sapNo, int quarter, Long year) {
+        statusReportService.deleteByProjectSapNoQuarterYear(sapNo, quarter, year);
         return "redirect:/options";
     }
 

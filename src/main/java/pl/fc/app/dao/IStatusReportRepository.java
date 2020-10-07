@@ -17,7 +17,7 @@ public interface IStatusReportRepository extends CrudRepository<ProjectStatusRep
     ProjectStatusReport getByMonthAndYearAndProjectProjectId(Month month, Long year, Long projectId);
     List<ProjectStatusReport> getByMonthAndYear(Month month, Long year);
     List<ProjectStatusReport> getByQuarterAndYear(Quarter quarter, Long year);
-    void deleteByMonthAndYearAndProjectProjectId(Month month, Long year, Long projectId);
+    void deleteByQuarterAndYearAndProjectSapNo(Quarter quarter, Long year, Long sapNo);
 
     Optional<ProjectStatusReport> findByPsrId(Long psrId);
 

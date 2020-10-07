@@ -380,8 +380,17 @@
                             <form action="#" th:action="@{'/options/removeproject/'}" method="GET"
                                   onsubmit="return confirm('Czy na pewno chcesz usunąć projekt P'+id.value+'? \nNie będzie można cofnąć tej operacji. Upewnij się, czy numer projektu jest prawidłowy.');"
                                   style="margin-bottom:1em">
-                                <input type="number" placeholder="Sam numer (bez P)" name="id" id="id" required>
+                                <input type="number" placeholder="Numer projektu (bez P)" name="id" id="id" required>
                                 <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Project</button>
+                            </form>
+
+                            <form action="#" th:action="@{'/options/removepsr/'}" method="GET"
+                                  onsubmit="return confirm('Czy na pewno chcesz usunąć PSR projektu P'+sapNo.value+' za Q'+quarter.value+' '+year.value+'? \nNie będzie można cofnąć tej operacji. Upewnij się, czy numer projektu, kwartału i roku jest prawidłowy.');"
+                                  style="margin-bottom:1em">
+                                <input type="number" placeholder="Numer projektu (bez P)" name="sapNo" id="sapNo" required>
+                                <input type="number" placeholder="Kwartał (1-4)" name="quarter" id="quarter" required>
+                                <input type="number" placeholder="Rok" name="year" id="year" required>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE PSR</button>
                             </form>
 
                             <form action="#" th:action="@{'/options/removepmo/'}" method="GET"

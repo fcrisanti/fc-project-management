@@ -42,8 +42,8 @@ public class StatusReportService {
     }
 
     @Transactional
-    public void deleteByProjectIdMonthYear(Long projectId, int month, Long year) {
-        statusRepository.deleteByMonthAndYearAndProjectProjectId(Month.of(month),year,projectId);
+    public void deleteByProjectSapNoQuarterYear(Long sapNo, int quarter, Long year) {
+        statusRepository.deleteByQuarterAndYearAndProjectSapNo(Quarter.of(quarter),year,sapNo);
     }
 
     public Optional<ProjectStatusReport> findByPsrId(Long id) {

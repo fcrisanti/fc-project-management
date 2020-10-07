@@ -24,7 +24,6 @@ import pl.fc.app.services.StatusReportService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -185,14 +184,6 @@ class PSRController {
             ProjectStatusReport projectStatusReport = maybeStatusReport.get();
             model.addAttribute("previousProjectStatusReport", projectStatusReport);
         }
-    }
-
-    void deleteProjectByAddPsrAttributes(Long id, int month, Long year, Model model) {
-        Project project = projectService.getByID(id);
-        statusReportService.deleteByProjectIdMonthYear(id, month, year);
-        ProjectStatusReport projectStatusReport = new ProjectStatusReport();
-        model.addAttribute("projectStatusReport", projectStatusReport);
-        model.addAttribute("project", project);
     }
 
     @PostMapping("{id}/save")
