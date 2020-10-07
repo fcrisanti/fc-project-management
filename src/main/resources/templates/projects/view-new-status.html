@@ -721,7 +721,7 @@
 
             var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-            html2canvas($("#content")[0],{scale:1.7}).then(function (canvas) {
+            html2canvas($("#content")[0],{scale:1.5}).then(function (canvas) {
                 var imgData = canvas.toDataURL("image/png", 1.0);
                 // var imgData = canvas.toDataURL({ devicePixelRatio: 5});
 
@@ -732,7 +732,7 @@
                     pdf.addPage(PDF_Width, PDF_Height);
                     pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
                 }
-                pdf.save("PSR.pdf");
+                pdf.save(/*[[${'P' + project.sapNo + ' ' + project.name + ' ' + projectStatusReport.year + ' ' + projectStatusReport.quarter + '.pdf'}]]*/);
                 // $(".html-content").hide();
                 $("#content").removeClass('content');
                 $('.widget').removeClass('border border-primary');
