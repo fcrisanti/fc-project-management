@@ -26,6 +26,10 @@ public class PermissionManager {
         return "";
     }
 
+    public boolean userExists() {
+        return userRepository.findByUserName(getUserName()).isPresent();
+    }
+
     public boolean userAllowed(String area) {
         if (userRepository.count() <= 2) {
             return true;

@@ -23,6 +23,7 @@ import pl.fc.app.services.ProjectService;
 import pl.fc.app.services.StatusReportService;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -57,62 +58,67 @@ class PSRController {
         return "redirect:view/list/" + currentYearMinusOffset + "/" + currentQuarterMinusOffset;
     }
 
-//    @GetMapping("/{year}/{month}")
-//    public String displayPSRbyMonthAndYear(Model model, @PathVariable("month") int month, @PathVariable("year") long year) {
-//        List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByMonthAndYear(month, year);
-//        List<Project> projects = projectService.getAllNonHavingPsr(month, year);
-//        model.addAttribute("projectStatusReports", projectStatusReports);
-//        model.addAttribute("projects", projects);
-//        model.addAttribute("month", month);
-//        model.addAttribute("year", year);
-//        return "projects/status-report/list-status-reports";
-//    }
+    @GetMapping("/view/vig")
+    public String displayVigPSR(Model model) {
+        LocalDate today = LocalDate.now();
+        int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
+        int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
+        return "redirect:vig/" + currentYearMinusOffset + "/" + currentQuarterMinusOffset;
+    }
 
     @GetMapping("/view/list/{year}/{quarter}")
-    public String displayPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year) {
+    public String displayPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year, HttpSession session) {
         List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByQuarterAndYear(quarter, year);
         List<Project> projects = projectService.getAllNonHavingPsrByQuarterAndYear(quarter, year);
         model.addAttribute("projectStatusReports", projectStatusReports);
         model.addAttribute("projects", projects);
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
+        session.setAttribute("vig","false");
         return "projects/status-report/list-status-reports";
     }
 
+    @GetMapping("/view/vig/{year}/{quarter}")
+    public String displayVIGPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year, HttpSession session) {
+        List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByQuarterAndVIGCompany(quarter, year);
+        List<Project> projects = projectService.getAllVIGNonHavingPsrByQuarterAndYear(quarter, year);
+        model.addAttribute("projectStatusReports", projectStatusReports);
+        model.addAttribute("projects", projects);
+        model.addAttribute("quarter", quarter);
+        model.addAttribute("year", year);
+        session.setAttribute("vig","true");
+        return "projects/status-report/vig-list-status-reports";
+    }
+
+    @GetMapping("/view/vig-open/{year}/{quarter}")
+    public String displayFullVIGPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year, HttpSession session) {
+        List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByQuarterAndVIGCompany(quarter, year);
+        model.addAttribute("projectStatusReports", projectStatusReports);
+        model.addAttribute("quarter", quarter);
+        model.addAttribute("year", year);
+        model.addAttribute("allCompanies", new CompanysDTO(companyRepository.findAll()));
+        session.setAttribute("vig","true");
+        return "projects/status-report/vig-all-status-reports";
+    }
+
     @GetMapping("/view/open/{year}/{quarter}")
-    public String displayFullPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year) {
+    public String displayFullPSRbyMonthAndYear(Model model, @PathVariable("quarter") int quarter, @PathVariable("year") long year, HttpSession session) {
         List<ProjectStatusReport> projectStatusReports = statusReportService.getAllByQuarterAndYear(quarter, year);
         model.addAttribute("projectStatusReports", projectStatusReports);
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
         model.addAttribute("allCompanies", new CompanysDTO(companyRepository.findAll()));
+        session.setAttribute("vig","false");
         return "projects/status-report/all-status-reports";
     }
 
     @GetMapping("{id}")
     public String newProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {
-//        Project project = projectService.getByID(id);
-//        redirectAttributes.addAttribute("projectStatusReport", projectStatusReport);
-//        model.addAttribute("project", project);
         LocalDate today = LocalDate.now();
         int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
         int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
-
-//        findNewProjectAndAddPsrAttributes(id, model);
         return "redirect:/psr/"+id+"/"+currentYearMinusOffset+"/"+currentQuarterMinusOffset;
     }
-
-//    @GetMapping("{id}/{year}/{month}")
-//    public String editProjectStatusReport(@PathVariable("id") Long id, @PathVariable("month") int month, @PathVariable("year") Long year, Model model) {
-//        findProjectAndAddPsrAttributes(id, month, year, model);
-//        return "projects/edit-status-report";
-//    }
-
-//    @GetMapping("{id}/{year}/{quarter}")
-//    public String editProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model) {
-//        findNewProjectAndAddPsrAttributes(id, quarter, year, model);
-//        return "projects/edit-new-status";
-//    }
 
     @GetMapping("/{id}/{year}/{quarter}")
     public String editProjectStatusReportIfCurrentQuarter(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
@@ -208,20 +214,10 @@ class PSRController {
 
     @PostMapping("{id}/savenew")
     public String saveNewProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {
-//        ProjectStatusReport foundProjectStatusReport = statusReportService.findByProjectIdMonthYear(id, projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()).orElse(projectStatusReport);
-//
-//        if (projectStatusReport.getPsrId() == 0 || foundProjectStatusReport.getPsrId() != projectStatusReport.getPsrId()) {
-//            if (projectService.getByID(id).getProjectStatusReports().contains(foundProjectStatusReport)) {
-//                redirectAttributes.addFlashAttribute("errorMessage", String.format("PSR dla %d/%d już istnieje. Zmień datę przed zapisem lub edytuj istniejący PSR.", projectStatusReport.getMonth().getValue(), projectStatusReport.getYear()));
-//                redirectAttributes.addFlashAttribute("projectStatusReport", projectStatusReport);
-//                return "redirect:/psr/" + id;
-//            }
-//        }
         Project project = projectService.getByID(id);
         projectStatusReport.setProject(project);
         project.addPSR(projectStatusReport);
         statusReportService.save(projectStatusReport);
         return "redirect:/psr/view/" + id + "/" + projectStatusReport.getYear() + "/" + projectStatusReport.getQuarter().getValue();
     }
-
 }

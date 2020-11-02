@@ -411,11 +411,12 @@
 
                     </div>
                     <form th:object="${companies}" th:action="@{'/options/addcompanies'}" method="POST">
-                        <h4> Companies Colors</h4>
+                        <h4> Companies Set-up</h4>
                         <table class="table table-bordered table-striped">
                             <thead class="thead-dark">
                             <tr>
                                 <th> Company Name</th>
+                                <th> VIG-PSR</th>
                                 <th> Color</th>
                             </tr>
                             </thead>
@@ -424,14 +425,19 @@
                                 <td th:text="${company}">
                                 </td>
                                 <td>
+                                    <input type="checkbox" th:name="|companies[${itemStat2.index}]?.isVIG|" th:checked="${company?.isVIG}">
+                                </td>
+                                <td>
                                     <input type="hidden" th:value="${company.company}" th:name="|companies[${itemStat2.index}].company|">
                                     <input type="color" th:name="|companies[${itemStat2.index}]?.color|" th:value="${company?.color}">
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                        <h5> All companies marked VIG-PSR will be listed on the VIG PSR list: <a href="/psr/view/vig">http://proton.gc.wew/psr/view/vig</a> </h5>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
+
                 </section>
             </div>
         </div>

@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pl.fc.app.dao.IProjectRepository;
+import pl.fc.app.dao.variables.ICompanyRepository;
 import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
+import pl.fc.app.enities.variables.Company;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -21,6 +23,9 @@ public class ProjectService {
 
     @Autowired
     IProjectRepository projectRepository;
+
+    @Autowired
+    ICompanyRepository companyRepository;
 
     public void save(Project project) {
         projectRepository.save(project);
@@ -84,22 +89,6 @@ public class ProjectService {
         projectRepository.delete(project);
     }
 
-    public List<Project> getAllNonHavingPsrByMonthAndYear(int month, Long year) {
-        List<Project> nonPsr = projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
-                .stream()
-                .filter(project -> project.getProjectStatusReports().isEmpty()).collect(Collectors.toList());
-
-        nonPsr.addAll(projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
-                .stream()
-                .filter(project -> !project.getProjectStatusReports().isEmpty())
-                .filter(project -> project.getProjectStatusReports()
-                        .stream()
-                        .noneMatch(projectStatusReport -> projectStatusReport.getYear().equals(year) && projectStatusReport.getMonth().getValue() == month))
-                .collect(Collectors.toList()));
-
-        return nonPsr;
-    }
-
     public List<Project> getAllNonHavingPsrByQuarterAndYear(int quarter, Long year) {
         List<Project> nonPsr = projectRepository.findAllByPsrNotRequiredIsNullOrPsrNotRequiredIsFalse()
                 .stream()
@@ -112,7 +101,16 @@ public class ProjectService {
                         .stream()
                         .noneMatch(projectStatusReport -> projectStatusReport.getYear().equals(year) && projectStatusReport.getQuarter().getValue() == quarter))
                 .collect(Collectors.toList()));
-
         return nonPsr;
+    }
+
+    public List<Project> getAllVIGNonHavingPsrByQuarterAndYear(int quarter, Long year) {
+        List<String> VIGCompanyNames = companyRepository.getCompaniesByIsVIG(true).stream().map(Company::getCompany).collect(Collectors.toList());
+        return getAllNonHavingPsrByQuarterAndYear(quarter, year)
+                .stream()
+                .filter(project -> project.getCompanies()
+                        .stream()
+                        .anyMatch(VIGCompanyNames::contains))
+                .collect(Collectors.toList());
     }
 }

@@ -87,7 +87,13 @@
         <ul class="sidebar-nav">
             <li class="">
                 <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="/psr/view">
+                <a th:if="${session.vig}" href="/psr/view/vig">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                    Status Reports
+                </a>
+                <a th:unless="${session.vig}" href="/psr/view">
                             <span class="icon">
                                 <i class="fi flaticon-document"></i>
                             </span>

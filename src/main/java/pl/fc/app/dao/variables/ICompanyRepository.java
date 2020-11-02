@@ -14,4 +14,6 @@ public interface ICompanyRepository extends CrudRepository<Company, String> {
 
     Company getByCompany(String name);
 
+    List<Company> getCompaniesByIsVIG(Boolean isVIG);
+
 }

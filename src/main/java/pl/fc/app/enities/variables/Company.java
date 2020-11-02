@@ -25,6 +25,8 @@ public class Company {
 
     private String color;
 
+    private Boolean isVIG;
+
     @Override
     public String toString() {
         return company;

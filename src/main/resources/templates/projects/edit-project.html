@@ -581,10 +581,10 @@
                                         <li class="gantt-menu-item gantt-menu-item-right gantt-menu-item-last"><a><img
                                                 src="/codebase/imgs/ic-export-24.png">Export</a>
                                             <ul class="gantt-controls">
-                                                <li class="gantt-menu-item"><a data-action="toPDF"><img
+                                                <li class="gantt-menu-item"><a onclick='gantt.exportToPDF({raw: true})'><img
                                                         src="/codebase/imgs/ic-file-24.png">PDF</a>
                                                 </li>
-                                                <li class="gantt-menu-item"><a data-action="toPNG"><img
+                                                <li class="gantt-menu-item"><a onclick='gantt.exportToPNG({raw: true})'><img
                                                         src="/codebase/imgs/ic-file-24.png">PNG</a>
                                                 </li>
                                                 <li class="gantt-menu-item"><a data-action="toExcel"><img
@@ -1148,6 +1148,8 @@
     gantt.config.auto_scheduling_strict = true;
     ganttModules.zoom.setZoom("months");
     ganttModules.menu.setup();
+
+    gantt.config.work_time = true;
 
     gantt.parse([[${project.jsonGantt}]]);
 
