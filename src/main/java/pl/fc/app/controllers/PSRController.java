@@ -14,7 +14,7 @@ import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.ProjectStatusReport;
-import pl.fc.app.enities.variables.CompanysDTO;
+import pl.fc.app.enities.variables.CompaniesDTO;
 import pl.fc.app.enities.variables.TooltipsDTO;
 import pl.fc.app.security.PermissionManager;
 import pl.fc.app.services.AdvancedOptionsService;
@@ -96,7 +96,7 @@ class PSRController {
         model.addAttribute("projectStatusReports", projectStatusReports);
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
-        model.addAttribute("allCompanies", new CompanysDTO(companyRepository.findAll()));
+        model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
         session.setAttribute("vig","true");
         return "projects/status-report/vig-all-status-reports";
     }
@@ -107,7 +107,7 @@ class PSRController {
         model.addAttribute("projectStatusReports", projectStatusReports);
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
-        model.addAttribute("allCompanies", new CompanysDTO(companyRepository.findAll()));
+        model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
         session.setAttribute("vig","false");
         return "projects/status-report/all-status-reports";
     }
@@ -175,7 +175,7 @@ class PSRController {
         }
         model.addAttribute("project", project);
         model.addAttribute("projectStatusReport", projectStatusReport);
-        model.addAttribute("allCompanies", new CompanysDTO(companyRepository.findAll()));
+        model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
     }
 
     private void findAndAddPreviousPsrAttributes(Long id, Model model) {

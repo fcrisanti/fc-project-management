@@ -110,11 +110,11 @@
             </li>
             <li class="" th:if="${advanced}">
                 <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="#">
+                <a href="/projects/priority">
                             <span class="icon">
-                                <i class="fi flaticon-calculator"></i>
+                                <i class="fi flaticon-star"></i>
                             </span>
-                    Budget
+                    Priorities
                 </a>
             </li>
         </ul>
@@ -489,7 +489,7 @@
     // });
 
     function copyFolder(copyText) {
-        if (copyText == null) {
+        if (copyText == null || copyText == '') {
             alert('Nie zdefiniowano ścieżki folderu projektowego. Otwórz folder, skopiuj jego ścieżkę i wklej w polu Folder Path w Edycji Projektu')
         } else {
             alert('Skopiowano do schowka ścieżkę folderu: ' + copyText +

@@ -106,13 +106,12 @@
                     PMO
                 </a>
             </li>
-            <li class="">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="#">
+            <li th:unless="${session.vig}">
+                <a href="/projects/priority">
                             <span class="icon">
-                                <i class="fi flaticon-calculator"></i>
+                                <i class="fi flaticon-star"></i>
                             </span>
-                    Budget
+                    Priorities
                 </a>
             </li>
         </ul>
@@ -703,7 +702,7 @@
 
             // var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-            html2canvas($("#content")[0], {scale: 0.9}).then(function (canvas) {
+            html2canvas($("#content")[0], {scale: 1.5}).then(function (canvas) {
                 var imgData = canvas.toDataURL("image/png", 1.0);
                 // var imgData = canvas.toDataURL({ devicePixelRatio: 5});
 
@@ -721,7 +720,7 @@
                 } else {
                     pdf.addPage(PDF_Width, PDF_Height+40);
                 }
-                pdf.addImage(imgData, 'PNG', 0, -(PDF_totalHeight), canvas_image_width, canvas_image_height);
+                pdf.addImage(imgData, 'PNG', 0, -(PDF_totalHeight), canvas_image_width, canvas_image_height,[[${projectStatusReport.psrId+'psr'}]], 'fast');
                 PDF_totalHeight = PDF_totalHeight + $("#[(${projectStatusReport.psrId+'psr'})]").height() + 40;
 
                 /*[/]*/

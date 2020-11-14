@@ -110,7 +110,6 @@
                 </a>
             </li>
             <li class="">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
                 <a href="/employees">
                             <span class="icon">
                                 <i class="fi flaticon-users"></i>
@@ -118,13 +117,12 @@
                     PMO
                 </a>
             </li>
-            <li class="">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="#">
+            <li th:unless="${session.vig}">
+                <a href="/projects/priority">
                             <span class="icon">
-                                <i class="fi flaticon-calculator"></i>
+                                <i class="fi flaticon-star"></i>
                             </span>
-                    Budget
+                    Priorities
                 </a>
             </li>
         </ul>
@@ -733,11 +731,12 @@
 
                 // var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
                 var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-                pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height,'NULL', 'fast');
                 for (var i = 1; i <= totalPDFPages; i++) {
                     pdf.addPage(PDF_Width, PDF_Height);
-                    pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                    pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height,'NULL', 'fast');
                 }
+
                 pdf.save(/*[[${'P' + project.sapNo + ' ' + project.name + ' ' + projectStatusReport.year + ' ' + projectStatusReport.quarter + '.pdf'}]]*/);
                 // $(".html-content").hide();
                 $("#content").removeClass('content');

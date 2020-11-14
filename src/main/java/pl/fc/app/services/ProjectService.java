@@ -9,6 +9,7 @@ import pl.fc.app.dao.variables.ICompanyRepository;
 import pl.fc.app.dto.IProjectStatus;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.variables.Company;
+import pl.fc.app.enities.variables.Status;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -37,6 +38,10 @@ public class ProjectService {
 
     public List<Project> getAll() {
         return projectRepository.findAll();
+    }
+
+    public List<Project> getRunning() {
+        return projectRepository.findAllByStatus("RUNNING");
     }
 
     public Map<Long, String> getIdWithNames() {

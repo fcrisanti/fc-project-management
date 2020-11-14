@@ -2,13 +2,13 @@ package pl.fc.app.enities.variables;
 
 import java.util.List;
 
-public class CompanysDTO {
+public class CompaniesDTO {
     private List<Company> companies;
 
-    public CompanysDTO() {
+    public CompaniesDTO() {
     }
 
-    public CompanysDTO(List<Company> companies) {
+    public CompaniesDTO(List<Company> companies) {
         this.companies = companies;
     }
 

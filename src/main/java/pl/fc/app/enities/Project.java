@@ -66,6 +66,7 @@ public class Project {
 
     private String genesis;
     private String status;
+    private String type;
     private String externalProviders;
     private String MPK;
 
@@ -93,6 +94,7 @@ public class Project {
     @Column(columnDefinition = "TEXT")
     private String comment;
     private BigDecimal budget;
+    private Double NPV;
     private Boolean psrNotRequired;
 
     private DocumentState kickOffPresentation;

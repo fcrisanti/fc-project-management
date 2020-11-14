@@ -12,12 +12,15 @@ import pl.fc.app.dao.IUserRepository;
 import pl.fc.app.dao.variables.ICompanyRepository;
 import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
+import pl.fc.app.dao.variables.ITypeRepository;
 import pl.fc.app.enities.UserAccount;
 import pl.fc.app.enities.variables.Company;
-import pl.fc.app.enities.variables.CompanysDTO;
+import pl.fc.app.enities.variables.CompaniesDTO;
 import pl.fc.app.enities.variables.Genesis;
 import pl.fc.app.enities.variables.Status;
 import pl.fc.app.enities.variables.TooltipsDTO;
+import pl.fc.app.enities.variables.Type;
+import pl.fc.app.enities.variables.TypesDTO;
 import pl.fc.app.security.PermissionManager;
 import pl.fc.app.services.AdvancedOptionsService;
 import pl.fc.app.services.EmployeeService;
@@ -50,6 +53,9 @@ class AdvancedOptionsController {
     IGenesisRepository genesisRepository;
 
     @Autowired
+    ITypeRepository typeRepository;
+
+    @Autowired
     IUserRepository userRepository;
 
     @Autowired
@@ -69,7 +75,7 @@ class AdvancedOptionsController {
     }
 
     @PostMapping("/addcompanies")
-    public String addCompanies(@ModelAttribute CompanysDTO companies, Model model) {
+    public String addCompanies(@ModelAttribute CompaniesDTO companies, Model model) {
         companyRepository.saveAll(companies.getCompanies());
         return "redirect:/options";
     }
@@ -86,18 +92,41 @@ class AdvancedOptionsController {
         return "redirect:/options";
     }
 
+    @PostMapping("/addtype")
+    public String addType(Type type, Model model) {
+        type.setColor("#000000");
+        typeRepository.save(type);
+        return "redirect:/options";
+    }
+
+    @PostMapping("/addtypes")
+    public String addTypes(@ModelAttribute TypesDTO types, Model model) {
+        typeRepository.saveAll(types.getTypes());
+        return "redirect:/options";
+    }
+
+    @Transactional
+    @PostMapping("/removetype")
+    public String removeType(Type type, Model model) {
+        typeRepository.delete(type);
+        return "redirect:/options";
+    }
+
+    @Transactional
     @PostMapping("/removecompany")
     public String removeCompany(Company company, Model model) {
         companyRepository.delete(company);
         return "redirect:/options";
     }
 
+    @Transactional
     @PostMapping("/removestatus")
     public String removeStatus(Status status, Model model) {
         statusRepository.delete(status);
         return "redirect:/options";
     }
 
+    @Transactional
     @PostMapping("/removegenesis")
     public String removeGenesis(Genesis genesis, Model model) {
         genesisRepository.delete(genesis);
@@ -128,21 +157,25 @@ class AdvancedOptionsController {
     @GetMapping
     public String displayAll(Model model, HttpServletResponse response) {
         if(permissionManager.userAllowed("admin")) {
-            CompanysDTO companies = new CompanysDTO(companyRepository.findAll());
+            CompaniesDTO companies = new CompaniesDTO(companyRepository.findAll());
             List<Status> statuses = statusRepository.findAll();
             List<Genesis> genesis = genesisRepository.findAll();
+            TypesDTO types = new TypesDTO(typeRepository.findAll());
 
             Company company = new Company();
             Genesis genesisType = new Genesis();
             Status status = new Status();
+            Type type = new Type();
 
             model.addAttribute("company", company);
             model.addAttribute("genesisType", genesisType);
             model.addAttribute("status", status);
+            model.addAttribute("type", type);
 
             model.addAttribute("companies", companies);
             model.addAttribute("genesis", genesis);
             model.addAttribute("statuses", statuses);
+            model.addAttribute("types", types);
 
             List<UserAccount> userAccounts = userRepository.findAll();
             UserAccount userAccount = new UserAccount();

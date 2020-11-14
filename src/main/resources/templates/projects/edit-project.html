@@ -105,13 +105,12 @@
                     PMO
                 </a>
             </li>
-            <li class="">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="#">
+            <li th:unless="${session.vig}">
+                <a href="/projects/priority">
                             <span class="icon">
-                                <i class="fi flaticon-calculator"></i>
+                                <i class="fi flaticon-star"></i>
                             </span>
-                    Budget
+                    Priorities
                 </a>
             </li>
         </ul>
@@ -391,9 +390,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th> Priority [1-5]</th>
+                                        <th> NPV</th>
                                         <td>
-                                            <input type="number" th:field="${project.priority}" min="1" max="5">
+                                            <input type="number" th:field="${project.NPV}">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Innovation level [1-4]</th>
+                                        <td>
+                                            <input type="number" th:field="${project.priority}" min="1" max="4">
                                         </td>
                                     </tr>
                                     <tr>
@@ -437,10 +442,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th> Numer zleceń</th>
+                                        <th> Type</th>
                                         <td>
-                                            <input type="text" th:field="${project.MPK}"
-                                                   placeholder="w formacie CXPMPXXXX">
+                                            <select th:field="${project.type}">
+                                                <!--                            <option th:each="genesis : ${T(pl.fc.app.enities.enums.Genesis).values()}"-->
+                                                <option th:each="type : ${allTypes}"
+                                                        th:value="${type}"
+                                                        th:text="${type}">
+                                                </option>
+                                            </select>
                                         </td>
                                     </tr>
                                     <tr>

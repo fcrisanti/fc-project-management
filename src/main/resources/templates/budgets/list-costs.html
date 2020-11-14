@@ -103,13 +103,12 @@
                     PMO
                 </a>
             </li>
-            <li class="">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="#">
+            <li th:unless="${session.vig}">
+                <a href="/projects/priority">
                             <span class="icon">
-                                <i class="fi flaticon-calculator"></i>
+                                <i class="fi flaticon-star"></i>
                             </span>
-                    Budget
+                    Priorities
                 </a>
             </li>
         </ul>

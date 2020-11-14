@@ -50,76 +50,82 @@
     <!-- need this .js class to initiate slimscroll -->
 
     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100vh;">
-    <div class="js-sidebar-content" style="overflow: hidden; width: auto; height: 100vh;">
-        <header class="logo d-none d-md-block">
-            <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
-                                           style="border: 5px solid transparent; opacity: 0.7;"></span>
-                <b>PROTON</b></a>
-        </header>
-        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
-             looks good, so adding it and enhancing with notifications -->
-        <div class="sidebar-status d-md-none">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <div class="js-sidebar-content" style="overflow: hidden; width: auto; height: 100vh;">
+            <header class="logo d-none d-md-block">
+                <a href="/projects"><span><IMG src="/codebase/planet.png" width="40" height="40"
+                                               style="border: 5px solid transparent; opacity: 0.7;"></span>
+                    <b>PROTON</b></a>
+            </header>
+            <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+                 looks good, so adding it and enhancing with notifications -->
+            <div class="sidebar-status d-md-none">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <span class="thumb-sm avatar float-right">
                             <img class="rounded-circle" src="demo/img/people/a5.jpg" alt="...">
                         </span>
-                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
-                     should be used with bg-* and text-* classes for colors -->
-                <span class="circle bg-warning fw-bold text-gray-dark">
+                    <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                         should be used with bg-* and text-* classes for colors -->
+                    <span class="circle bg-warning fw-bold text-gray-dark">
                             13
                         </span>
-                &nbsp;
-                Philip <strong>Smith</strong>
-                <b class="caret"></b>
-            </a>
-            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
-        </div>
-        <!-- main notification links are placed inside of .sidebar-nav -->
-        <ul class="sidebar-nav">
-            <li class="">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="/projects">
+                    &nbsp;
+                    Philip <strong>Smith</strong>
+                    <b class="caret"></b>
+                </a>
+                <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+            </div>
+            <!-- main notification links are placed inside of .sidebar-nav -->
+            <ul class="sidebar-nav">
+                <li class="">
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a href="/projects">
                             <span class="icon">
                                 <i class="fi flaticon-home"></i>
                             </span>
-                    Project List
-                </a>
-            </li>
-        </ul>
-        <!-- every .sidebar-nav may have a title -->
-        <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
-        <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
-        <ul class="sidebar-nav">
-            <li class="" th:if="${advanced}">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="/psr/view">
+                        Project List
+                    </a>
+                </li>
+            </ul>
+            <!-- every .sidebar-nav may have a title -->
+            <!--        <h5 class="sidebar-nav-title">Template <a class="action-link" href="#"><i-->
+            <!--                class="glyphicon glyphicon-refresh"></i></a></h5>-->
+            <ul class="sidebar-nav">
+                <li class="">
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a th:if="${session.vig}" href="/psr/view/vig">
                             <span class="icon">
                                 <i class="fi flaticon-document"></i>
                             </span>
-                    Status Reports
-                </a>
-            </li>
-            <li class="" th:if="${advanced}">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="/employees">
+                        Status Reports
+                    </a>
+                    <a th:unless="${session.vig}" href="/psr/view">
+                            <span class="icon">
+                                <i class="fi flaticon-document"></i>
+                            </span>
+                        Status Reports
+                    </a>
+                </li>
+                <li class="" th:if="${advanced}">
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a href="/employees">
                             <span class="icon">
                                 <i class="fi flaticon-users"></i>
                             </span>
-                    PMO
-                </a>
-            </li>
-            <li class="" th:if="${advanced}">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="/projects/priority">
+                        PMO
+                    </a>
+                </li>
+                <li>
+                    <!-- an example of nested submenu. basic bootstrap collapse component -->
+                    <a href="/projects/priority">
                             <span class="icon">
                                 <i class="fi flaticon-star"></i>
                             </span>
-                    Priorities
-                </a>
-            </li>
-        </ul>
+                        Priorities
+                    </a>
+                </li>
+            </ul>
 
-    </div>
+        </div>
         <div class="slimScrollBar"
              style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 95.5453px;"></div>
         <div class="slimScrollRail"
@@ -230,6 +236,64 @@
                 <section class="widget">
                     <header>
                         <h5>
+                            Project <span class="fw-semi-bold">Priority Chart</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div id="chart"></div>
+                    </div>
+                </section>
+                <div class="row">
+
+                    <div class="flex-column col-xl-3">
+                        <section class="widget">
+                            <header>
+                                <h5>
+                                    Axis <span class="fw-semi-bold">Description</span>
+                                </h5>
+                            </header>
+                            <div class="widget-body">
+                                <li><b>Impact</b> - Calculation based on NPV, Budget and innovation level
+                                </li>
+                                <li><b>Feasibility</b> - Project expected timeline
+                                </li>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="flex-column col-lg-auto">
+                        <section class="widget">
+                            <header>
+                                <h5>
+                                    Quarter <span class="fw-semi-bold">Description</span>
+                                </h5>
+                            </header>
+                            <div class="widget-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <li>
+                                            <b>A</b> - High impact and short time to Go live (<1y) projects
+                                        </li>
+                                        <li>
+                                            <b>B</b> - High impact and longer time to Go live projects (>1y)
+                                        </li>
+                                    </div>
+                                    <div class="col">
+                                        <li>
+                                            <b>C</b> - Lower impact and short time to Go live (<1y) projects
+                                        </li>
+                                        <li>
+                                            <b>D</b> - Lower impact and longer time to Go live projects (>1y)
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <section class="widget" th:styleappend="${advanced?'':'visibility: hidden;'}">
+                    <header>
+                        <h5>
                             Project <span class="fw-semi-bold">List</span>
                         </h5>
                     </header>
@@ -241,7 +305,7 @@
                                 <th> Sap No</th>
                                 <th> Guardian</th>
                                 <th> Project</th>
-                                <th> Status</th>
+                                <th> Type</th>
                                 <th> Company</th>
                                 <th> Stream</th>
                                 <th> Project Manager</th>
@@ -254,7 +318,6 @@
                                 <th> Kick Off</th>
                                 <th> Go-Live Planned</th>
                                 <th> Go-Live Final</th>
-                                <th th:if="${advanced}" class="small"> Folder</th>
                                 <th> Proj. Closure</th>
                                 <th> Steering Committee / Mbm</th>
                                 <th> Depreciation Start Date</th>
@@ -269,6 +332,9 @@
                                 <th> SCHEDULE</th>
                                 <th> DPIA</th>
                                 <th> CLOSURE PROJECT PRESENTATION</th>
+                                <th> NPV</th>
+                                <th> Inno- -vation level</th>
+                                <th> Impact</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -280,8 +346,8 @@
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
                                        th:text="${project.name}"></a></td>
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
-                                       th:text="${project.status}"
-                                       th:class="${project.status} == 'TO_BE_OPENED' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${project.status}"></a>
+                                       th:text="${project.type}">
+                                </a>
                                 </td>
                                 <!--        <td><a th:href="@{/projects/edit(id=${project.projectId})}" th:text="${project.company}"></a></td>-->
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
@@ -317,15 +383,6 @@
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
                                        th:text="${project.goLiveFinal}"></a>
                                 </td>
-
-                                <td th:if="${advanced}">
-                                    <button class="btn btn-default mb-xs"
-                                            th:onclick="copyFolder([[${project.folderPath}]])">
-                                        <i class="glyphicon glyphicon-folder-open">
-                                        </i>
-                                    </button>
-                                </td>
-
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
                                        th:text="${project.projectClosure}"></a>
                                 </td>
@@ -357,6 +414,13 @@
                                        th:text="${project.DPIA}"></a></td>
                                 <td><a th:href="@{/projects/edit(id=${project.projectId})}"
                                        th:text="${project.closurePresentation}"></a></td>
+                                <td><a th:href="@{/projects/edit(id=${project.projectId})}"
+                                       th:text="${project.NPV}"></a>
+                                </td>
+                                <td><a th:href="@{/projects/edit(id=${project.projectId})}"
+                                       th:text="${project.priority}"></a>
+                                </td>
+                                <td></td>
                             </tr>
                             </tbody>
                             <tfoot>
@@ -368,7 +432,7 @@
                                 <!--        3-->
                                 <th> Project</th>
                                 <!--        4-->
-                                <th> Status</th>
+                                <th> Type</th>
                                 <!--        5-->
                                 <th> Company</th>
                                 <!--        6-->
@@ -393,7 +457,6 @@
                                 <th> Go-Live Planned</th>
                                 <!--        16-->
                                 <th> Go-Live Final</th>
-                                <th th:if="${advanced}"> Folder</th>
                                 <!--        17-->
                                 <th> Proj. Closure</th>
                                 <!--        18-->
@@ -422,6 +485,9 @@
                                 <th> DPIA</th>
                                 <!--        30-->
                                 <th> CLOSURE PROJECT PRESENTATION</th>
+                                <th> NPV</th>
+                                <th> Innovation level</th>
+                                <th> Impact</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -479,6 +545,8 @@
 <!-- page specific js -->
 <script src="/js/sing/tables.js"></script>
 
+<!-- plotly -->
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 
 <script th:inline="javascript">
 
@@ -507,7 +575,7 @@
 
     function less() {
         $('#dtBasicExample').DataTable()
-            .columns([7, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]).visible(false, false)
+            .columns([6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]).visible(false, false)
             .columns.adjust().draw(false);
     }
 
@@ -599,7 +667,228 @@
         $('.dataTables_length').addClass('bs-select');
         less();
         reset();
+        var data = [];
+        var impact = [];
+        $(function () {
+            $.each($('#dtBasicExample tr'), function (i, tr) {
+                var result = 0;
+
+                var x = cellValue(6, i);
+                switch (true) {
+                    case (x > 5000000):
+                        result += 4;
+                        break;
+                    case (x > 2500000):
+                        result += 3;
+                        break;
+                    case (x > 500000):
+                        result += 2;
+                        break;
+                    default:
+                        result += 1;
+                        break;
+                }
+
+                var x = cellValue(7, i);
+                switch (true) {
+                    case (x > 3000000):
+                        result += 4;
+                        break;
+                    case (x > 1500000):
+                        result += 3;
+                        break;
+                    case (x > 500000):
+                        result += 2;
+                        break;
+                    default:
+                        result += 1;
+                        break;
+                }
+
+                result += cellValue(8, i) * 1;
+                impact[i] = result;
+                setCellValue(9, i, result);
+            });
+
+            const today = new Date();
+            /*[# th:each="type : ${types}"]*/
+            var typeImpact = [];
+            var projectName = [];
+            var timeLeft = [];
+            $.each($('#dtBasicExample tr'), function (i, tr) {
+                if ([[${type.name}]] === "NOT_SET") {
+                    return;
+                }
+                if ([[${type.name}]] === cellValue(2, i).trim()) {
+                    if (cellValue(5, i).trim() !== "") {
+                        if ([[${type.name}]] === "Top priority") {
+                            typeImpact.push(13);
+                        } else {
+                            typeImpact.push(impact[i]);
+                        }
+                        projectName.push(cellValue(1, i)+[[${type.name=='Top priority'?'⭐':' '}]]);
+                        const diffTime = Math.abs(Date.parse(cellValue(5, i).trim()) - today);
+                        var diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30));
+                        if (typeImpact.includes(impact[i]) && timeLeft.includes(diffMonths)) {
+                            diffMonths += 1;
+                            if (typeImpact.includes(impact[i]) && timeLeft.includes(diffMonths)) {
+                                diffMonths -= 2;
+                                if (typeImpact.includes(impact[i]) && timeLeft.includes(diffMonths)) {
+                                    diffMonths += 1.5;
+                                }
+                            }
+                        }
+                        timeLeft.push(diffMonths);
+                    }
+                }
+            });
+
+            var trace = {
+                x: timeLeft,
+                y: typeImpact,
+                mode: 'markers+text',
+                type: 'scatter',
+                opacity: 0.8,
+                name: [[${type.name}]],
+                text: projectName,
+                textposition: 'top center',
+                textfont: {
+                    family: 'Raleway, sans-serif'
+                },
+                marker:
+                    {size: 12,
+                        color: [[${type.color}]]
+                    }
+                };
+
+            data.push(trace);
+            /*[/]*/
+
+            var layout = {
+                annotations: [{
+                    text: 'B',
+                    align: 'left',
+                    showarrow: false,
+                    xref: 'paper',
+                    yref: 'paper',
+                    x: 0,
+                    y: 1,
+                    bordercolor: 'black',
+                    borderwidth: 1
+                },
+                    {
+                        text: 'A',
+                        align: 'left',
+                        showarrow: false,
+                        xref: 'paper',
+                        yref: 'paper',
+                        x: 0.99,
+                        y: 1,
+                        bordercolor: 'black',
+                        borderwidth: 1
+                    },
+                    {
+                        text: 'C',
+                        align: 'left',
+                        showarrow: false,
+                        xref: 'paper',
+                        yref: 'paper',
+                        x: 0.99,
+                        y: 0,
+                        bordercolor: 'black',
+                        borderwidth: 1
+                    },
+                    {
+                        text: 'D',
+                        align: 'left',
+                        showarrow: false,
+                        xref: 'paper',
+                        yref: 'paper',
+                        x: 0,
+                        y: 0,
+                        bordercolor: 'black',
+                        borderwidth: 1
+                    }
+                ],
+                shapes: [
+                    {
+                        type: 'line',
+                        xref: 'paper',
+                        x0: 0,
+                        y0: 6.0,
+                        x1: 1,
+                        y1: 6.0,
+                        line: {
+                            color: 'rgba(0,0,0,0.5)',
+                            width: 4,
+                            dash: 'dot'
+                        }
+                    },
+                    {
+                        type: 'line',
+                        yref: 'paper',
+                        x0: 12.0,
+                        y0: 0,
+                        x1: 12.0,
+                        y1: 1,
+                        line: {
+                            color: 'rgba(0,0,0,0.5)',
+                            width: 4,
+                            dash: 'dot'
+                        }
+                    }],
+                hovermode: 'x',
+                height: 600,
+                xaxis: {
+                    showspikes: true,
+                    autorange: 'reversed',
+                    title: {
+                        y: -0.1,
+                        text: 'Feasibility (months till closure)',
+                        font: {
+                            family: 'Raleway, sans-serif',
+                            size: 18,
+                            color: '#7f7f7f'
+                        }
+                    },
+                },
+                yaxis: {
+                    showspikes: true,
+                    range: [0, 14],
+                    title: {
+                        text: 'Impact',
+                        font: {
+                            family: 'Raleway, sans-serif',
+                            size: 18,
+                            color: '#7f7f7f'
+                        }
+                    }
+                },
+                legend: {
+                    y: -0.3,
+                    orientation: 'h',
+                    yref: 'paper',
+                    font: {
+                        family: 'Arial, sans-serif',
+                        size: 20,
+                        color: 'grey',
+                    },
+                },
+            };
+            Plotly.newPlot('chart', data, layout, {
+                scrollZoom: true
+            });
+            $("#chart").find("g.pointtext").find("text").css("visibility", "hidden");
+        });
     });
+
+    function cellValue(x, y) {
+        return $('#dtBasicExample').find('tr:eq(' + (y + 1) + ')>td:eq(' + (x + 1) + ')').text();
+    }
+
+    function setCellValue(x, y, s) {
+        $('#dtBasicExample').find('tr:eq(' + (y + 1) + ')>td:eq(' + (x + 1) + ')').text(s);
+    }
 
     /*]]>*/
 

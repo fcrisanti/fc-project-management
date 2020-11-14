@@ -8,12 +8,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
 
 
-
     <!-- DataTables CSS -->
     <!--    <link href="/css/addons/datatables.min.css" rel="stylesheet" type="text/css">-->
     <!-- DataTables Select CSS -->
     <link href="/css/addons/datatables-select.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css"/>
     <!-- Bootstrap core CSS -->
     <!--    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
     <!-- Material Design Bootstrap -->
@@ -104,13 +104,12 @@
                     PMO
                 </a>
             </li>
-            <li class="">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="#">
+            <li th:unless="${session.vig}">
+                <a href="/projects/priority">
                             <span class="icon">
-                                <i class="fi flaticon-calculator"></i>
+                                <i class="fi flaticon-star"></i>
                             </span>
-                    Budget
+                    Priorities
                 </a>
             </li>
         </ul>
@@ -164,7 +163,8 @@
             <form class="navbar-form" role="search">
                 <div class="form-group">
                     <div class="input-group input-group-no-border ml-4">
-                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..." oninput="doSearch()">
+                        <input class="form-control" type="text" id="mySearchText" placeholder="Search..."
+                               oninput="doSearch()">
                         <span class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="la la-search"></i>
@@ -184,7 +184,8 @@
                         <i class="la la-cog"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="la la-sign-out"></i> &nbsp; Log Out</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -216,7 +217,8 @@
                         <div class="column" style="margin-left:20px; margin-right:20px;">
                             <div>
                                 <h4> Add/Modify user</h4>
-                                <form id="userform" th:action="@{/options/user}" th:object="${userAccount}" method="POST">
+                                <form id="userform" th:action="@{/options/user}" th:object="${userAccount}"
+                                      method="POST">
                                     <label>
                                         Alias
                                         <input type="text" th:field="${userAccount.userName}">
@@ -237,7 +239,8 @@
                                 </form>
 
                                 <h4> Delete user</h4>
-                                <form id="userdeleteform" th:action="@{/options/deleteuser}" th:object="${userAccount}" method="POST">
+                                <form id="userdeleteform" th:action="@{/options/deleteuser}" th:object="${userAccount}"
+                                      method="POST">
                                     <label>
                                         Alias
                                         <input type="text" th:field="${userAccount.userName}">
@@ -270,11 +273,17 @@
                         </div>
                         <br>
                         <ul>
-                        <li><b>advanced-view</b> - sees all columns including budget, missing files etc.</li>
-                        <li><b>project-edit</b> - view and edit project page</li>
-                        <li><b>psr-edit</b> - edit psr of current quarter plus 5 days</li>
-                        <li><b>psr-any-edit</b> - edit psr of ANY quarter by changing the quarter and year in the psr link and adding /force</li>
-                        <li><b>admin</b> - access to this page; edit user rights, modify dictionaries, delete projects and PMO</li>
+                            <li><b>If a user alias is added without any access area it will have access only to the
+                                project and PSR list.</b></li>
+                            <li><b>advanced-view</b> - sees all columns including budget, missing files etc.</li>
+                            <li><b>project-edit</b> - view and edit project page</li>
+                            <li><b>psr-edit</b> - edit psr of current quarter plus 5 days</li>
+                            <li><b>psr-any-edit</b> - edit psr of ANY quarter by changing the quarter and year in the
+                                psr link and adding /force
+                            </li>
+                            <li><b>admin</b> - access to this page; edit user rights, modify dictionaries, delete
+                                projects and PMO
+                            </li>
                         </ul>
                     </div>
                 </section>
@@ -290,7 +299,7 @@
                         </h5>
                     </header>
                     <div class="row">
-                        <div class="column" style="margin-left:20px; margin-right:20px; width:30%">
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:29%">
                             <div>
                                 <h4> Companies</h4>
                                 <table class="table table-bordered table-striped">
@@ -324,7 +333,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="column" style="margin-left:20px; margin-right:20px; width:30%">
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:29%">
                             <div>
                                 <h4> Statuses</h4>
                                 <table class="table table-bordered table-striped">
@@ -342,38 +351,77 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:29%">
+                            <div>
+                                <h4> Types (priority chart)</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Type Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="type : ${types.getTypes()}">
+                                        <td th:text="${type}">
+                                    </tr>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <div class="column" style="margin-top: 37px; width:30%">
-                            <form th:action="@{/options/addcompany}" th:object="${company}" method="POST" style="margin-bottom:1em">
+                            <form th:action="@{/options/addcompany}" th:object="${company}" method="POST"
+                                  style="margin-bottom:1em">
                                 <input type="text" placeholder="Company Name" th:field="${company.company}">
                                 <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Company</button>
                             </form>
 
 
-                            <form th:action="@{/options/addstatus}" th:object="${status}" method="POST" style="margin-bottom:1em">
+                            <form th:action="@{/options/addstatus}" th:object="${status}" method="POST"
+                                  style="margin-bottom:1em">
                                 <input type="text" placeholder="Status Name" th:field="${status.name}" required>
                                 <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Status</button>
                             </form>
 
-                            <form th:action="@{/options/addgenesis}" th:object="${genesisType}" method="POST" style="margin-bottom:1em">
+                            <form th:action="@{/options/addgenesis}" th:object="${genesisType}" method="POST"
+                                  style="margin-bottom:1em">
                                 <input type="text" placeholder="Stream Name" th:field="${genesisType.name}" required>
                                 <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Stream</button>
                             </form>
 
-                            <form th:action="@{/options/removecompany}" th:object="${company}" method="POST" style="margin-bottom:1em">
+                            <form th:action="@{/options/addtype}" th:object="${type}" method="POST"
+                                  style="margin-bottom:1em">
+                                <input type="text" placeholder="Type Name" th:field="${type.name}" required>
+                                <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Type</button>
+                            </form>
+
+                            <form th:action="@{/options/removecompany}" th:object="${company}" method="POST"
+                                  style="margin-bottom:1em">
                                 <input type="text" placeholder="Company Name" th:field="${company.company}" required>
-                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Company</button>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Company
+                                </button>
                             </form>
 
-                            <form th:action="@{/options/removestatus}" th:object="${status}" method="POST" style="margin-bottom:1em">
+                            <form th:action="@{/options/removestatus}" th:object="${status}" method="POST"
+                                  style="margin-bottom:1em">
                                 <input type="text" placeholder="Status Name" th:field="${status.name}" required>
-                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Status</button>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Status
+                                </button>
                             </form>
 
-                            <form th:action="@{/options/removegenesis}" th:object="${genesisType}" method="POST" style="margin-bottom:1em">
+                            <form th:action="@{/options/removegenesis}" th:object="${genesisType}" method="POST"
+                                  style="margin-bottom:1em">
                                 <input type="text" placeholder="Stream Name" th:field="${genesisType.name}" required>
-                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Stream</button>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Stream
+                                </button>
                             </form>
+
+                            <form th:action="@{/options/removetype}" th:object="${type}" method="POST"
+                                  style="margin-bottom:1em">
+                                <input type="text" placeholder="Stream Name" th:field="${type.name}" required>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Type
+                                </button>
+                            </form>
+
                             <div style="margin:20px; align-content: center">
                                 <img src="/codebase/imgs/warning.png" width="171" height="171">
                             </div>
@@ -381,13 +429,15 @@
                                   onsubmit="return confirm('Czy na pewno chcesz usunąć projekt P'+id.value+'? \nNie będzie można cofnąć tej operacji. Upewnij się, czy numer projektu jest prawidłowy.');"
                                   style="margin-bottom:1em">
                                 <input type="number" placeholder="Numer projektu (bez P)" name="id" id="id" required>
-                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Project</button>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Project
+                                </button>
                             </form>
 
                             <form action="#" th:action="@{'/options/removepsr/'}" method="GET"
                                   onsubmit="return confirm('Czy na pewno chcesz usunąć PSR projektu P'+sapNo.value+' za Q'+quarter.value+' '+year.value+'? \nNie będzie można cofnąć tej operacji. Upewnij się, czy numer projektu, kwartału i roku jest prawidłowy.');"
                                   style="margin-bottom:1em">
-                                <input type="number" placeholder="Numer projektu (bez P)" name="sapNo" id="sapNo" required>
+                                <input type="number" placeholder="Numer projektu (bez P)" name="sapNo" id="sapNo"
+                                       required>
                                 <input type="number" placeholder="Kwartał (1-4)" name="quarter" id="quarter" required>
                                 <input type="number" placeholder="Rok" name="year" id="year" required>
                                 <button type="submit" class="btn-outline-red" style="width: 200px">DELETE PSR</button>
@@ -410,33 +460,70 @@
                         </div>
 
                     </div>
-                    <form th:object="${companies}" th:action="@{'/options/addcompanies'}" method="POST">
-                        <h4> Companies Set-up</h4>
-                        <table class="table table-bordered table-striped">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th> Company Name</th>
-                                <th> VIG-PSR</th>
-                                <th> Color</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="company, itemStat2 : ${companies.companies}">
-                                <td th:text="${company}">
-                                </td>
-                                <td>
-                                    <input type="checkbox" th:name="|companies[${itemStat2.index}]?.isVIG|" th:checked="${company?.isVIG}">
-                                </td>
-                                <td>
-                                    <input type="hidden" th:value="${company.company}" th:name="|companies[${itemStat2.index}].company|">
-                                    <input type="color" th:name="|companies[${itemStat2.index}]?.color|" th:value="${company?.color}">
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <h5> All companies marked VIG-PSR will be listed on the VIG PSR list: <a href="/psr/view/vig">http://proton.gc.wew/psr/view/vig</a> </h5>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
+                    <div class="row">
+                        <div class="col">
+                            <form th:object="${companies}" th:action="@{'/options/addcompanies'}" method="POST">
+                                <h4> Companies Set-up</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Company Name</th>
+                                        <th> VIG-PSR</th>
+                                        <th> Color</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="company, itemStat2 : ${companies.companies}">
+                                        <td th:text="${company}">
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" th:name="|companies[${itemStat2.index}]?.isVIG|"
+                                                   th:checked="${company?.isVIG}">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" th:value="${company.company}"
+                                                   th:name="|companies[${itemStat2.index}].company|">
+                                            <input type="color" th:name="|companies[${itemStat2.index}]?.color|"
+                                                   th:value="${company?.color}">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <h5> All companies marked VIG-PSR will be listed on the VIG PSR list: <a
+                                        href="/psr/view/vig">http://proton.gc.wew/psr/view/vig</a>
+                                </h5>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form th:object="${types}" th:action="@{'/options/addtypes'}" method="POST">
+                                <h4> Types Set-up</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Type Name</th>
+                                        <th> Color</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="type, itemStat3 : ${types.types}">
+                                        <td th:text="${type}">
+                                        </td>
+                                        <td>
+                                            <input type="hidden" th:value="${type.name}"
+                                                   th:name="|types[${itemStat3.index}].name|">
+                                            <input type="color" th:name="|types[${itemStat3.index}]?.color|"
+                                                   th:value="${type?.color}">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <h5> These types will are used in the Priority Chart
+                                </h5>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
 
                 </section>
             </div>
@@ -451,32 +538,35 @@
                         </h5>
                     </header>
                     <div class="row">
-                        <div class="column" style="margin-left:20px; margin-right:20px; width:30%">
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:29%">
                             <form th:object="${tooltipsForm}" th:action="@{/options/tooltips}" method="post">
                                 <fieldset>
-                            <div>
-                                <h4> Project Status Report Tooltips</h4>
-                                <table class="table table-bordered table-striped">
-                                    <thead class="thead-dark">
-                                    <tr>
-                                        <th> Field Name</th>
-                                        <th> Tooltip Text</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="tooltip, itemStat : ${tooltipsForm.tooltips}">
-                                        <td th:text="${tooltip.fieldName}">
-                                        </td>
-                                        <td>
-                                            <input type="hidden" th:value="${tooltip.fieldName}" th:name="|tooltips[${itemStat.index}].fieldName|">
-                                            <textarea th:name="|tooltips[${itemStat.index}].fieldDescription|" th:text="${tooltip.fieldDescription}" cols="110" rows="2"></textarea>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <div>
+                                        <h4> Project Status Report Tooltips</h4>
+                                        <table class="table table-bordered table-striped">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th> Field Name</th>
+                                                <th> Tooltip Text</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="tooltip, itemStat : ${tooltipsForm.tooltips}">
+                                                <td th:text="${tooltip.fieldName}">
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" th:value="${tooltip.fieldName}"
+                                                           th:name="|tooltips[${itemStat.index}].fieldName|">
+                                                    <textarea th:name="|tooltips[${itemStat.index}].fieldDescription|"
+                                                              th:text="${tooltip.fieldDescription}" cols="110"
+                                                              rows="2"></textarea>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </fieldset>
                             </form>
                         </div>
@@ -572,7 +662,7 @@
     }
 
     function scrollToBottom() {
-        window.scrollTo(0,document.body.scrollHeight);
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
     $(document).ready(function () {
