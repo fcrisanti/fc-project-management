@@ -1,5 +1,6 @@
 package pl.fc.app.controllers;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -179,9 +180,9 @@ class PSRController {
     }
 
     private void findAndAddPreviousPsrAttributes(Long id, Model model) {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now().minusDays(OFFSET_IN_DAYS);
         int previousQuarter = Quarter.ofMonth(today.getMonthValue()).minus(1).getValue();
-        long previousPSRYear = today.getYear();
+        long previousPSRYear = previousQuarter==4 ? today.getYear()-1 : today.getYear();
         if(Quarter.ofMonth(today.getMonthValue()) == Quarter.Q1) {
             previousPSRYear = today.minusYears(1).getYear();
         }

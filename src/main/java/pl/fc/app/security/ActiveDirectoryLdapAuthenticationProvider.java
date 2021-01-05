@@ -116,6 +116,7 @@ public class ActiveDirectoryLdapAuthenticationProvider extends
     private static final int ACCOUNT_LOCKED = 0x775;
 
     private final String domain;
+
     private final String rootDn;
     private final String url;
     private boolean convertSubErrorCodesToExceptions;
@@ -124,6 +125,9 @@ public class ActiveDirectoryLdapAuthenticationProvider extends
 
     @Value("${ldap.security.protocol}")
     private String SECURITY_PROTOCOL;
+
+    @Value("${ldap.security.userdomain}")
+    private String userDomain;
 
     // Only used to allow tests to substitute a mock LdapContext
     ContextFactory contextFactory = new ContextFactory();
@@ -393,8 +397,11 @@ public class ActiveDirectoryLdapAuthenticationProvider extends
         if (domain == null || username.toLowerCase().endsWith(domain)) {
             return username;
         }
-
-        return username + "@" + domain;
+        if (userDomain == null) {
+            userDomain = domain;
+        }
+        logger.info("Logging in user: " + username + "@" + userDomain);
+        return username + "@" + userDomain;
     }
 
     /**
