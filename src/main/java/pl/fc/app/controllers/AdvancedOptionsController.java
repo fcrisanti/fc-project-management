@@ -1,6 +1,7 @@
 package pl.fc.app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -66,6 +68,9 @@ class AdvancedOptionsController {
 
     @Autowired
     StatusReportService statusReportService;
+
+    @Value("${PSR_OFFSET}")
+    int OFFSET_IN_DAYS;
 
     @PostMapping("/addcompany")
     public String addCompany(Company company, Model model) {
@@ -166,6 +171,9 @@ class AdvancedOptionsController {
             Genesis genesisType = new Genesis();
             Status status = new Status();
             Type type = new Type();
+
+            model.addAttribute("offset", OFFSET_IN_DAYS);
+            model.addAttribute("time", new Date());
 
             model.addAttribute("company", company);
             model.addAttribute("genesisType", genesisType);

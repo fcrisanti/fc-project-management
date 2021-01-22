@@ -2,6 +2,7 @@ package pl.fc.app.controllers;
 
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +33,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/psr")
 class PSRController {
-
-    final int OFFSET_IN_DAYS = 6;
+    @Value("${PSR_OFFSET}")
+    int OFFSET_IN_DAYS;
     @Autowired
     ProjectService projectService;
     @Autowired
@@ -133,7 +134,7 @@ class PSRController {
             model.addAttribute("tooltips",new TooltipsDTO(advancedOptionsService.getAll()));
             return "projects/edit-new-status";
         }
-        redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do 5 dni po jego zakończeniu.");
+        redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do " + OFFSET_IN_DAYS + " dni po jego zakończeniu.");
         return "redirect:/psr/view/"+id+"/"+year+"/"+quarter;
         } else {
             response.setStatus(403);
