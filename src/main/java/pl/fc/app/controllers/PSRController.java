@@ -1,14 +1,15 @@
 package pl.fc.app.controllers;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.threeten.extra.Quarter;
 import pl.fc.app.dao.variables.ICompanyRepository;
@@ -76,7 +77,7 @@ class PSRController {
         model.addAttribute("projects", projects);
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
-        session.setAttribute("vig","false");
+        session.setAttribute("vig", "false");
         return "projects/status-report/list-status-reports";
     }
 
@@ -88,7 +89,7 @@ class PSRController {
         model.addAttribute("projects", projects);
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
-        session.setAttribute("vig","true");
+        session.setAttribute("vig", "true");
         return "projects/status-report/vig-list-status-reports";
     }
 
@@ -99,7 +100,7 @@ class PSRController {
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
         model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
-        session.setAttribute("vig","true");
+        session.setAttribute("vig", "true");
         return "projects/status-report/vig-all-status-reports";
     }
 
@@ -110,7 +111,7 @@ class PSRController {
         model.addAttribute("quarter", quarter);
         model.addAttribute("year", year);
         model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
-        session.setAttribute("vig","false");
+        session.setAttribute("vig", "false");
         return "projects/status-report/all-status-reports";
     }
 
@@ -119,23 +120,23 @@ class PSRController {
         LocalDate today = LocalDate.now();
         int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
         int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
-        return "redirect:/psr/"+id+"/"+currentYearMinusOffset+"/"+currentQuarterMinusOffset;
+        return "redirect:/psr/" + id + "/" + currentYearMinusOffset + "/" + currentQuarterMinusOffset;
     }
 
     @GetMapping("/{id}/{year}/{quarter}")
     public String editProjectStatusReportIfCurrentQuarter(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
-        if(permissionManager.userAllowed("psr-edit") || permissionManager.userAllowed(id)) {
-        LocalDate today = LocalDate.now();
-        int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
-        int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
-        if(currentQuarterMinusOffset == quarter && currentYearMinusOffset == year) {
-            findNewProjectAndAddPsrAttributes(id, quarter, year, model);
-            findAndAddPreviousPsrAttributes(id, model);
-            model.addAttribute("tooltips",new TooltipsDTO(advancedOptionsService.getAll()));
-            return "projects/edit-new-status";
-        }
-        redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do " + OFFSET_IN_DAYS + " dni po jego zakończeniu.");
-        return "redirect:/psr/view/"+id+"/"+year+"/"+quarter;
+        if (permissionManager.userAllowed("psr-edit") || permissionManager.userAllowed(id)) {
+            LocalDate today = LocalDate.now();
+            int currentQuarterMinusOffset = Quarter.ofMonth(today.minusDays(OFFSET_IN_DAYS).getMonthValue()).getValue();
+            int currentYearMinusOffset = today.minusDays(OFFSET_IN_DAYS).getYear();
+            if (currentQuarterMinusOffset == quarter && currentYearMinusOffset == year) {
+                findNewProjectAndAddPsrAttributes(id, quarter, year, model);
+                findAndAddPreviousPsrAttributes(id, model);
+                model.addAttribute("tooltips", new TooltipsDTO(advancedOptionsService.getAll()));
+                return "projects/edit-new-status";
+            }
+            redirectAttributes.addFlashAttribute("errorMessage", "Project Status Report jest zablokowany do edycji. Można edytować PSR kwartału w trakcie i do " + OFFSET_IN_DAYS + " dni po jego zakończeniu.");
+            return "redirect:/psr/view/" + id + "/" + year + "/" + quarter;
         } else {
             response.setStatus(403);
             return "errorpages/error-403";
@@ -144,10 +145,10 @@ class PSRController {
 
     @GetMapping("/{id}/{year}/{quarter}/force")
     public String forceEditProjectStatusReport(@PathVariable("id") Long id, @PathVariable("quarter") int quarter, @PathVariable("year") Long year, Model model, RedirectAttributes redirectAttributes, HttpServletResponse response) {
-        if(permissionManager.userAllowed("psr-any-edit")) {
+        if (permissionManager.userAllowed("psr-any-edit")) {
             findNewProjectAndAddPsrAttributes(id, quarter, year, model);
             findAndAddPreviousPsrAttributes(id, model);
-            model.addAttribute("tooltips",new TooltipsDTO(advancedOptionsService.getAll()));
+            model.addAttribute("tooltips", new TooltipsDTO(advancedOptionsService.getAll()));
             return "projects/edit-new-status";
         } else {
             response.setStatus(403);
@@ -163,11 +164,11 @@ class PSRController {
 
     private void findNewProjectAndAddPsrAttributes(Long id, int quarter, Long year, Model model) {
         Optional<ProjectStatusReport> maybeStatusReport = Optional.empty();
-        if(statusRepository.count()>0) {
+        if (statusRepository.count() > 0) {
             maybeStatusReport = statusReportService.findByProjectIdQuarterYear(id, quarter, year);
         }
         Project project = projectService.getByID(id);
-        ProjectStatusReport projectStatusReport = new ProjectStatusReport();
+        ProjectStatusReport projectStatusReport;
         if (maybeStatusReport.isPresent()) {
             projectStatusReport = maybeStatusReport.get();
         } else {
@@ -175,16 +176,18 @@ class PSRController {
             projectStatusReport.setYear(year);
             projectStatusReport.setQuarter(Quarter.of(quarter));
         }
-        model.addAttribute("project", project);
-        model.addAttribute("projectStatusReport", projectStatusReport);
-        model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
+        if (project != null) {
+            model.addAttribute("project", project);
+            model.addAttribute("projectStatusReport", projectStatusReport);
+            model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Motyla noga! Nie znalazłem takiego projektu :(");
     }
 
     private void findAndAddPreviousPsrAttributes(Long id, Model model) {
         LocalDate today = LocalDate.now().minusDays(OFFSET_IN_DAYS);
         int previousQuarter = Quarter.ofMonth(today.getMonthValue()).minus(1).getValue();
-        long previousPSRYear = previousQuarter==4 ? today.getYear()-1 : today.getYear();
-        if(Quarter.ofMonth(today.getMonthValue()) == Quarter.Q1) {
+        long previousPSRYear = previousQuarter == 4 ? today.getYear() - 1 : today.getYear();
+        if (Quarter.ofMonth(today.getMonthValue()) == Quarter.Q1) {
             previousPSRYear = today.minusYears(1).getYear();
         }
         Optional<ProjectStatusReport> maybeStatusReport = statusReportService.findByProjectIdQuarterYear(id, previousQuarter, previousPSRYear);
@@ -217,9 +220,11 @@ class PSRController {
     @PostMapping("{id}/savenew")
     public String saveNewProjectStatusReport(@PathVariable("id") Long id, ProjectStatusReport projectStatusReport, RedirectAttributes redirectAttributes, Model model) {
         Project project = projectService.getByID(id);
-        projectStatusReport.setProject(project);
-        project.addPSR(projectStatusReport);
-        statusReportService.save(projectStatusReport);
+        if (project != null) {
+            project.addPSR(projectStatusReport);
+            projectStatusReport.setProject(project);
+            statusReportService.save(projectStatusReport);
+        }
         return "redirect:/psr/view/" + id + "/" + projectStatusReport.getYear() + "/" + projectStatusReport.getQuarter().getValue();
     }
 }

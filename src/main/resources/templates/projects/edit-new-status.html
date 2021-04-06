@@ -216,16 +216,18 @@
             <div th:if="${errorMessage}">
                 <div th:text="${errorMessage}" class="red-text"></div>
             </div>
+            <input type="hidden" th:value="${projectStatusReport.psrId}" name="psrId" id="psrId">
+            <input type="hidden" th:field="${projectStatusReport.quarter}">
+            <input type="hidden" th:field="${projectStatusReport.year}">
+            <input type="hidden" th:field="${projectStatusReport.quarter}">
             <input type="hidden" th:field="${projectStatusReport.jsonRisks}" id="jsonRisks" value="jsonRisks">
             <input type="hidden" th:field="${projectStatusReport.jsonMilestones}" id="jsonMilestones"
                    value="jsonMilestones">
             <input type="hidden" th:field="${projectStatusReport.htmlRisks}" id="htmlRisks" value="htmlRisks">
             <input type="hidden" th:field="${projectStatusReport.htmlMilestones}" id="htmlMilestones"
                    value="htmlMilestones">
-            <input type="hidden" th:field="${projectStatusReport.quarter}">
-            <input type="hidden" th:field="${projectStatusReport.year}">
-            <input type="hidden" th:field="${projectStatusReport.quarter}">
-            <input type="hidden" th:value="${projectStatusReport.psrId}" name="psrId" id="psrId">
+
+
 
             <div id="content" class="flex-column col-lg-8" style="width: 926px;">
 
