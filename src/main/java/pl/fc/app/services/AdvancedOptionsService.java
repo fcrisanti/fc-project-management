@@ -7,12 +7,13 @@ import pl.fc.app.enities.variables.Tooltip;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class AdvancedOptionsService {
 
-    final List<String> PSR_FIELD_NAMES = new ArrayList<>(Arrays.asList("Project Description","Key Modified Systems","Project Budget","Realized Costs","Cost Allocation Key","Project Rating","Cost Forecast","Project Milestones","Project Risks","Comments"));
+    final List<String> PSR_FIELD_NAMES = new ArrayList<>(Arrays.asList("Project Description","Key Modified Systems","Project Budget","Realized Costs","Cost Allocation Key","Project Rating","Cost Forecast","Project Milestones","Project Risks","Comments", "Annual Budget"));
 
     @Autowired
     ITooltipRepository tooltipRepository;

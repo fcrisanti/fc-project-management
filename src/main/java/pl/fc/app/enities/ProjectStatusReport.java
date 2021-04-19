@@ -74,6 +74,13 @@ public class ProjectStatusReport {
     @Column(columnDefinition = "TEXT")
     private String htmlRisks;
 
+    @Column(columnDefinition = "json")
+    @JsonRawValue
+    private String jsonBudget;
+
+    @Column(columnDefinition = "TEXT")
+    private String htmlBudget;
+
     private String projectManager;
     private String completedWorks1; //obsolete, for backward-compatibility only
     private String completedWorks2; //obsolete, for backward-compatibility only

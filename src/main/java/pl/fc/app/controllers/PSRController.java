@@ -180,6 +180,7 @@ class PSRController {
             model.addAttribute("project", project);
             model.addAttribute("projectStatusReport", projectStatusReport);
             model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
+            model.addAttribute("costyear", project.getExpensesByYear());
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Motyla noga! Nie znalazłem takiego projektu :(");
     }
 

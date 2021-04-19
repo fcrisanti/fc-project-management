@@ -3,10 +3,10 @@
 <html>
 <head>
     <title th:text="${project?.name}">PROTON</title>
+    <link href="/css/status.css" rel="stylesheet">
     <link href="/css/sing/application.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
-
 
 
     <!-- DataTables CSS -->
@@ -100,8 +100,8 @@
                             <span class="icon">
                                 <i class="fi flaticon-document"></i>
                             </span>
-                Status Reports
-            </a>
+                    Status Reports
+                </a>
                 <a th:unless="${session.vig}" href="/psr/view">
                             <span class="icon">
                                 <i class="fi flaticon-document"></i>
@@ -187,7 +187,8 @@
                 </div>
             </form>
 
-            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${projectStatusReport.getQuarter().getValue()}, year=${projectStatusReport.year})}" type="button" class="btn btn-primary"
+            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${projectStatusReport.getQuarter().getValue()}, year=${projectStatusReport.year})}"
+               type="button" class="btn btn-primary"
                style="width:250px">Edit PSR</a>
             <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
                style="width:250px">Edit Project</a>
@@ -228,8 +229,14 @@
                 <li class="breadcrumb-item">Project Status Report</li>
                 <li class="breadcrumb-item active" th:text="P+${project.sapNo}"></li>
             </ol>
-            <h2 class="page-title"><span th:text="${projectStatusReport.getYear() + ' ' + projectStatusReport.getQuarter()}">2020 Q3</span> - <span class="fw-semi-bold" id="companyOrGenesis"
-                                                                  th:text="${project.name}">All</span></h2>
+            <ol class="breadcrumb pull-right">
+                <li class="breadcrumb-item active" th:text="${project.status}"
+                    th:class="${project.status} == 'TO_BE_OPENED' ? 'badge badge-pill bg-gray-lighter text-gray-light' : 'badge badge-pill badge-success '+${project.status}"></li>
+            </ol>
+            <h2 class="page-title"><span
+                    th:text="${projectStatusReport.getYear() + ' ' + projectStatusReport.getQuarter()}">2020 Q3</span> -
+                <span class="fw-semi-bold" id="companyOrGenesis"
+                      th:text="${project.name}">All</span></h2>
 
             <i th:text="${projectStatusReport.modifiedBy!=null } ? ${ 'Last modified by '+projectStatusReport.modifiedBy+' on '+projectStatusReport.lastModifiedDate}"></i>
             <p id="errorMessage" style="color: red" th:text="${errorMessage}"></p>
@@ -345,22 +352,81 @@
                 </div>
 
                 <div class="col-sm-3">
-                        <div th:each="property : ${projectStatusReport?.project?.costAllocation?.entrySet()}"
-                             style="display: none;">
-                            <div class="form-group">
-                                <label th:for="*{project.costAllocation['__${property.key}__']}"
-                                       th:text="${property.key}">Property</label>
-                                <input type="number" class="form-control company"
-                                       th:alt="${property.key}" min="0"
-                                       max="100" step="any"
-                                       th:field="*{project.costAllocation['__${property.key}__']}"
-                                       th:data="${allCompanies.getCompanyColor(property.key)}"
-                                       style="width: max-content"/>%
-                            </div>
+                    <div th:each="property : ${projectStatusReport?.project?.costAllocation?.entrySet()}"
+                         style="display: none;">
+                        <div class="form-group">
+                            <label th:for="*{project.costAllocation['__${property.key}__']}"
+                                   th:text="${property.key}">Property</label>
+                            <input type="number" class="form-control company"
+                                   th:alt="${property.key}" min="0"
+                                   max="100" step="any"
+                                   th:field="*{project.costAllocation['__${property.key}__']}"
+                                   th:data="${allCompanies.getCompanyColor(property.key)}"
+                                   style="width: max-content"/>%
                         </div>
-                        <canvas id="doughnutChart" style="width: 120%; height: 120%;"></canvas>
+                    </div>
+                    <canvas id="doughnutChart" style="width: 120%; height: 120%;"></canvas>
                 </div>
             </div>
+
+
+            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 20px;"
+                 th:if="${projectStatusReport.jsonBudget != null}">
+                <section class="widget">
+                    <header>
+                        <h5>
+                            Project <span class="fw-semi-bold">Annual Budget Breakdown</span>
+                        </h5>
+                    </header>
+                    <div class="widget-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="budget" class="table-editable">
+                                    <table id="table-budget"
+                                           class="table table-bordered table-responsive-md table-striped text-center display">
+                                        <thead class="peach-gradient white-text">
+                                        <tr>
+                                            <th class="text-center">Year</th>
+                                            <th class="text-center" style="min-width: 75px;">Budget</th>
+                                            <th class="text-center" style="min-width: 75px;">Realized Costs</th>
+                                            <th class="text-center">Comment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="budget-tbody">
+                                        <tr th:each="year : ${costyear}" th:if="${year.getKey() != 0}">
+                                            <td id="date1" class="pt-3-half">
+                                                <input type="number" name="year" id="year"
+                                                       th:value="${year?.getKey()}"
+                                                       style="text-align:right; width: 120px"/>
+                                            </td>
+                                            <td class="pt-3-half">
+                                                <input type="text" name="yearlybudget" id="yearlybudget"
+                                                       class="currencyInput" value="0"
+                                                       style="text-align:right; width: 120px"/>
+                                            </td>
+                                            <td class="pt-3-half">
+                                                <input type="text" name="yearlycost" id="yearlycost"
+                                                       class="currencyInput"
+                                                       style="text-align:right; width: 120px"
+                                                       th:value="${year?.getValue()}"/>
+                                            </td>
+                                            <td class="pt-3-half">Type the comment here
+                                            </td>
+                                            <td class="pt-3-half">
+                        <span class="table-remove"><button type="button"
+                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
             <div class="flex-column col-xl-13" style="flex-grow: 0; flex-shrink: 0; padding-top: 12px;">
                 <section class="widget">
                     <header>
@@ -418,7 +484,7 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td class="pt-3-half" contenteditable="true">Trwa ładowanie danych...
+                                            <td class="pt-3-half">Trwa ładowanie danych...
                                             </td>
                                             <td id="date1" class="pt-3-half">
                                                 <input type="date" name="dueDate" id="dueDate"/>
@@ -465,13 +531,13 @@
                                             <td id="date1" class="pt-3-half">
                                                 <input type="date" name="dueDate" id="dueDate"/>
                                             </td>
-                                            <td class="pt-3-half" contenteditable="true">Trwa ładowanie danych...
+                                            <td class="pt-3-half">Trwa ładowanie danych...
                                             </td>
-                                            <td class="pt-3-half" contenteditable="true">Trwa ładowanie danych...
+                                            <td class="pt-3-half">Trwa ładowanie danych...
                                             </td>
-                                            <td class="pt-3-half" contenteditable="true">No</td>
-                                            <td class="pt-3-half" contenteditable="true">Low</td>
-                                            <td class="pt-3-half" contenteditable="true">Medium</td>
+                                            <td class="pt-3-half">No</td>
+                                            <td class="pt-3-half">Low</td>
+                                            <td class="pt-3-half">Medium</td>
                                         </tbody>
                                     </table>
                                 </div>
@@ -482,7 +548,8 @@
                 </section>
             </div>
 
-            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;" th:if="${projectStatusReport.comment!=''}">
+            <div class="flex-column col-lg-13" style="flex-grow: 0; flex-shrink: 0;"
+                 th:if="${projectStatusReport.comment!=''}">
                 <section class="widget">
                     <header>
                         <h5>
@@ -495,64 +562,63 @@
                 </section>
             </div>
 
-        <footer th:replace="layouts :: footer"></footer>
-</div>
-
-<div class="flex-column col-lg-auto" style="flex-grow: 0; flex-shrink: 0; margin-left: 78%; position: fixed;">
-    <section class="widget">
-        <header>
-            <h5>
-                All <span class="fw-semi-bold">Status Reports</span>
-            </h5>
-        </header>
-        <div class="widget-body">
-
-            <div class="column">
-                <table id="dtBasicExample" class="table-bordered table-striped">
-                    <thead class="aqua-gradient" style="color: white">
-                    <tr>
-                        <th> Q.</th>
-                        <th> YEAR</th>
-                        <th> EDIT</th>
-                        <th> VIEW</th>
-                        <!--                                    <th> DOWNLOAD</th>-->
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="psr : ${project.projectStatusReports}">
-                        <td>
-                            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                               th:text="${psr.getQuarter().getValue()}"></a></td>
-                        <td>
-                            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                               th:text="${psr.year}"></a></td>
-                        <td>
-                            <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                               class="btn btn-red btn-sm m-0">EDIT</a></td>
-                        <td>
-                            <a th:href="@{/psr/view/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
-                               class="btn btn-red btn-sm m-0">VIEW</a></td>
-                        <!--                                    <td>-->
-                        <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
-                        <!--                                                th:attr="onclick=|view('@{/psr/view/{id}/{year}/{month}/pdf(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
-                        <!--                                        >PDF-->
-                        <!--                                        </button>-->
-                        <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
-                        <!--                                                th:attr="onclick=|view('@{/psr/view/{id}/{year}/{month}/ppt(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
-                        <!--                                        >PPT-->
-                        <!--                                        </button>-->
-                        <!--                                    </td>-->
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <footer th:replace="layouts :: footer"></footer>
         </div>
-    </section>
-</div>
+
+        <div class="flex-column col-lg-auto" style="flex-grow: 0; flex-shrink: 0; margin-left: 78%; position: fixed;">
+            <section class="widget">
+                <header>
+                    <h5>
+                        All <span class="fw-semi-bold">Status Reports</span>
+                    </h5>
+                </header>
+                <div class="widget-body">
+
+                    <div class="column">
+                        <table id="dtBasicExample" class="table-bordered table-striped">
+                            <thead class="aqua-gradient" style="color: white">
+                            <tr>
+                                <th> Q.</th>
+                                <th> YEAR</th>
+                                <th> EDIT</th>
+                                <th> VIEW</th>
+                                <!--                                    <th> DOWNLOAD</th>-->
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="psr : ${project.projectStatusReports}">
+                                <td>
+                                    <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                       th:text="${psr.getQuarter().getValue()}"></a></td>
+                                <td>
+                                    <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                       th:text="${psr.year}"></a></td>
+                                <td>
+                                    <a th:href="@{/psr/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                       class="btn btn-red btn-sm m-0">EDIT</a></td>
+                                <td>
+                                    <a th:href="@{/psr/view/{id}/{year}/{quarter}(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}"
+                                       class="btn btn-red btn-sm m-0">VIEW</a></td>
+                                <!--                                    <td>-->
+                                <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
+                                <!--                                                th:attr="onclick=|view('@{/psr/view/{id}/{year}/{month}/pdf(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                                <!--                                        >PDF-->
+                                <!--                                        </button>-->
+                                <!--                                        <button type="button" class="btn btn-amber btn-sm m-0"-->
+                                <!--                                                th:attr="onclick=|view('@{/psr/view/{id}/{year}/{month}/ppt(id=${project.projectId}, quarter=${psr.getQuarter().getValue()}, year=${psr.year})}')|"-->
+                                <!--                                        >PPT-->
+                                <!--                                        </button>-->
+                                <!--                                    </td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
 
 
-
-</main>
+    </main>
 </div>
 <!-- The Loader. Is shown when pjax happens -->
 <div class="loader-wrap hiding hide">
@@ -712,8 +778,9 @@
 
             $("#content").addClass('content');
             $('#errorMessage').remove();
-            $('#table-ed').css("width","770px");
-            $('#table-risks').css("width","770px");
+            $('#table-ed').css("width", "770px");
+            $('#table-risks').css("width", "770px");
+            $('#table-budget').css("width", "770px");
             $('.widget').addClass('border border-primary');
             var HTML_Width = $("#content").width();
             var HTML_Height = $("#content").height();
@@ -725,16 +792,16 @@
 
             var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-            html2canvas($("#content")[0],{scale:1.5}).then(function (canvas) {
+            html2canvas($("#content")[0], {scale: 1.5}).then(function (canvas) {
                 var imgData = canvas.toDataURL("image/png", 1.0);
                 // var imgData = canvas.toDataURL({ devicePixelRatio: 5});
 
                 // var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
                 var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-                pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height,'NULL', 'fast');
+                pdf.addImage(imgData, 'PNG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height, 'NULL', 'fast');
                 for (var i = 1; i <= totalPDFPages; i++) {
                     pdf.addPage(PDF_Width, PDF_Height);
-                    pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height,'NULL', 'fast');
+                    pdf.addImage(imgData, 'PNG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height, 'NULL', 'fast');
                 }
 
                 pdf.save(/*[[${'P' + project.sapNo + ' ' + project.name + ' ' + projectStatusReport.year + ' ' + projectStatusReport.quarter + '.pdf'}]]*/);
@@ -777,11 +844,11 @@
             'sDom': 't',
             stateSave: true,
             data: [(${projectStatusReport.jsonMilestones})],
-            order: [ 1, 'asc' ],
-            columns : [
-                { data : "task description", orderable: false },
-                { data : "last accepted due date", orderable: false  },
-                { data : "execution date", orderable: false  }
+            order: [1, 'asc'],
+            columns: [
+                {data: "task description", orderable: false},
+                {data: "last accepted due date", orderable: false},
+                {data: "execution date", orderable: false}
             ]
         });
 
@@ -791,19 +858,36 @@
             'sDom': 't',
             stateSave: true,
             data: [(${projectStatusReport.jsonRisks})],
-            order: [ 0, 'asc' ],
-            columns : [
-                { data : "date of identification", orderable: false },
-                { data : "description", orderable: false },
-                { data : "way of prevention", orderable: false },
-                { data : "materialized", orderable: false },
-                { data : "impact", orderable: false },
-                { data : "probability", orderable: false }
+            order: [0, 'asc'],
+            columns: [
+                {data: "date of identification", orderable: false},
+                {data: "description", orderable: false},
+                {data: "way of prevention", orderable: false},
+                {data: "materialized", orderable: false},
+                {data: "impact", orderable: false},
+                {data: "probability", orderable: false}
             ]
         });
 
+
+        $('#table-budget').DataTable({
+            "paging": false, // false to disable pagination (or any other option)
+            "searching": false,
+            'sDom': 't',
+            stateSave: true,
+            data: [(${projectStatusReport.jsonBudget})],
+            order: [0, 'asc'],
+            columns: [
+                {data: "year", orderable: false},
+                {data: "budget", orderable: false},
+                {data: "realized costs", orderable: false},
+                {data: "comment", orderable: false},
+            ]
+        });
+
+
         $("#table-ed tr td:nth-of-type(1):contains(Project Closure)")
-        .parent().css('background-color', '#dee4ee');
+            .parent().css('background-color', '#dee4ee');
         $("#table-ed tr td:nth-of-type(1):contains(Project Kick-off)")
             .parent().css('background-color', '#dee4ee');
         $("#table-risks tr td:nth-of-type(5):contains(High)")
@@ -812,8 +896,13 @@
             .parent().css('background-color', '#fff2ef');
         $("#table-risks tr td:nth-of-type(4):contains(Yes)")
             .parent().css('background-color', '#fdf7e6');
-        $('#table-ed tr').each(function() {
-            if(new Date($(this).find("td:eq(1)").text()) < new Date($(this).find("td:eq(2)").text())) {
+        $('#table-ed tr').each(function () {
+            if (new Date($(this).find("td:eq(1)").text()) < new Date($(this).find("td:eq(2)").text())) {
+                $(this).css('color', 'red');
+            }
+        });
+        $('#table-budget tr').each(function () {
+            if (parseInt($(this).find("td:eq(1)").text().replace(/ /g, '')) < parseInt($(this).find("td:eq(2)").text().replace(/ /g, ''))) {
                 $(this).css('color', 'red');
             }
         });

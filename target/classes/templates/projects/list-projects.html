@@ -185,7 +185,7 @@
             </form>
             <a th:href="@{/projects/new}" class="btn btn-primary" th:if="${advanced}"> New Project </a>
             <span>Filter by:</span>
-            <button id="ALL" class="btn btn-sm btn-amber btn-rounded btn-default" onclick="reset()">ALL</button>
+            <button id="ALL" class="btn btn-sm btn-rounded btn-warning" onclick="reset()">RESET ALL FILTERS</button>
             <button id="CL" class="btn btn-sm btn-teal btn-rounded btn-default" onclick="filter('CL')">CL</button>
             <button id="CNL" class="btn btn-sm btn-green btn-rounded btn-default" onclick="filter('CNL')">CNL</button>
             <button id="VIG" class="btn btn-sm btn-red btn-rounded btn-default" onclick="filter('VIG')">VIG</button>
@@ -553,6 +553,8 @@
         $('#dtBasicExample').DataTable({
             "paging": false, // false to disable pagination (or any other option)
             dom: 'Bfrtip',
+            stateSave: true,
+            bStateSave: true,
             columnDefs: [
                 {
                     targets: 1,
@@ -594,11 +596,10 @@
                         });
                 });
             }
-
         });
         $('.dataTables_length').addClass('bs-select');
         less();
-        reset();
+        // reset();
     });
 
     /*]]>*/
