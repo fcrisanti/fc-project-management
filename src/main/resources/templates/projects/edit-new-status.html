@@ -179,7 +179,8 @@
                 </div>
             </form>
 
-            <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px" onclick="saveTables()">
+            <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px"
+                    onclick="return onSubmit();">
                 Save Changes
             </button>
             <a th:href="@{/projects/edit(id=${project.projectId})}" type="button" class="btn btn-default"
@@ -343,9 +344,8 @@
                                     <div class="d-flex justify-content-between align-items-center mb-lg">
                                         <h4 data-toggle="tooltip" data-placement="right" title="">
                                             <input size="6" id="plannedBudget" name="plannedBudget"
-                                                   class="currencyInput" style="text-align:right;">
-                                            <!--                                                   th:value="${projectStatusReport.plannedBudget != null ? projectStatusReport.plannedBudget : previousProjectStatusReport?.plannedBudget}"-->
-
+                                                   class="currencyInput" style="text-align:right;"
+                                                   th:value="${projectStatusReport.plannedBudget != null ? projectStatusReport.plannedBudget : previousProjectStatusReport?.plannedBudget}">
                                         </h4>
 
                                     </div>
@@ -370,8 +370,8 @@
                                     <div class="d-flex justify-content-between align-items-center mb-lg">
                                         <h4 data-toggle="tooltip" data-placement="right" title="">
                                             <input size="6" id="realizedBudget" name="realizedBudget"
-                                                   class="currencyInput" style="text-align:right;">
-                                            <!--                                                   th:value="${projectStatusReport.realizedBudget != null ? projectStatusReport.realizedBudget : previousProjectStatusReport?.realizedBudget}"-->
+                                                   class="currencyInput" style="text-align:right;"
+                                            th:value="${projectStatusReport.realizedBudget != null ? projectStatusReport.realizedBudget : previousProjectStatusReport?.realizedBudget}">
 
                                         </h4>
                                     </div>
@@ -398,7 +398,8 @@
                                         <h4 data-toggle="tooltip" data-placement="right" title="">
                                             <input size="6"
                                                    th:value="${projectStatusReport.forecastBudget != null ? projectStatusReport.forecastBudget : previousProjectStatusReport?.forecastBudget}"
-                                                   id="forecastBudget" name="forecastBudget" class="currencyInput" style="text-align:right;">
+                                                   id="forecastBudget" name="forecastBudget" class="currencyInput"
+                                                   style="text-align:right;">
                                         </h4>
 
                                     </div>
@@ -480,7 +481,8 @@
                                                            style="text-align:right; width: 120px"/>
                                                 </td>
                                                 <td class="pt-3-half">
-                                                    <input type="text" name="yearlycost" id="yearlycost" class="currencyInput"
+                                                    <input type="text" name="yearlycost" id="yearlycost"
+                                                           class="currencyInput"
                                                            style="text-align:right; width: 120px"
                                                            th:value="${year?.getValue()}"/>
                                                 </td>
@@ -700,13 +702,14 @@
                             </h5>
                         </header>
                         <div class="widget-body">
-                            <textarea cols="72" rows="7" th:text="${projectStatusReport.comment}" id="comment"
-                                      name="comment"></textarea>
+                            <textarea style="white-space: pre-line" cols="72" rows="7" th:text="${projectStatusReport.comment}" id="comment"
+                                      name="comment" required></textarea>
                         </div>
                     </section>
                 </div>
 
-                <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px" onclick="saveTables()">
+                <button type="submit" form="psrForm" class="btn btn-primary" style="width:200px"
+                        onclick="return onSubmit()">
                     Save Changes
                 </button>
 
@@ -848,14 +851,16 @@
                 $('.currencyInput').removeClass("currencyInput");
                 $tableID3.find('tbody').append(row);
                 autoNumericRun()
-                $(":input:not(select)").on("change paste keyup", function () {
-                    $(this).attr('value', $(this).val());
-                });
             }
         }
         /*[/]*/
-        calc_total("yearlycost", "realizedBudget");
-        calc_total("yearlybudget", "plannedBudget");
+        
+        
+        $(":input:not(select)").on("change paste keyup", function () {
+            $(this).attr('value', $(this).val());
+            
+            
+        });
     }
 
     $(document).ready(function () {
@@ -968,6 +973,8 @@
 
         $(":input:not(select)").on("change paste keyup", function () {
             $(this).attr('value', $(this).val());
+            
+            
         });
         $("select").on("change paste keyup", function () {
             $(this).children("option:selected").attr('data', true);
@@ -989,8 +996,9 @@
         $('.kickOff').html( /*[[${project.kickOff}]]*/ 'Edit Project to set it');
         $('#projectClosure1').html( /*[[${project.projectClosure}]]*/ 'Edit Project to set it');
 
-        calc_total("yearlycost", "realizedBudget");
-        calc_total("yearlybudget", "plannedBudget");
+        $('input[name="yearlybudget"]').addClass("currencyInput");
+        $('input[name="yearlycost"]').addClass("currencyInput");
+
         autoNumericRun();
     });
 
@@ -1109,6 +1117,8 @@
 
         $(":input:not(select)").on("change paste keyup", function () {
             $(this).attr('value', $(this).val());
+            
+            
         });
         // $("select").on("change paste keyup", function() {
         //     $(this).children("option:selected").attr('selected',true);
@@ -1138,14 +1148,9 @@
     }
 
     $('.table-budget').on('click', 'i', () => {
-        if ($tableID3.find('tbody tr').length === 0) {
+        if ($tableID3.find('tbody tr').length < 2) {
             $('.currencyInput').removeClass("currencyInput");
             $tableID3.find('tbody').append(newTr3);
-            $(":input:not(select)").on("change paste keyup", function () {
-                $(this).attr('value', $(this).val());
-                calc_total("yearlycost", "realizedBudget");
-                calc_total("yearlybudget", "plannedBudget");
-            });
         } else {
             const $clone = $tableID3.find('tbody tr').last().clone(true).removeClass('hide table-line');
             var row = $clone.closest('tr');
@@ -1158,15 +1163,18 @@
             $('.currencyInput').removeClass("currencyInput");
             $tableID3.find('table').append(row);
         }
+        $(":input:not(select)").on("change paste keyup", function () {
+            $(this).attr('value', $(this).val());
+        });
         autoNumericRun();
     });
 
-    $('input[name=yearlycost]').on('change', function () {
-        calc_total("yearlycost", "realizedBudget");
-    });
-    $('input[name=yearlybudget]').on('change', function () {
-        calc_total("yearlybudget", "plannedBudget");
-    });
+    // $('input[name=yearlycost]').on('change', function () {
+    //
+    // });
+    // $('input[name=yearlybudget]').on('change', function () {
+    //
+    // });
 
     function calc_total(inputName, target) {
         var sum = 0;
@@ -1187,8 +1195,8 @@
 
     $tableID3.on('click', '.table-remove', function () {
         $(this).parents('tr').detach();
-        calc_total("yearlycost", "realizedBudget");
-        calc_total("yearlybudget", "plannedBudget");
+        
+        
     });
 
     $tableID.on('click', '.table-up', function () {
@@ -1211,6 +1219,17 @@
     // A few jQuery helpers for exporting only
     jQuery.fn.pop = [].pop;
     jQuery.fn.shift = [].shift;
+
+    function onSubmit() {
+        if ( $("#table-risks tr:contains('Type the description here')").length || $("#table-risks tr:contains('Type the way of prevention here')").length ) {
+            alert("Uzupełnij tabelę Project Risks przed zapisaniem PSR.")
+            return false;
+        } else {
+            saveTables()
+            return true;
+        }
+
+    }
 
     function saveTables() {
 

@@ -15,18 +15,9 @@ import pl.fc.app.dao.variables.IGenesisRepository;
 import pl.fc.app.dao.variables.IStatusRepository;
 import pl.fc.app.dao.variables.ITypeRepository;
 import pl.fc.app.enities.UserAccount;
-import pl.fc.app.enities.variables.Company;
-import pl.fc.app.enities.variables.CompaniesDTO;
-import pl.fc.app.enities.variables.Genesis;
-import pl.fc.app.enities.variables.Status;
-import pl.fc.app.enities.variables.TooltipsDTO;
-import pl.fc.app.enities.variables.Type;
-import pl.fc.app.enities.variables.TypesDTO;
+import pl.fc.app.enities.variables.*;
 import pl.fc.app.security.PermissionManager;
-import pl.fc.app.services.AdvancedOptionsService;
-import pl.fc.app.services.EmployeeService;
-import pl.fc.app.services.ProjectService;
-import pl.fc.app.services.StatusReportService;
+import pl.fc.app.services.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
@@ -44,6 +35,9 @@ class AdvancedOptionsController {
 
     @Autowired
     EmployeeService employeeService;
+
+    @Autowired
+    CostService costService;
 
     @Autowired
     ICompanyRepository companyRepository;
@@ -110,6 +104,19 @@ class AdvancedOptionsController {
         return "redirect:/options";
     }
 
+    @PostMapping("/addcostcat")
+    public String addCostCat(@ModelAttribute CostCategory costCategory, Model model) {
+        costService.saveCostCat(costCategory);
+        return "redirect:/options";
+    }
+
+    @Transactional
+    @PostMapping("/removecostcat")
+    public String removeCostCat(CostCategory costCategory, Model model) {
+        costService.deleteCostCategoryByDisplayValue(costCategory.getDisplayValue());
+        return "redirect:/options";
+    }
+
     @Transactional
     @PostMapping("/removetype")
     public String removeType(Type type, Model model) {
@@ -166,11 +173,13 @@ class AdvancedOptionsController {
             List<Status> statuses = statusRepository.findAll();
             List<Genesis> genesis = genesisRepository.findAll();
             TypesDTO types = new TypesDTO(typeRepository.findAll());
+            List<CostCategory> costCategories = costService.getAllCategories();
 
             Company company = new Company();
             Genesis genesisType = new Genesis();
             Status status = new Status();
             Type type = new Type();
+            CostCategory costCategory = new CostCategory();
 
             model.addAttribute("offset", OFFSET_IN_DAYS);
             model.addAttribute("time", new Date());
@@ -179,11 +188,13 @@ class AdvancedOptionsController {
             model.addAttribute("genesisType", genesisType);
             model.addAttribute("status", status);
             model.addAttribute("type", type);
+            model.addAttribute("costCategory", costCategory);
 
             model.addAttribute("companies", companies);
             model.addAttribute("genesis", genesis);
             model.addAttribute("statuses", statuses);
             model.addAttribute("types", types);
+            model.addAttribute("costCategories", costCategories);
 
             List<UserAccount> userAccounts = userRepository.findAll();
             UserAccount userAccount = new UserAccount();

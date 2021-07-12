@@ -278,7 +278,7 @@
                                             </td>
                                             <td class="pt-3-half">
                                                 <select name="costCategory" id="costCategory">
-                                                    <option th:each="cat : ${T(pl.fc.app.enities.enums.CostCategory).values()}"
+                                                    <option th:each="cat : ${costCategories}"
                                                             th:text="${cat.displayValue}"
                                                             th:selected="${cat == cost.costCategory}">
                                                     </option>

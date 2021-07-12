@@ -523,6 +523,7 @@
             .search("")
             .draw();
         document.getElementById("companyOrGenesis").innerHTML = "All";
+        $('#dtBasicExample').dataTable().fnFilter('');
     }
 
     function filter(value) {

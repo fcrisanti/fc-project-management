@@ -7,23 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
-import pl.fc.app.enities.enums.CostCategory;
+import pl.fc.app.enities.variables.CostCategory;
 import pl.fc.app.enities.enums.CostType;
 import pl.fc.app.enities.enums.IsIT;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -52,8 +43,11 @@ public class Cost {
     private CostType type;
     @Enumerated(EnumType.STRING)
     private IsIT isIT;
-    @Enumerated(EnumType.STRING)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "`fk_costcat`")
     private CostCategory costCategory;
+
     private String projectString;
     private String nrZlecenia;
     private String nazwaBiura;
@@ -64,25 +58,4 @@ public class Cost {
     @JoinColumn(name = "fk_cost")
     private Project project;
 
-    public static Cost create(CostDTO costDTO) {
-        Cost createdCost = Cost.builder()
-                .companies(costDTO.companies)
-                .costCategory(CostCategory.getByDisplayValue(costDTO.costCategory))
-                .grossAmount(!costDTO.grossAmount.isEmpty()? new BigDecimal(costDTO.grossAmount.replaceAll("\\s", "")) : BigDecimal.ZERO)
-                .isIT(IsIT.getByDisplayValue(costDTO.isIT))
-                .invoiceNumber(costDTO.invoiceNumber)
-                .MPK(costDTO.MPK)
-                .nazwaBiura(costDTO.nazwaBiura)
-                .nrZlecenia(costDTO.nrZlecenia)
-                .provider(costDTO.provider)
-                .title(costDTO.title)
-                .type(!costDTO.type.equals("0") ? CostType.valueOf(costDTO.type) : null)
-                .PMCostCategory(costDTO.PMCostCategory)
-                .build();
-
-        if (!costDTO.invoiceDate.isEmpty()) {
-            createdCost.setInvoiceDate(LocalDate.parse(costDTO.invoiceDate));
-        }
-        return createdCost;
-    }
 }

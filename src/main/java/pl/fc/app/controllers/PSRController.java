@@ -181,17 +181,23 @@ class PSRController {
             model.addAttribute("projectStatusReport", projectStatusReport);
             model.addAttribute("allCompanies", new CompaniesDTO(companyRepository.findAll()));
             model.addAttribute("costyear", project.getExpensesByYear());
-        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Motyla noga! Nie znalazłem takiego projektu :(");
+        } else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Motyla noga! Nie znalazłem takiego projektu :(");
     }
 
     private void findAndAddPreviousPsrAttributes(Long id, Model model) {
         LocalDate today = LocalDate.now().minusDays(OFFSET_IN_DAYS);
-        int previousQuarter = Quarter.ofMonth(today.getMonthValue()).minus(1).getValue();
-        long previousPSRYear = previousQuarter == 4 ? today.getYear() - 1 : today.getYear();
-        if (Quarter.ofMonth(today.getMonthValue()) == Quarter.Q1) {
-            previousPSRYear = today.minusYears(1).getYear();
-        }
-        Optional<ProjectStatusReport> maybeStatusReport = statusReportService.findByProjectIdQuarterYear(id, previousQuarter, previousPSRYear);
+        Optional<ProjectStatusReport> maybeStatusReport;
+        int index = 1;
+        do {
+            int previousQuarter = Quarter.ofMonth(today.getMonthValue()).minus(index).getValue();
+            long previousPSRYear = previousQuarter == 4 ? today.getYear() - 1 : today.getYear();
+            if (Quarter.ofMonth(today.getMonthValue()) == Quarter.Q1) {
+                previousPSRYear = today.minusYears(1).getYear();
+            }
+            maybeStatusReport = statusReportService.findByProjectIdQuarterYear(id, previousQuarter, previousPSRYear);
+            index++;
+        } while (!maybeStatusReport.isPresent() && index < 4);
         if (maybeStatusReport.isPresent()) {
             ProjectStatusReport projectStatusReport = maybeStatusReport.get();
             model.addAttribute("previousProjectStatusReport", projectStatusReport);

@@ -26,6 +26,11 @@ public class PermissionManager {
         return "";
     }
 
+    public static Boolean isCompensaUser() {
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       return authentication.getPrincipal().toString().contains("vpn_compensa_users");
+    }
+
     public boolean userExists() {
         return userRepository.findByUserName(getUserName()).isPresent();
     }

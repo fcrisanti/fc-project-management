@@ -14,6 +14,8 @@ import pl.fc.app.enities.CostDTO;
 import pl.fc.app.enities.PMCostCategoryDTO;
 import pl.fc.app.enities.Project;
 import pl.fc.app.enities.variables.Company;
+import pl.fc.app.enities.variables.CostCategory;
+import pl.fc.app.services.CostService;
 import pl.fc.app.services.EmployeeService;
 import pl.fc.app.services.ProjectService;
 import pl.fc.app.services.StatusReportService;
@@ -34,6 +36,9 @@ class BudgetController {
 
     @Autowired
     EmployeeService employeeService;
+
+    @Autowired
+    CostService costService;
 
     @Autowired
     ICompanyRepository companyRepository;
@@ -74,6 +79,7 @@ class BudgetController {
     @GetMapping
     public String displayProjectCosts(@RequestParam("id") long projectId, Model model) {
         List<Company> allCompanies = companyRepository.findAll();
+        List<CostCategory> costCategories = costService.getAllCategories();
         model.addAttribute("allCompanies", allCompanies);
         Project project = projectService.findByID(projectId).get();
         if (project.getExpenses().isEmpty()) {
@@ -81,6 +87,7 @@ class BudgetController {
         }
         model.addAttribute("costs", project.getExpenses());
         model.addAttribute("project", project);
+        model.addAttribute("costCategories", costCategories);
 
         return "budgets/list-costs";
     }
@@ -121,12 +128,12 @@ class BudgetController {
     public String saveProjectCostsAndDeletePrevious(@PathVariable("projectId") long projectId, @RequestBody CostDTO[] costDTO, Model model) {
         Project project = projectService.findByID(projectId).get();
 
-        costRepository.deleteAllByProject(project);
+        costService.deleteAllByProject(project);
 
         for (CostDTO dto : costDTO) {
-            Cost cost = Cost.create(dto);
+            Cost cost = costService.create(dto);
             cost.setProject(project);
-            costRepository.save(cost);
+            costService.save(cost);
             project.addCost(cost);
         }
 
@@ -139,9 +146,9 @@ class BudgetController {
         Project project = projectService.findByID(projectId).get();
 
         for (CostDTO dto : costDTO) {
-            Cost cost = Cost.create(dto);
+            Cost cost = costService.create(dto);
             cost.setProject(project);
-            costRepository.save(cost);
+            costService.save(cost);
             project.addCost(cost);
         }
 

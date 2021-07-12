@@ -557,7 +557,7 @@
                         </h5>
                     </header>
                     <div class="widget-body">
-                        <a th:text="${projectStatusReport.comment}"></a>
+                        <a th:text="${projectStatusReport.comment}" style="white-space: pre-line"></a>
                     </div>
                 </section>
             </div>
@@ -869,13 +869,12 @@
             ]
         });
 
-
         $('#table-budget').DataTable({
             "paging": false, // false to disable pagination (or any other option)
             "searching": false,
             'sDom': 't',
             stateSave: true,
-            data: [(${projectStatusReport.jsonBudget})],
+            data: [(${projectStatusReport.jsonBudget != null ? projectStatusReport.jsonBudget : "[]"})],
             order: [0, 'asc'],
             columns: [
                 {data: "year", orderable: false},

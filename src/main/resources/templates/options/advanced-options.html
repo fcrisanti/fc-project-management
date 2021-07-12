@@ -368,6 +368,24 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class="column" style="margin-left:20px; margin-right:20px; width:29%">
+                            <div>
+                                <h4> Global Cost Categories</h4>
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th> Category Name</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="costCategory : ${costCategories}">
+                                        <td th:text="${costCategory.getDisplayValue()}">
+                                    </tr>
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <form th:action="@{/options/addcompany}" th:object="${company}" method="POST"
                                   style="margin-bottom:1em">
@@ -392,6 +410,12 @@
                                   style="margin-bottom:1em">
                                 <input type="text" placeholder="Type Name" th:field="${type.name}" required>
                                 <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Type</button>
+                            </form>
+
+                            <form th:action="@{/options/addcostcat}" th:object="${costCategory}" method="POST"
+                                  style="margin-bottom:1em">
+                                <input type="text" placeholder="Cost Category Name" th:field="${costCategory.displayValue}" required>
+                                <button type="submit" CLASS="btn-elegant" style="width: 200px">ADD Cost Category</button>
                             </form>
 
                             <form th:action="@{/options/removecompany}" th:object="${company}" method="POST"
@@ -419,6 +443,13 @@
                                   style="margin-bottom:1em">
                                 <input type="text" placeholder="Stream Name" th:field="${type.name}" required>
                                 <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Type
+                                </button>
+                            </form>
+
+                            <form th:action="@{/options/removecostcat}" th:object="${costCategory}" method="POST"
+                                  style="margin-bottom:1em">
+                                <input type="text" placeholder="Cost Category Name" th:field="${costCategory.displayValue}" required>
+                                <button type="submit" class="btn-outline-red" style="width: 200px">DELETE Cost Category
                                 </button>
                             </form>
 
@@ -518,7 +549,7 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <h5> These types will are used in the Priority Chart
+                                <h5> These types are used in the Priority Chart
                                 </h5>
                                 <button type="submit" class="btn btn-primary">Save Changes</button>
                             </form>
