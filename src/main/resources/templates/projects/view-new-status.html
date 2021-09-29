@@ -393,30 +393,6 @@
                                         </tr>
                                         </thead>
                                         <tbody id="budget-tbody">
-                                        <tr th:each="year : ${costyear}" th:if="${year.getKey() != 0}">
-                                            <td id="date1" class="pt-3-half">
-                                                <input type="number" name="year" id="year"
-                                                       th:value="${year?.getKey()}"
-                                                       style="text-align:right; width: 120px"/>
-                                            </td>
-                                            <td class="pt-3-half">
-                                                <input type="text" name="yearlybudget" id="yearlybudget"
-                                                       class="currencyInput" value="0"
-                                                       style="text-align:right; width: 120px"/>
-                                            </td>
-                                            <td class="pt-3-half">
-                                                <input type="text" name="yearlycost" id="yearlycost"
-                                                       class="currencyInput"
-                                                       style="text-align:right; width: 120px"
-                                                       th:value="${year?.getValue()}"/>
-                                            </td>
-                                            <td class="pt-3-half">Type the comment here
-                                            </td>
-                                            <td class="pt-3-half">
-                        <span class="table-remove"><button type="button"
-                                                           class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">X</button></span>
-                                            </td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
